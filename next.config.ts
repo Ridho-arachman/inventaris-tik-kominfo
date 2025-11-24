@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
   images: {
-    domains: ["images.unsplash.com", "source.unsplash.com"],
+    domains: ["cdn-icons-png.flaticon.com", "images.pexels.com"],
   },
 };
 
