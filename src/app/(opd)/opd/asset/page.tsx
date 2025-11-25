@@ -15,6 +15,7 @@ import {
   SelectItem,
   SelectContent,
 } from "@/components/ui/select";
+import { useRouter } from "next/navigation";
 
 // ============================
 // Dummy Data Asset (schema DB baru)
@@ -65,6 +66,7 @@ const dummyAssets = [
 ];
 
 export default function AssetListOPD() {
+  const router = useRouter();
   const years = [...new Set(dummyAssets.map((a) => a.acquisitionYear))];
   const [selectedYear, setSelectedYear] = useState<number | "ALL">("ALL");
 
@@ -160,6 +162,7 @@ export default function AssetListOPD() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
                 className="border-b hover:bg-gray-50 cursor-pointer"
+                onClick={() => router.push("/opd/asset/" + asset.id)}
               >
                 {/* FOTO */}
                 <td className="p-3">

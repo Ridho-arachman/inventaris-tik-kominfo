@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 // Dummy asset sesuai schema baru
 const dummyAsset = {
@@ -142,9 +143,11 @@ export default function AssetDetailOPD() {
                 transition={{ duration: 0.6, delay: 0.45 }}
                 className="flex gap-4 pt-4"
               >
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-                  Edit Aset
-                </Button>
+                <Link href={`/opd/asset/${dummyAsset.id}/edit`}>
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                    Edit Aset
+                  </Button>
+                </Link>
                 <Button className="bg-red-600 hover:bg-red-700 text-white">
                   Hapus Aset
                 </Button>
