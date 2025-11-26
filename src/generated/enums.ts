@@ -15,3 +15,30 @@ export const Role = {
 } as const
 
 export type Role = (typeof Role)[keyof typeof Role]
+
+
+export const StatusAset = {
+  AKTIF: 'AKTIF',
+  NON_AKTIF: 'NON_AKTIF',
+  CADANGAN: 'CADANGAN'
+} as const
+
+export type StatusAset = (typeof StatusAset)[keyof typeof StatusAset]
+
+
+export const jenisLisensi = {
+  PERPETUAL: 'PERPETUAL',
+  LANGGANAN: 'LANGGANAN',
+  OPEN_SOURCE: 'OPEN_SOURCE'
+} as const
+
+export type jenisLisensi = (typeof jenisLisensi)[keyof typeof jenisLisensi]
+
+
+export const KritikalitasStatus = {
+  TINGGI: 'TINGGI',
+  SEDANG: 'SEDANG',
+  RENDAH: 'RENDAH'
+} as const
+
+export type KritikalitasStatus = (typeof KritikalitasStatus)[keyof typeof KritikalitasStatus]

@@ -32,6 +32,7 @@ export type UserMinAggregateOutputType = {
   emailVerified: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  codeOpd: string | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -42,6 +43,7 @@ export type UserMaxAggregateOutputType = {
   emailVerified: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  codeOpd: string | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -52,6 +54,7 @@ export type UserCountAggregateOutputType = {
   emailVerified: number
   createdAt: number
   updatedAt: number
+  codeOpd: number
   _all: number
 }
 
@@ -64,6 +67,7 @@ export type UserMinAggregateInputType = {
   emailVerified?: true
   createdAt?: true
   updatedAt?: true
+  codeOpd?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -74,6 +78,7 @@ export type UserMaxAggregateInputType = {
   emailVerified?: true
   createdAt?: true
   updatedAt?: true
+  codeOpd?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -84,6 +89,7 @@ export type UserCountAggregateInputType = {
   emailVerified?: true
   createdAt?: true
   updatedAt?: true
+  codeOpd?: true
   _all?: true
 }
 
@@ -167,6 +173,7 @@ export type UserGroupByOutputType = {
   emailVerified: boolean
   createdAt: Date
   updatedAt: Date
+  codeOpd: string | null
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -198,8 +205,14 @@ export type UserWhereInput = {
   emailVerified?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  codeOpd?: Prisma.StringNullableFilter<"User"> | string | null
+  opd?: Prisma.XOR<Prisma.OpdNullableScalarRelationFilter, Prisma.OpdWhereInput> | null
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
+  createdHardware?: Prisma.HardwareListRelationFilter
+  updatedHardware?: Prisma.HardwareListRelationFilter
+  createdSoftwrae?: Prisma.SoftwareListRelationFilter
+  updatedSoftware?: Prisma.SoftwareListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -210,8 +223,14 @@ export type UserOrderByWithRelationInput = {
   emailVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  codeOpd?: Prisma.SortOrderInput | Prisma.SortOrder
+  opd?: Prisma.OpdOrderByWithRelationInput
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   accounts?: Prisma.AccountOrderByRelationAggregateInput
+  createdHardware?: Prisma.HardwareOrderByRelationAggregateInput
+  updatedHardware?: Prisma.HardwareOrderByRelationAggregateInput
+  createdSoftwrae?: Prisma.SoftwareOrderByRelationAggregateInput
+  updatedSoftware?: Prisma.SoftwareOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -225,8 +244,14 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   emailVerified?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  codeOpd?: Prisma.StringNullableFilter<"User"> | string | null
+  opd?: Prisma.XOR<Prisma.OpdNullableScalarRelationFilter, Prisma.OpdWhereInput> | null
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
+  createdHardware?: Prisma.HardwareListRelationFilter
+  updatedHardware?: Prisma.HardwareListRelationFilter
+  createdSoftwrae?: Prisma.SoftwareListRelationFilter
+  updatedSoftware?: Prisma.SoftwareListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -237,6 +262,7 @@ export type UserOrderByWithAggregationInput = {
   emailVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  codeOpd?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -253,6 +279,7 @@ export type UserScalarWhereWithAggregatesInput = {
   emailVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  codeOpd?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
 }
 
 export type UserCreateInput = {
@@ -263,8 +290,13 @@ export type UserCreateInput = {
   emailVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  opd?: Prisma.OpdCreateNestedOneWithoutUsersInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  createdHardware?: Prisma.HardwareCreateNestedManyWithoutCreatorInput
+  updatedHardware?: Prisma.HardwareCreateNestedManyWithoutUpdaterInput
+  createdSoftwrae?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
+  updatedSoftware?: Prisma.SoftwareCreateNestedManyWithoutUpdaterInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -275,8 +307,13 @@ export type UserUncheckedCreateInput = {
   emailVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  codeOpd?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  createdHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutCreatorInput
+  updatedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutUpdaterInput
+  createdSoftwrae?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
+  updatedSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutUpdaterInput
 }
 
 export type UserUpdateInput = {
@@ -287,8 +324,13 @@ export type UserUpdateInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  opd?: Prisma.OpdUpdateOneWithoutUsersNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  createdHardware?: Prisma.HardwareUpdateManyWithoutCreatorNestedInput
+  updatedHardware?: Prisma.HardwareUpdateManyWithoutUpdaterNestedInput
+  createdSoftwrae?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
+  updatedSoftware?: Prisma.SoftwareUpdateManyWithoutUpdaterNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -299,8 +341,13 @@ export type UserUncheckedUpdateInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  codeOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  createdHardware?: Prisma.HardwareUncheckedUpdateManyWithoutCreatorNestedInput
+  updatedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutUpdaterNestedInput
+  createdSoftwrae?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
+  updatedSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutUpdaterNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -311,6 +358,7 @@ export type UserCreateManyInput = {
   emailVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  codeOpd?: string | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -331,6 +379,7 @@ export type UserUncheckedUpdateManyInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  codeOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -341,6 +390,7 @@ export type UserCountOrderByAggregateInput = {
   emailVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  codeOpd?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -351,6 +401,7 @@ export type UserMaxOrderByAggregateInput = {
   emailVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  codeOpd?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -361,11 +412,27 @@ export type UserMinOrderByAggregateInput = {
   emailVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  codeOpd?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
   is?: Prisma.UserWhereInput
   isNot?: Prisma.UserWhereInput
+}
+
+export type UserListRelationFilter = {
+  every?: Prisma.UserWhereInput
+  some?: Prisma.UserWhereInput
+  none?: Prisma.UserWhereInput
+}
+
+export type UserOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -416,6 +483,112 @@ export type UserUpdateOneRequiredWithoutAccountsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAccountsInput, Prisma.UserUpdateWithoutAccountsInput>, Prisma.UserUncheckedUpdateWithoutAccountsInput>
 }
 
+export type UserCreateNestedManyWithoutOpdInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOpdInput, Prisma.UserUncheckedCreateWithoutOpdInput> | Prisma.UserCreateWithoutOpdInput[] | Prisma.UserUncheckedCreateWithoutOpdInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOpdInput | Prisma.UserCreateOrConnectWithoutOpdInput[]
+  createMany?: Prisma.UserCreateManyOpdInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUncheckedCreateNestedManyWithoutOpdInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOpdInput, Prisma.UserUncheckedCreateWithoutOpdInput> | Prisma.UserCreateWithoutOpdInput[] | Prisma.UserUncheckedCreateWithoutOpdInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOpdInput | Prisma.UserCreateOrConnectWithoutOpdInput[]
+  createMany?: Prisma.UserCreateManyOpdInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUpdateManyWithoutOpdNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOpdInput, Prisma.UserUncheckedCreateWithoutOpdInput> | Prisma.UserCreateWithoutOpdInput[] | Prisma.UserUncheckedCreateWithoutOpdInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOpdInput | Prisma.UserCreateOrConnectWithoutOpdInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutOpdInput | Prisma.UserUpsertWithWhereUniqueWithoutOpdInput[]
+  createMany?: Prisma.UserCreateManyOpdInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutOpdInput | Prisma.UserUpdateWithWhereUniqueWithoutOpdInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutOpdInput | Prisma.UserUpdateManyWithWhereWithoutOpdInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserUncheckedUpdateManyWithoutOpdNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOpdInput, Prisma.UserUncheckedCreateWithoutOpdInput> | Prisma.UserCreateWithoutOpdInput[] | Prisma.UserUncheckedCreateWithoutOpdInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOpdInput | Prisma.UserCreateOrConnectWithoutOpdInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutOpdInput | Prisma.UserUpsertWithWhereUniqueWithoutOpdInput[]
+  createMany?: Prisma.UserCreateManyOpdInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutOpdInput | Prisma.UserUpdateWithWhereUniqueWithoutOpdInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutOpdInput | Prisma.UserUpdateManyWithWhereWithoutOpdInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserCreateNestedOneWithoutCreatedHardwareInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedHardwareInput, Prisma.UserUncheckedCreateWithoutCreatedHardwareInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedHardwareInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutUpdatedHardwareInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUpdatedHardwareInput, Prisma.UserUncheckedCreateWithoutUpdatedHardwareInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUpdatedHardwareInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutCreatedHardwareNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedHardwareInput, Prisma.UserUncheckedCreateWithoutCreatedHardwareInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedHardwareInput
+  upsert?: Prisma.UserUpsertWithoutCreatedHardwareInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreatedHardwareInput, Prisma.UserUpdateWithoutCreatedHardwareInput>, Prisma.UserUncheckedUpdateWithoutCreatedHardwareInput>
+}
+
+export type UserUpdateOneWithoutUpdatedHardwareNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUpdatedHardwareInput, Prisma.UserUncheckedCreateWithoutUpdatedHardwareInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUpdatedHardwareInput
+  upsert?: Prisma.UserUpsertWithoutUpdatedHardwareInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUpdatedHardwareInput, Prisma.UserUpdateWithoutUpdatedHardwareInput>, Prisma.UserUncheckedUpdateWithoutUpdatedHardwareInput>
+}
+
+export type UserCreateNestedOneWithoutCreatedSoftwraeInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedSoftwraeInput, Prisma.UserUncheckedCreateWithoutCreatedSoftwraeInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedSoftwraeInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutUpdatedSoftwareInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUpdatedSoftwareInput, Prisma.UserUncheckedCreateWithoutUpdatedSoftwareInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUpdatedSoftwareInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutCreatedSoftwraeNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedSoftwraeInput, Prisma.UserUncheckedCreateWithoutCreatedSoftwraeInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedSoftwraeInput
+  upsert?: Prisma.UserUpsertWithoutCreatedSoftwraeInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreatedSoftwraeInput, Prisma.UserUpdateWithoutCreatedSoftwraeInput>, Prisma.UserUncheckedUpdateWithoutCreatedSoftwraeInput>
+}
+
+export type UserUpdateOneWithoutUpdatedSoftwareNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUpdatedSoftwareInput, Prisma.UserUncheckedCreateWithoutUpdatedSoftwareInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUpdatedSoftwareInput
+  upsert?: Prisma.UserUpsertWithoutUpdatedSoftwareInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUpdatedSoftwareInput, Prisma.UserUpdateWithoutUpdatedSoftwareInput>, Prisma.UserUncheckedUpdateWithoutUpdatedSoftwareInput>
+}
+
 export type UserCreateWithoutSessionsInput = {
   id?: string
   email: string
@@ -424,7 +597,12 @@ export type UserCreateWithoutSessionsInput = {
   emailVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  opd?: Prisma.OpdCreateNestedOneWithoutUsersInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  createdHardware?: Prisma.HardwareCreateNestedManyWithoutCreatorInput
+  updatedHardware?: Prisma.HardwareCreateNestedManyWithoutUpdaterInput
+  createdSoftwrae?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
+  updatedSoftware?: Prisma.SoftwareCreateNestedManyWithoutUpdaterInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -435,7 +613,12 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   emailVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  codeOpd?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  createdHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutCreatorInput
+  updatedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutUpdaterInput
+  createdSoftwrae?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
+  updatedSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutUpdaterInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -462,7 +645,12 @@ export type UserUpdateWithoutSessionsInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  opd?: Prisma.OpdUpdateOneWithoutUsersNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  createdHardware?: Prisma.HardwareUpdateManyWithoutCreatorNestedInput
+  updatedHardware?: Prisma.HardwareUpdateManyWithoutUpdaterNestedInput
+  createdSoftwrae?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
+  updatedSoftware?: Prisma.SoftwareUpdateManyWithoutUpdaterNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -473,7 +661,12 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  codeOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  createdHardware?: Prisma.HardwareUncheckedUpdateManyWithoutCreatorNestedInput
+  updatedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutUpdaterNestedInput
+  createdSoftwrae?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
+  updatedSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutUpdaterNestedInput
 }
 
 export type UserCreateWithoutAccountsInput = {
@@ -484,7 +677,12 @@ export type UserCreateWithoutAccountsInput = {
   emailVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  opd?: Prisma.OpdCreateNestedOneWithoutUsersInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  createdHardware?: Prisma.HardwareCreateNestedManyWithoutCreatorInput
+  updatedHardware?: Prisma.HardwareCreateNestedManyWithoutUpdaterInput
+  createdSoftwrae?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
+  updatedSoftware?: Prisma.SoftwareCreateNestedManyWithoutUpdaterInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -495,7 +693,12 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   emailVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  codeOpd?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  createdHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutCreatorInput
+  updatedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutUpdaterInput
+  createdSoftwrae?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
+  updatedSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutUpdaterInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -522,7 +725,12 @@ export type UserUpdateWithoutAccountsInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  opd?: Prisma.OpdUpdateOneWithoutUsersNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  createdHardware?: Prisma.HardwareUpdateManyWithoutCreatorNestedInput
+  updatedHardware?: Prisma.HardwareUpdateManyWithoutUpdaterNestedInput
+  createdSoftwrae?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
+  updatedSoftware?: Prisma.SoftwareUpdateManyWithoutUpdaterNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -533,7 +741,456 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  codeOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  createdHardware?: Prisma.HardwareUncheckedUpdateManyWithoutCreatorNestedInput
+  updatedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutUpdaterNestedInput
+  createdSoftwrae?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
+  updatedSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutUpdaterNestedInput
+}
+
+export type UserCreateWithoutOpdInput = {
+  id?: string
+  email: string
+  name?: string | null
+  role?: $Enums.Role
+  emailVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  createdHardware?: Prisma.HardwareCreateNestedManyWithoutCreatorInput
+  updatedHardware?: Prisma.HardwareCreateNestedManyWithoutUpdaterInput
+  createdSoftwrae?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
+  updatedSoftware?: Prisma.SoftwareCreateNestedManyWithoutUpdaterInput
+}
+
+export type UserUncheckedCreateWithoutOpdInput = {
+  id?: string
+  email: string
+  name?: string | null
+  role?: $Enums.Role
+  emailVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  createdHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutCreatorInput
+  updatedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutUpdaterInput
+  createdSoftwrae?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
+  updatedSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutUpdaterInput
+}
+
+export type UserCreateOrConnectWithoutOpdInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutOpdInput, Prisma.UserUncheckedCreateWithoutOpdInput>
+}
+
+export type UserCreateManyOpdInputEnvelope = {
+  data: Prisma.UserCreateManyOpdInput | Prisma.UserCreateManyOpdInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserUpsertWithWhereUniqueWithoutOpdInput = {
+  where: Prisma.UserWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserUpdateWithoutOpdInput, Prisma.UserUncheckedUpdateWithoutOpdInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutOpdInput, Prisma.UserUncheckedCreateWithoutOpdInput>
+}
+
+export type UserUpdateWithWhereUniqueWithoutOpdInput = {
+  where: Prisma.UserWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutOpdInput, Prisma.UserUncheckedUpdateWithoutOpdInput>
+}
+
+export type UserUpdateManyWithWhereWithoutOpdInput = {
+  where: Prisma.UserScalarWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutOpdInput>
+}
+
+export type UserScalarWhereInput = {
+  AND?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  OR?: Prisma.UserScalarWhereInput[]
+  NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  id?: Prisma.StringFilter<"User"> | string
+  email?: Prisma.StringFilter<"User"> | string
+  name?: Prisma.StringNullableFilter<"User"> | string | null
+  role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
+  emailVerified?: Prisma.BoolFilter<"User"> | boolean
+  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  codeOpd?: Prisma.StringNullableFilter<"User"> | string | null
+}
+
+export type UserCreateWithoutCreatedHardwareInput = {
+  id?: string
+  email: string
+  name?: string | null
+  role?: $Enums.Role
+  emailVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  opd?: Prisma.OpdCreateNestedOneWithoutUsersInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  updatedHardware?: Prisma.HardwareCreateNestedManyWithoutUpdaterInput
+  createdSoftwrae?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
+  updatedSoftware?: Prisma.SoftwareCreateNestedManyWithoutUpdaterInput
+}
+
+export type UserUncheckedCreateWithoutCreatedHardwareInput = {
+  id?: string
+  email: string
+  name?: string | null
+  role?: $Enums.Role
+  emailVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  codeOpd?: string | null
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  updatedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutUpdaterInput
+  createdSoftwrae?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
+  updatedSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutUpdaterInput
+}
+
+export type UserCreateOrConnectWithoutCreatedHardwareInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedHardwareInput, Prisma.UserUncheckedCreateWithoutCreatedHardwareInput>
+}
+
+export type UserCreateWithoutUpdatedHardwareInput = {
+  id?: string
+  email: string
+  name?: string | null
+  role?: $Enums.Role
+  emailVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  opd?: Prisma.OpdCreateNestedOneWithoutUsersInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  createdHardware?: Prisma.HardwareCreateNestedManyWithoutCreatorInput
+  createdSoftwrae?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
+  updatedSoftware?: Prisma.SoftwareCreateNestedManyWithoutUpdaterInput
+}
+
+export type UserUncheckedCreateWithoutUpdatedHardwareInput = {
+  id?: string
+  email: string
+  name?: string | null
+  role?: $Enums.Role
+  emailVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  codeOpd?: string | null
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  createdHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutCreatorInput
+  createdSoftwrae?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
+  updatedSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutUpdaterInput
+}
+
+export type UserCreateOrConnectWithoutUpdatedHardwareInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutUpdatedHardwareInput, Prisma.UserUncheckedCreateWithoutUpdatedHardwareInput>
+}
+
+export type UserUpsertWithoutCreatedHardwareInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCreatedHardwareInput, Prisma.UserUncheckedUpdateWithoutCreatedHardwareInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedHardwareInput, Prisma.UserUncheckedCreateWithoutCreatedHardwareInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCreatedHardwareInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCreatedHardwareInput, Prisma.UserUncheckedUpdateWithoutCreatedHardwareInput>
+}
+
+export type UserUpdateWithoutCreatedHardwareInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  opd?: Prisma.OpdUpdateOneWithoutUsersNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  updatedHardware?: Prisma.HardwareUpdateManyWithoutUpdaterNestedInput
+  createdSoftwrae?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
+  updatedSoftware?: Prisma.SoftwareUpdateManyWithoutUpdaterNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCreatedHardwareInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  codeOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  updatedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutUpdaterNestedInput
+  createdSoftwrae?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
+  updatedSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutUpdaterNestedInput
+}
+
+export type UserUpsertWithoutUpdatedHardwareInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUpdatedHardwareInput, Prisma.UserUncheckedUpdateWithoutUpdatedHardwareInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUpdatedHardwareInput, Prisma.UserUncheckedCreateWithoutUpdatedHardwareInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutUpdatedHardwareInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUpdatedHardwareInput, Prisma.UserUncheckedUpdateWithoutUpdatedHardwareInput>
+}
+
+export type UserUpdateWithoutUpdatedHardwareInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  opd?: Prisma.OpdUpdateOneWithoutUsersNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  createdHardware?: Prisma.HardwareUpdateManyWithoutCreatorNestedInput
+  createdSoftwrae?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
+  updatedSoftware?: Prisma.SoftwareUpdateManyWithoutUpdaterNestedInput
+}
+
+export type UserUncheckedUpdateWithoutUpdatedHardwareInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  codeOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  createdHardware?: Prisma.HardwareUncheckedUpdateManyWithoutCreatorNestedInput
+  createdSoftwrae?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
+  updatedSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutUpdaterNestedInput
+}
+
+export type UserCreateWithoutCreatedSoftwraeInput = {
+  id?: string
+  email: string
+  name?: string | null
+  role?: $Enums.Role
+  emailVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  opd?: Prisma.OpdCreateNestedOneWithoutUsersInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  createdHardware?: Prisma.HardwareCreateNestedManyWithoutCreatorInput
+  updatedHardware?: Prisma.HardwareCreateNestedManyWithoutUpdaterInput
+  updatedSoftware?: Prisma.SoftwareCreateNestedManyWithoutUpdaterInput
+}
+
+export type UserUncheckedCreateWithoutCreatedSoftwraeInput = {
+  id?: string
+  email: string
+  name?: string | null
+  role?: $Enums.Role
+  emailVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  codeOpd?: string | null
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  createdHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutCreatorInput
+  updatedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutUpdaterInput
+  updatedSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutUpdaterInput
+}
+
+export type UserCreateOrConnectWithoutCreatedSoftwraeInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedSoftwraeInput, Prisma.UserUncheckedCreateWithoutCreatedSoftwraeInput>
+}
+
+export type UserCreateWithoutUpdatedSoftwareInput = {
+  id?: string
+  email: string
+  name?: string | null
+  role?: $Enums.Role
+  emailVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  opd?: Prisma.OpdCreateNestedOneWithoutUsersInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  createdHardware?: Prisma.HardwareCreateNestedManyWithoutCreatorInput
+  updatedHardware?: Prisma.HardwareCreateNestedManyWithoutUpdaterInput
+  createdSoftwrae?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
+}
+
+export type UserUncheckedCreateWithoutUpdatedSoftwareInput = {
+  id?: string
+  email: string
+  name?: string | null
+  role?: $Enums.Role
+  emailVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  codeOpd?: string | null
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  createdHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutCreatorInput
+  updatedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutUpdaterInput
+  createdSoftwrae?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
+}
+
+export type UserCreateOrConnectWithoutUpdatedSoftwareInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutUpdatedSoftwareInput, Prisma.UserUncheckedCreateWithoutUpdatedSoftwareInput>
+}
+
+export type UserUpsertWithoutCreatedSoftwraeInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCreatedSoftwraeInput, Prisma.UserUncheckedUpdateWithoutCreatedSoftwraeInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedSoftwraeInput, Prisma.UserUncheckedCreateWithoutCreatedSoftwraeInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCreatedSoftwraeInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCreatedSoftwraeInput, Prisma.UserUncheckedUpdateWithoutCreatedSoftwraeInput>
+}
+
+export type UserUpdateWithoutCreatedSoftwraeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  opd?: Prisma.OpdUpdateOneWithoutUsersNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  createdHardware?: Prisma.HardwareUpdateManyWithoutCreatorNestedInput
+  updatedHardware?: Prisma.HardwareUpdateManyWithoutUpdaterNestedInput
+  updatedSoftware?: Prisma.SoftwareUpdateManyWithoutUpdaterNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCreatedSoftwraeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  codeOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  createdHardware?: Prisma.HardwareUncheckedUpdateManyWithoutCreatorNestedInput
+  updatedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutUpdaterNestedInput
+  updatedSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutUpdaterNestedInput
+}
+
+export type UserUpsertWithoutUpdatedSoftwareInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUpdatedSoftwareInput, Prisma.UserUncheckedUpdateWithoutUpdatedSoftwareInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUpdatedSoftwareInput, Prisma.UserUncheckedCreateWithoutUpdatedSoftwareInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutUpdatedSoftwareInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUpdatedSoftwareInput, Prisma.UserUncheckedUpdateWithoutUpdatedSoftwareInput>
+}
+
+export type UserUpdateWithoutUpdatedSoftwareInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  opd?: Prisma.OpdUpdateOneWithoutUsersNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  createdHardware?: Prisma.HardwareUpdateManyWithoutCreatorNestedInput
+  updatedHardware?: Prisma.HardwareUpdateManyWithoutUpdaterNestedInput
+  createdSoftwrae?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutUpdatedSoftwareInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  codeOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  createdHardware?: Prisma.HardwareUncheckedUpdateManyWithoutCreatorNestedInput
+  updatedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutUpdaterNestedInput
+  createdSoftwrae?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
+}
+
+export type UserCreateManyOpdInput = {
+  id?: string
+  email: string
+  name?: string | null
+  role?: $Enums.Role
+  emailVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type UserUpdateWithoutOpdInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  createdHardware?: Prisma.HardwareUpdateManyWithoutCreatorNestedInput
+  updatedHardware?: Prisma.HardwareUpdateManyWithoutUpdaterNestedInput
+  createdSoftwrae?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
+  updatedSoftware?: Prisma.SoftwareUpdateManyWithoutUpdaterNestedInput
+}
+
+export type UserUncheckedUpdateWithoutOpdInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  createdHardware?: Prisma.HardwareUncheckedUpdateManyWithoutCreatorNestedInput
+  updatedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutUpdaterNestedInput
+  createdSoftwrae?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
+  updatedSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutUpdaterNestedInput
+}
+
+export type UserUncheckedUpdateManyWithoutOpdInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -544,11 +1201,19 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
 export type UserCountOutputType = {
   sessions: number
   accounts: number
+  createdHardware: number
+  updatedHardware: number
+  createdSoftwrae: number
+  updatedSoftware: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs
+  createdHardware?: boolean | UserCountOutputTypeCountCreatedHardwareArgs
+  updatedHardware?: boolean | UserCountOutputTypeCountUpdatedHardwareArgs
+  createdSoftwrae?: boolean | UserCountOutputTypeCountCreatedSoftwraeArgs
+  updatedSoftware?: boolean | UserCountOutputTypeCountUpdatedSoftwareArgs
 }
 
 /**
@@ -575,6 +1240,34 @@ export type UserCountOutputTypeCountAccountsArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.AccountWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCreatedHardwareArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HardwareWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountUpdatedHardwareArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HardwareWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCreatedSoftwraeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SoftwareWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountUpdatedSoftwareArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SoftwareWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -584,8 +1277,14 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   emailVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  codeOpd?: boolean
+  opd?: boolean | Prisma.User$opdArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
+  createdHardware?: boolean | Prisma.User$createdHardwareArgs<ExtArgs>
+  updatedHardware?: boolean | Prisma.User$updatedHardwareArgs<ExtArgs>
+  createdSoftwrae?: boolean | Prisma.User$createdSoftwraeArgs<ExtArgs>
+  updatedSoftware?: boolean | Prisma.User$updatedSoftwareArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -597,6 +1296,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   emailVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  codeOpd?: boolean
+  opd?: boolean | Prisma.User$opdArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -607,6 +1308,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   emailVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  codeOpd?: boolean
+  opd?: boolean | Prisma.User$opdArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -617,22 +1320,37 @@ export type UserSelectScalar = {
   emailVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  codeOpd?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "role" | "emailVerified" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "role" | "emailVerified" | "createdAt" | "updatedAt" | "codeOpd", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  opd?: boolean | Prisma.User$opdArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
+  createdHardware?: boolean | Prisma.User$createdHardwareArgs<ExtArgs>
+  updatedHardware?: boolean | Prisma.User$updatedHardwareArgs<ExtArgs>
+  createdSoftwrae?: boolean | Prisma.User$createdSoftwraeArgs<ExtArgs>
+  updatedSoftware?: boolean | Prisma.User$updatedSoftwareArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  opd?: boolean | Prisma.User$opdArgs<ExtArgs>
+}
+export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  opd?: boolean | Prisma.User$opdArgs<ExtArgs>
+}
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
+    opd: Prisma.$OpdPayload<ExtArgs> | null
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     accounts: Prisma.$AccountPayload<ExtArgs>[]
+    createdHardware: Prisma.$HardwarePayload<ExtArgs>[]
+    updatedHardware: Prisma.$HardwarePayload<ExtArgs>[]
+    createdSoftwrae: Prisma.$SoftwarePayload<ExtArgs>[]
+    updatedSoftware: Prisma.$SoftwarePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -642,6 +1360,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     emailVerified: boolean
     createdAt: Date
     updatedAt: Date
+    codeOpd: string | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1036,8 +1755,13 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  opd<T extends Prisma.User$opdArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$opdArgs<ExtArgs>>): Prisma.Prisma__OpdClient<runtime.Types.Result.GetResult<Prisma.$OpdPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdHardware<T extends Prisma.User$createdHardwareArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdHardwareArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HardwarePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  updatedHardware<T extends Prisma.User$updatedHardwareArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedHardwareArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HardwarePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdSoftwrae<T extends Prisma.User$createdSoftwraeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdSoftwraeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SoftwarePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  updatedSoftware<T extends Prisma.User$updatedSoftwareArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedSoftwareArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SoftwarePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1074,6 +1798,7 @@ export interface UserFieldRefs {
   readonly emailVerified: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly codeOpd: Prisma.FieldRef<"User", 'String'>
 }
     
 
@@ -1323,6 +2048,10 @@ export type UserCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    */
   data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1393,6 +2122,10 @@ export type UserUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many Users to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1462,6 +2195,25 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
+ * User.opd
+ */
+export type User$opdArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Opd
+   */
+  select?: Prisma.OpdSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Opd
+   */
+  omit?: Prisma.OpdOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OpdInclude<ExtArgs> | null
+  where?: Prisma.OpdWhereInput
+}
+
+/**
  * User.sessions
  */
 export type User$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1507,6 +2259,102 @@ export type User$accountsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.AccountScalarFieldEnum | Prisma.AccountScalarFieldEnum[]
+}
+
+/**
+ * User.createdHardware
+ */
+export type User$createdHardwareArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Hardware
+   */
+  select?: Prisma.HardwareSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Hardware
+   */
+  omit?: Prisma.HardwareOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HardwareInclude<ExtArgs> | null
+  where?: Prisma.HardwareWhereInput
+  orderBy?: Prisma.HardwareOrderByWithRelationInput | Prisma.HardwareOrderByWithRelationInput[]
+  cursor?: Prisma.HardwareWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HardwareScalarFieldEnum | Prisma.HardwareScalarFieldEnum[]
+}
+
+/**
+ * User.updatedHardware
+ */
+export type User$updatedHardwareArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Hardware
+   */
+  select?: Prisma.HardwareSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Hardware
+   */
+  omit?: Prisma.HardwareOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HardwareInclude<ExtArgs> | null
+  where?: Prisma.HardwareWhereInput
+  orderBy?: Prisma.HardwareOrderByWithRelationInput | Prisma.HardwareOrderByWithRelationInput[]
+  cursor?: Prisma.HardwareWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HardwareScalarFieldEnum | Prisma.HardwareScalarFieldEnum[]
+}
+
+/**
+ * User.createdSoftwrae
+ */
+export type User$createdSoftwraeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Software
+   */
+  select?: Prisma.SoftwareSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Software
+   */
+  omit?: Prisma.SoftwareOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SoftwareInclude<ExtArgs> | null
+  where?: Prisma.SoftwareWhereInput
+  orderBy?: Prisma.SoftwareOrderByWithRelationInput | Prisma.SoftwareOrderByWithRelationInput[]
+  cursor?: Prisma.SoftwareWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SoftwareScalarFieldEnum | Prisma.SoftwareScalarFieldEnum[]
+}
+
+/**
+ * User.updatedSoftware
+ */
+export type User$updatedSoftwareArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Software
+   */
+  select?: Prisma.SoftwareSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Software
+   */
+  omit?: Prisma.SoftwareOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SoftwareInclude<ExtArgs> | null
+  where?: Prisma.SoftwareWhereInput
+  orderBy?: Prisma.SoftwareOrderByWithRelationInput | Prisma.SoftwareOrderByWithRelationInput[]
+  cursor?: Prisma.SoftwareWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SoftwareScalarFieldEnum | Prisma.SoftwareScalarFieldEnum[]
 }
 
 /**

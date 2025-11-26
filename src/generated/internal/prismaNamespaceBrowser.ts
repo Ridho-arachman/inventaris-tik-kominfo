@@ -54,7 +54,12 @@ export const ModelName = {
   User: 'User',
   Session: 'Session',
   Account: 'Account',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  Opd: 'Opd',
+  JenisHardware: 'JenisHardware',
+  Hardware: 'Hardware',
+  KategoriSoftware: 'KategoriSoftware',
+  Software: 'Software'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -80,7 +85,8 @@ export const UserScalarFieldEnum = {
   role: 'role',
   emailVerified: 'emailVerified',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  codeOpd: 'codeOpd'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -129,6 +135,84 @@ export const VerificationScalarFieldEnum = {
 } as const
 
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
+
+
+export const OpdScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  createdAt: 'createdAt',
+  name: 'name',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OpdScalarFieldEnum = (typeof OpdScalarFieldEnum)[keyof typeof OpdScalarFieldEnum]
+
+
+export const JenisHardwareScalarFieldEnum = {
+  id: 'id',
+  nama: 'nama',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type JenisHardwareScalarFieldEnum = (typeof JenisHardwareScalarFieldEnum)[keyof typeof JenisHardwareScalarFieldEnum]
+
+
+export const HardwareScalarFieldEnum = {
+  kodeId: 'kodeId',
+  nama: 'nama',
+  merk: 'merk',
+  spesifikasi: 'spesifikasi',
+  lokasiFisik: 'lokasiFisik',
+  tglPengadaan: 'tglPengadaan',
+  garansiMulai: 'garansiMulai',
+  garansiSelesai: 'garansiSelesai',
+  status: 'status',
+  pic: 'pic',
+  biayaProlehan: 'biayaProlehan',
+  nomorSeri: 'nomorSeri',
+  penyedia: 'penyedia',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
+  opdId: 'opdId',
+  jenisId: 'jenisId'
+} as const
+
+export type HardwareScalarFieldEnum = (typeof HardwareScalarFieldEnum)[keyof typeof HardwareScalarFieldEnum]
+
+
+export const KategoriSoftwareScalarFieldEnum = {
+  id: 'id',
+  nama: 'nama',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type KategoriSoftwareScalarFieldEnum = (typeof KategoriSoftwareScalarFieldEnum)[keyof typeof KategoriSoftwareScalarFieldEnum]
+
+
+export const SoftwareScalarFieldEnum = {
+  id: 'id',
+  nama: 'nama',
+  jenisLisensi: 'jenisLisensi',
+  serialNumber: 'serialNumber',
+  tglBerakhirLisensi: 'tglBerakhirLisensi',
+  versiTerpasang: 'versiTerpasang',
+  vendor: 'vendor',
+  inHouse: 'inHouse',
+  kritikalitas: 'kritikalitas',
+  hargaPerolehan: 'hargaPerolehan',
+  tahunPengadaan: 'tahunPengadaan',
+  status: 'status',
+  pic: 'pic',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
+  opdId: 'opdId',
+  kategoriId: 'kategoriId',
+  hardwareTerinstall: 'hardwareTerinstall'
+} as const
+
+export type SoftwareScalarFieldEnum = (typeof SoftwareScalarFieldEnum)[keyof typeof SoftwareScalarFieldEnum]
 
 
 export const SortOrder = {

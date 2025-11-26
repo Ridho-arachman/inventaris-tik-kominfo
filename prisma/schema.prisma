@@ -16,8 +16,16 @@ model User {
   emailVerified Boolean   @default(false)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+
+  codeOpd       String?
+  opd           Opd?       @relation(fields: [codeOpd], references: [code] )
+
   sessions      Session[]
   accounts      Account[]
+  createdHardware Hardware[] @relation("HardwareCreator")
+  updatedHardware Hardware[] @relation("HardwareUpdater")
+  createdSoftwrae Software[] @relation("SoftwareCreator")
+  updatedSoftware Software[] @relation("SoftwareUpdater")
 
   @@map("user")
 }
@@ -73,4 +81,107 @@ model Verification {
 enum Role {
   ADMIN
   OPD
+}
+
+model Opd {
+  id        String   @id @default(cuid())
+  code      String   @unique// e.g., "DKES"
+  createdAt DateTime @default(now())
+  
+  name      String   @unique // e.g., "Dinas Kesehatan"
+  updatedAt DateTime @updatedAt
+
+  users     User[]
+  hardware  Hardware[]      
+  software  Software[] 
+}
+
+model JenisHardware {
+  id        String   @id @default(cuid())
+  nama      String   @unique
+  hardware  Hardware[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum StatusAset {
+  AKTIF
+  NON_AKTIF
+  CADANGAN
+}
+
+model Hardware {
+  kodeId          String           @id
+  nama            String            
+  merk            String
+  spesifikasi     String
+  lokasiFisik     String
+  tglPengadaan    DateTime //tahun
+  garansiMulai    DateTime
+  garansiSelesai  DateTime
+  status          StatusAset        @default(AKTIF)
+  pic             String        
+  biayaProlehan   Decimal
+  nomorSeri       String
+  penyedia        String?
+
+  createdBy       String?
+  creator         User?             @relation("HardwareCreator", fields: [createdBy], references: [id])
+  updatedBy       String?
+  updater         User?             @relation("HardwareUpdater", fields: [updatedBy], references: [id])
+  opdId           String
+  opd             Opd               @relation(fields: [opdId],references: [id])
+  jenisId         String 
+  jenisHardware   JenisHardware     @relation(fields: [jenisId],references: [id])
+
+  software        Software[]
+}
+
+enum jenisLisensi {
+  PERPETUAL
+  LANGGANAN
+  OPEN_SOURCE
+}
+
+enum KritikalitasStatus {
+  TINGGI
+  SEDANG
+  RENDAH
+}
+
+model KategoriSoftware {
+  id        String       @id @default(cuid())
+  nama      String       @unique
+  hardware  Software[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Software {
+  id                    String               @id @default(cuid())
+  nama                  String      
+  jenisLisensi          jenisLisensi         @default(OPEN_SOURCE)
+  serialNumber          String          
+  tglBerakhirLisensi    DateTime
+  versiTerpasang        Int
+  vendor                String?
+  inHouse               Boolean              @default(false)
+  kritikalitas          KritikalitasStatus   
+  hargaPerolehan        Decimal
+  tahunPengadaan        DateTime
+  status                StatusAset            @default(AKTIF)
+  pic                   String
+
+  createdBy       String?
+  creator         User?             @relation("SoftwareCreator", fields: [createdBy], references: [id])
+  updatedBy       String?
+  updater         User?             @relation("SoftwareUpdater", fields: [updatedBy], references: [id])
+  opdId                 String
+  opd                   Opd                  @relation(fields: [opdId],references: [id])
+  kategoriId            String
+  kategori              KategoriSoftware      @relation(fields: [kategoriId],references: [id])              
+  hardwareTerinstall    String
+  hardware              Hardware        @relation(fields: [hardwareTerinstall],references: [kodeId])
 }

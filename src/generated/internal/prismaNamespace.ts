@@ -387,7 +387,12 @@ export const ModelName = {
   User: 'User',
   Session: 'Session',
   Account: 'Account',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  Opd: 'Opd',
+  JenisHardware: 'JenisHardware',
+  Hardware: 'Hardware',
+  KategoriSoftware: 'KategoriSoftware',
+  Software: 'Software'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -403,7 +408,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "account" | "verification"
+    modelProps: "user" | "session" | "account" | "verification" | "opd" | "jenisHardware" | "hardware" | "kategoriSoftware" | "software"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -703,6 +708,376 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Opd: {
+      payload: Prisma.$OpdPayload<ExtArgs>
+      fields: Prisma.OpdFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OpdFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OpdPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OpdFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OpdPayload>
+        }
+        findFirst: {
+          args: Prisma.OpdFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OpdPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OpdFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OpdPayload>
+        }
+        findMany: {
+          args: Prisma.OpdFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OpdPayload>[]
+        }
+        create: {
+          args: Prisma.OpdCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OpdPayload>
+        }
+        createMany: {
+          args: Prisma.OpdCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.OpdCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OpdPayload>[]
+        }
+        delete: {
+          args: Prisma.OpdDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OpdPayload>
+        }
+        update: {
+          args: Prisma.OpdUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OpdPayload>
+        }
+        deleteMany: {
+          args: Prisma.OpdDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OpdUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.OpdUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OpdPayload>[]
+        }
+        upsert: {
+          args: Prisma.OpdUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OpdPayload>
+        }
+        aggregate: {
+          args: Prisma.OpdAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOpd>
+        }
+        groupBy: {
+          args: Prisma.OpdGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OpdGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OpdCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OpdCountAggregateOutputType> | number
+        }
+      }
+    }
+    JenisHardware: {
+      payload: Prisma.$JenisHardwarePayload<ExtArgs>
+      fields: Prisma.JenisHardwareFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.JenisHardwareFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JenisHardwarePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.JenisHardwareFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JenisHardwarePayload>
+        }
+        findFirst: {
+          args: Prisma.JenisHardwareFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JenisHardwarePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.JenisHardwareFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JenisHardwarePayload>
+        }
+        findMany: {
+          args: Prisma.JenisHardwareFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JenisHardwarePayload>[]
+        }
+        create: {
+          args: Prisma.JenisHardwareCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JenisHardwarePayload>
+        }
+        createMany: {
+          args: Prisma.JenisHardwareCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.JenisHardwareCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JenisHardwarePayload>[]
+        }
+        delete: {
+          args: Prisma.JenisHardwareDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JenisHardwarePayload>
+        }
+        update: {
+          args: Prisma.JenisHardwareUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JenisHardwarePayload>
+        }
+        deleteMany: {
+          args: Prisma.JenisHardwareDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.JenisHardwareUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.JenisHardwareUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JenisHardwarePayload>[]
+        }
+        upsert: {
+          args: Prisma.JenisHardwareUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$JenisHardwarePayload>
+        }
+        aggregate: {
+          args: Prisma.JenisHardwareAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateJenisHardware>
+        }
+        groupBy: {
+          args: Prisma.JenisHardwareGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.JenisHardwareGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.JenisHardwareCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.JenisHardwareCountAggregateOutputType> | number
+        }
+      }
+    }
+    Hardware: {
+      payload: Prisma.$HardwarePayload<ExtArgs>
+      fields: Prisma.HardwareFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HardwareFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HardwarePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HardwareFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HardwarePayload>
+        }
+        findFirst: {
+          args: Prisma.HardwareFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HardwarePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HardwareFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HardwarePayload>
+        }
+        findMany: {
+          args: Prisma.HardwareFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HardwarePayload>[]
+        }
+        create: {
+          args: Prisma.HardwareCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HardwarePayload>
+        }
+        createMany: {
+          args: Prisma.HardwareCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.HardwareCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HardwarePayload>[]
+        }
+        delete: {
+          args: Prisma.HardwareDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HardwarePayload>
+        }
+        update: {
+          args: Prisma.HardwareUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HardwarePayload>
+        }
+        deleteMany: {
+          args: Prisma.HardwareDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HardwareUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.HardwareUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HardwarePayload>[]
+        }
+        upsert: {
+          args: Prisma.HardwareUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HardwarePayload>
+        }
+        aggregate: {
+          args: Prisma.HardwareAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHardware>
+        }
+        groupBy: {
+          args: Prisma.HardwareGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HardwareGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HardwareCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HardwareCountAggregateOutputType> | number
+        }
+      }
+    }
+    KategoriSoftware: {
+      payload: Prisma.$KategoriSoftwarePayload<ExtArgs>
+      fields: Prisma.KategoriSoftwareFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.KategoriSoftwareFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KategoriSoftwarePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.KategoriSoftwareFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KategoriSoftwarePayload>
+        }
+        findFirst: {
+          args: Prisma.KategoriSoftwareFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KategoriSoftwarePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.KategoriSoftwareFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KategoriSoftwarePayload>
+        }
+        findMany: {
+          args: Prisma.KategoriSoftwareFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KategoriSoftwarePayload>[]
+        }
+        create: {
+          args: Prisma.KategoriSoftwareCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KategoriSoftwarePayload>
+        }
+        createMany: {
+          args: Prisma.KategoriSoftwareCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.KategoriSoftwareCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KategoriSoftwarePayload>[]
+        }
+        delete: {
+          args: Prisma.KategoriSoftwareDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KategoriSoftwarePayload>
+        }
+        update: {
+          args: Prisma.KategoriSoftwareUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KategoriSoftwarePayload>
+        }
+        deleteMany: {
+          args: Prisma.KategoriSoftwareDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.KategoriSoftwareUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.KategoriSoftwareUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KategoriSoftwarePayload>[]
+        }
+        upsert: {
+          args: Prisma.KategoriSoftwareUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KategoriSoftwarePayload>
+        }
+        aggregate: {
+          args: Prisma.KategoriSoftwareAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKategoriSoftware>
+        }
+        groupBy: {
+          args: Prisma.KategoriSoftwareGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KategoriSoftwareGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.KategoriSoftwareCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KategoriSoftwareCountAggregateOutputType> | number
+        }
+      }
+    }
+    Software: {
+      payload: Prisma.$SoftwarePayload<ExtArgs>
+      fields: Prisma.SoftwareFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SoftwareFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SoftwarePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SoftwareFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SoftwarePayload>
+        }
+        findFirst: {
+          args: Prisma.SoftwareFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SoftwarePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SoftwareFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SoftwarePayload>
+        }
+        findMany: {
+          args: Prisma.SoftwareFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SoftwarePayload>[]
+        }
+        create: {
+          args: Prisma.SoftwareCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SoftwarePayload>
+        }
+        createMany: {
+          args: Prisma.SoftwareCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SoftwareCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SoftwarePayload>[]
+        }
+        delete: {
+          args: Prisma.SoftwareDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SoftwarePayload>
+        }
+        update: {
+          args: Prisma.SoftwareUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SoftwarePayload>
+        }
+        deleteMany: {
+          args: Prisma.SoftwareDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SoftwareUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SoftwareUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SoftwarePayload>[]
+        }
+        upsert: {
+          args: Prisma.SoftwareUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SoftwarePayload>
+        }
+        aggregate: {
+          args: Prisma.SoftwareAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSoftware>
+        }
+        groupBy: {
+          args: Prisma.SoftwareGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SoftwareGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SoftwareCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SoftwareCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -749,7 +1124,8 @@ export const UserScalarFieldEnum = {
   role: 'role',
   emailVerified: 'emailVerified',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  codeOpd: 'codeOpd'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -798,6 +1174,84 @@ export const VerificationScalarFieldEnum = {
 } as const
 
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
+
+
+export const OpdScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  createdAt: 'createdAt',
+  name: 'name',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OpdScalarFieldEnum = (typeof OpdScalarFieldEnum)[keyof typeof OpdScalarFieldEnum]
+
+
+export const JenisHardwareScalarFieldEnum = {
+  id: 'id',
+  nama: 'nama',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type JenisHardwareScalarFieldEnum = (typeof JenisHardwareScalarFieldEnum)[keyof typeof JenisHardwareScalarFieldEnum]
+
+
+export const HardwareScalarFieldEnum = {
+  kodeId: 'kodeId',
+  nama: 'nama',
+  merk: 'merk',
+  spesifikasi: 'spesifikasi',
+  lokasiFisik: 'lokasiFisik',
+  tglPengadaan: 'tglPengadaan',
+  garansiMulai: 'garansiMulai',
+  garansiSelesai: 'garansiSelesai',
+  status: 'status',
+  pic: 'pic',
+  biayaProlehan: 'biayaProlehan',
+  nomorSeri: 'nomorSeri',
+  penyedia: 'penyedia',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
+  opdId: 'opdId',
+  jenisId: 'jenisId'
+} as const
+
+export type HardwareScalarFieldEnum = (typeof HardwareScalarFieldEnum)[keyof typeof HardwareScalarFieldEnum]
+
+
+export const KategoriSoftwareScalarFieldEnum = {
+  id: 'id',
+  nama: 'nama',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type KategoriSoftwareScalarFieldEnum = (typeof KategoriSoftwareScalarFieldEnum)[keyof typeof KategoriSoftwareScalarFieldEnum]
+
+
+export const SoftwareScalarFieldEnum = {
+  id: 'id',
+  nama: 'nama',
+  jenisLisensi: 'jenisLisensi',
+  serialNumber: 'serialNumber',
+  tglBerakhirLisensi: 'tglBerakhirLisensi',
+  versiTerpasang: 'versiTerpasang',
+  vendor: 'vendor',
+  inHouse: 'inHouse',
+  kritikalitas: 'kritikalitas',
+  hargaPerolehan: 'hargaPerolehan',
+  tahunPengadaan: 'tahunPengadaan',
+  status: 'status',
+  pic: 'pic',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
+  opdId: 'opdId',
+  kategoriId: 'kategoriId',
+  hardwareTerinstall: 'hardwareTerinstall'
+} as const
+
+export type SoftwareScalarFieldEnum = (typeof SoftwareScalarFieldEnum)[keyof typeof SoftwareScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -880,6 +1334,48 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
+ * Reference to a field of type 'StatusAset'
+ */
+export type EnumStatusAsetFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StatusAset'>
+    
+
+
+/**
+ * Reference to a field of type 'StatusAset[]'
+ */
+export type ListEnumStatusAsetFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StatusAset[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+/**
+ * Reference to a field of type 'jenisLisensi'
+ */
+export type EnumjenisLisensiFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'jenisLisensi'>
+    
+
+
+/**
+ * Reference to a field of type 'jenisLisensi[]'
+ */
+export type ListEnumjenisLisensiFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'jenisLisensi[]'>
+    
+
+
+/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -890,6 +1386,34 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'KritikalitasStatus'
+ */
+export type EnumKritikalitasStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KritikalitasStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'KritikalitasStatus[]'
+ */
+export type ListEnumKritikalitasStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KritikalitasStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 /**
@@ -975,6 +1499,11 @@ export type GlobalOmitConfig = {
   session?: Prisma.SessionOmit
   account?: Prisma.AccountOmit
   verification?: Prisma.VerificationOmit
+  opd?: Prisma.OpdOmit
+  jenisHardware?: Prisma.JenisHardwareOmit
+  hardware?: Prisma.HardwareOmit
+  kategoriSoftware?: Prisma.KategoriSoftwareOmit
+  software?: Prisma.SoftwareOmit
 }
 
 /* Types for Logging */

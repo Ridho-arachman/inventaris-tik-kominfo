@@ -59,3 +59,28 @@ export type Account = Prisma.AccountModel
  * 
  */
 export type Verification = Prisma.VerificationModel
+/**
+ * Model Opd
+ * 
+ */
+export type Opd = Prisma.OpdModel
+/**
+ * Model JenisHardware
+ * 
+ */
+export type JenisHardware = Prisma.JenisHardwareModel
+/**
+ * Model Hardware
+ * 
+ */
+export type Hardware = Prisma.HardwareModel
+/**
+ * Model KategoriSoftware
+ * 
+ */
+export type KategoriSoftware = Prisma.KategoriSoftwareModel
+/**
+ * Model Software
+ * 
+ */
+export type Software = Prisma.SoftwareModel
