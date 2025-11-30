@@ -28,60 +28,86 @@ import {
 } from "recharts";
 
 // ===========================
-// Dummy Session User Login
+// Dummy Session User OPD
 // ===========================
 const userSession = {
-  id: 100,
-  opdId: 1,
+  id: "user-1",
+  opdId: "OPD-001",
 };
 
 // ===========================
-// Dummy Data Asset (NEW SCHEMA)
+// DUMMY DATA — Hardware
 // ===========================
-const assets = [
+const hardwareDummy = [
   {
-    id: 1,
-    category: "Laptop",
-    brand: "Asus",
-    model: "A14",
-    acquisitionYear: 2022,
-    jmlhAktif: 8,
-    jmlhNonaktif: 2,
-    jml: 10,
-    opdId: 1,
+    kodeId: "HW-001",
+    nama: "Laptop A14",
+    merk: "Asus",
+    tglPengadaan: new Date("2022-06-12"),
+    status: "AKTIF",
+    opdId: "OPD-001",
+    jenisId: "JEN-1",
+    jenisHardware: { nama: "Laptop" },
   },
   {
-    id: 2,
-    category: "Laptop",
-    brand: "HP",
-    model: "840 G2",
-    acquisitionYear: 2020,
-    jmlhAktif: 4,
-    jmlhNonaktif: 3,
-    jml: 7,
-    opdId: 1,
+    kodeId: "HW-002",
+    nama: "Laptop HP 840",
+    merk: "HP",
+    tglPengadaan: new Date("2020-04-10"),
+    status: "NON_AKTIF",
+    opdId: "OPD-001",
+    jenisId: "JEN-1",
+    jenisHardware: { nama: "Laptop" },
   },
   {
-    id: 3,
-    category: "Printer",
-    brand: "Canon",
-    model: "IP2770",
-    acquisitionYear: 2023,
-    jmlhAktif: 5,
-    jmlhNonaktif: 0,
-    jml: 5,
-    opdId: 1,
+    kodeId: "HW-003",
+    nama: "Printer IP2770",
+    merk: "Canon",
+    tglPengadaan: new Date("2023-01-15"),
+    status: "AKTIF",
+    opdId: "OPD-001",
+    jenisId: "JEN-2",
+    jenisHardware: { nama: "Printer" },
   },
   {
-    id: 4,
-    category: "Meja",
-    brand: "Ikea",
-    model: "ProTable",
-    acquisitionYear: 2021,
-    jmlhAktif: 11,
-    jmlhNonaktif: 0,
-    jml: 11,
-    opdId: 1,
+    kodeId: "HW-004",
+    nama: "Meja Kantor",
+    merk: "IKEA",
+    tglPengadaan: new Date("2021-02-20"),
+    status: "CADANGAN",
+    opdId: "OPD-001",
+    jenisId: "JEN-3",
+    jenisHardware: { nama: "Furniture" },
+  },
+];
+
+// ===========================
+// DUMMY DATA — Software
+// ===========================
+const softwareDummy = [
+  {
+    kodeId: "SW-001",
+    nama: "Microsoft Office 2021",
+    jenis: "Lisensi",
+    tglPengadaan: new Date("2022-01-12"),
+    status: "AKTIF",
+    opdId: "OPD-001",
+  },
+  {
+    kodeId: "SW-002",
+    nama: "Adobe Photoshop",
+    jenis: "Lisensi",
+    tglPengadaan: new Date("2021-03-18"),
+    status: "AKTIF",
+    opdId: "OPD-001",
+  },
+  {
+    kodeId: "SW-003",
+    nama: "Sistem Informasi Absensi",
+    jenis: "Aplikasi Internal",
+    tglPengadaan: new Date("2020-08-22"),
+    status: "NON_AKTIF",
+    opdId: "OPD-001",
   },
 ];
 
@@ -91,57 +117,73 @@ const assets = [
 export default function DashboardOPD() {
   const [yearFilter, setYearFilter] = useState("all");
 
-  // Tahun unik
-  const years = [...new Set(assets.map((a) => a.acquisitionYear))];
+  // Gabungkan hardware + software sesuai OPD user
+  const allAssets = useMemo(() => {
+    const hw = hardwareDummy
+      .filter((h) => h.opdId === userSession.opdId)
+      .map((h) => ({
+        ...h,
+        kategori: h.jenisHardware.nama,
+        tipe: "Hardware",
+      }));
 
-  // Filter berdasarkan OPD login
-  const opdAssets = useMemo(
-    () => assets.filter((a) => a.opdId === userSession.opdId),
-    []
-  );
+    const sw = softwareDummy
+      .filter((s) => s.opdId === userSession.opdId)
+      .map((s) => ({
+        ...s,
+        kategori: s.jenis,
+        tipe: "Software",
+      }));
+
+    return [...hw, ...sw];
+  }, []);
+
+  // Tahun unik
+  const years = [
+    ...new Set(allAssets.map((a) => a.tglPengadaan.getFullYear())),
+  ].sort();
 
   // Filter tahun
   const filteredAssets = useMemo(() => {
-    if (yearFilter === "all") return opdAssets;
-    return opdAssets.filter((a) => String(a.acquisitionYear) === yearFilter);
-  }, [yearFilter, opdAssets]);
+    if (yearFilter === "all") return allAssets;
+    return allAssets.filter(
+      (a) => a.tglPengadaan.getFullYear().toString() === yearFilter
+    );
+  }, [yearFilter, allAssets]);
 
-  // Summary (NEW)
+  // Summary
   const summary = {
-    total: filteredAssets.reduce((t, a) => t + a.jml, 0),
-    aktif: filteredAssets.reduce((t, a) => t + a.jmlhAktif, 0),
-    nonAktif: filteredAssets.reduce((t, a) => t + a.jmlhNonaktif, 0),
+    total: filteredAssets.length,
+    aktif: filteredAssets.filter((a) => a.status === "AKTIF").length,
+    nonAktif: filteredAssets.filter((a) => a.status === "NON_AKTIF").length,
+    cadangan: filteredAssets.filter((a) => a.status === "CADANGAN").length,
   };
 
-  // Bar Chart: total asset per kategori
+  // Bar Chart kategori hardware+software
   const barData = Object.values(
-    filteredAssets.reduce((acc, asset) => {
-      if (!acc[asset.category]) {
-        acc[asset.category] = { category: asset.category, total: 0 };
-      }
-      acc[asset.category].total += asset.jml;
+    filteredAssets.reduce((acc, item) => {
+      const cat = item.kategori;
+      if (!acc[cat]) acc[cat] = { category: cat, total: 0 };
+      acc[cat].total += 1;
       return acc;
     }, {} as Record<string, any>)
   );
 
-  // Pie Chart: aktif vs nonaktif
+  // Pie Chart status
   const pieData = [
     { name: "Aktif", value: summary.aktif },
     { name: "Non Aktif", value: summary.nonAktif },
+    { name: "Cadangan", value: summary.cadangan },
   ];
 
-  const colors = ["#22c55e", "#ef4444"];
+  const pieColors = ["#22c55e", "#ef4444", "#eab308"];
 
-  // Line Chart: total asset per tahun
+  // Line Chart jumlah per tahun
   const lineData = Object.values(
-    opdAssets.reduce((acc, asset) => {
-      if (!acc[asset.acquisitionYear]) {
-        acc[asset.acquisitionYear] = {
-          year: asset.acquisitionYear,
-          total: 0,
-        };
-      }
-      acc[asset.acquisitionYear].total += asset.jml;
+    allAssets.reduce((acc, item) => {
+      const year = item.tglPengadaan.getFullYear();
+      if (!acc[year]) acc[year] = { year, total: 0 };
+      acc[year].total += 1;
       return acc;
     }, {} as Record<number, any>)
   ).sort((a, b) => a.year - b.year);
@@ -152,7 +194,6 @@ export default function DashboardOPD() {
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
         className="flex justify-between items-center"
       >
         <h1 className="text-3xl font-bold">Dashboard OPD</h1>
@@ -174,24 +215,29 @@ export default function DashboardOPD() {
         </div>
       </motion.div>
 
-      {/* SUMMARY CARDS */}
+      {/* SUMMARY */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {[
-          { label: "Total Asset", value: summary.total },
+          { label: "Total Aset", value: summary.total },
           { label: "Aktif", value: summary.aktif, color: "text-green-600" },
           {
             label: "Non Aktif",
             value: summary.nonAktif,
             color: "text-red-600",
           },
+          {
+            label: "Cadangan",
+            value: summary.cadangan,
+            color: "text-yellow-600",
+          },
         ].map((item, idx) => (
           <motion.div
             key={idx}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.35, delay: idx * 0.1 }}
+            transition={{ duration: 0.4, delay: idx * 0.1 }}
           >
-            <Card className="p-4 shadow-md">
+            <Card className="p-4">
               <CardTitle>{item.label}</CardTitle>
               <p className={`text-3xl font-bold mt-2 ${item.color || ""}`}>
                 {item.value}
@@ -205,16 +251,16 @@ export default function DashboardOPD() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         {/* Pie Chart */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <Card className="shadow-md p-4">
+          <Card className="p-4">
             <CardHeader>
-              <CardTitle>Status Asset</CardTitle>
+              <CardTitle>Status Aset</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={260}>
                 <PieChart>
                   <Pie data={pieData} dataKey="value" outerRadius={90} label>
                     {pieData.map((_, i) => (
-                      <Cell key={i} fill={colors[i]} />
+                      <Cell key={i} fill={pieColors[i]} />
                     ))}
                   </Pie>
                   <Tooltip />
@@ -226,9 +272,9 @@ export default function DashboardOPD() {
 
         {/* Bar Chart */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <Card className="shadow-md p-4">
+          <Card className="p-4">
             <CardHeader>
-              <CardTitle>Total Asset per Kategori</CardTitle>
+              <CardTitle>Aset per Kategori</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={260}>
@@ -249,9 +295,9 @@ export default function DashboardOPD() {
           animate={{ opacity: 1 }}
           className="lg:col-span-2"
         >
-          <Card className="shadow-md p-4">
+          <Card className="p-4">
             <CardHeader>
-              <CardTitle>Perkembangan Asset per Tahun</CardTitle>
+              <CardTitle>Perkembangan Aset per Tahun</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>

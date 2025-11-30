@@ -315,7 +315,7 @@ export type HardwareWhereInput = {
   creator?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updater?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   opd?: Prisma.XOR<Prisma.OpdScalarRelationFilter, Prisma.OpdWhereInput>
-  jenisHardware?: Prisma.XOR<Prisma.JenisHardwareScalarRelationFilter, Prisma.JenisHardwareWhereInput>
+  jenisHardware?: Prisma.XOR<Prisma.KategoriHardwareScalarRelationFilter, Prisma.KategoriHardwareWhereInput>
   software?: Prisma.SoftwareListRelationFilter
 }
 
@@ -340,7 +340,7 @@ export type HardwareOrderByWithRelationInput = {
   creator?: Prisma.UserOrderByWithRelationInput
   updater?: Prisma.UserOrderByWithRelationInput
   opd?: Prisma.OpdOrderByWithRelationInput
-  jenisHardware?: Prisma.JenisHardwareOrderByWithRelationInput
+  jenisHardware?: Prisma.KategoriHardwareOrderByWithRelationInput
   software?: Prisma.SoftwareOrderByRelationAggregateInput
 }
 
@@ -368,7 +368,7 @@ export type HardwareWhereUniqueInput = Prisma.AtLeast<{
   creator?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updater?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   opd?: Prisma.XOR<Prisma.OpdScalarRelationFilter, Prisma.OpdWhereInput>
-  jenisHardware?: Prisma.XOR<Prisma.JenisHardwareScalarRelationFilter, Prisma.JenisHardwareWhereInput>
+  jenisHardware?: Prisma.XOR<Prisma.KategoriHardwareScalarRelationFilter, Prisma.KategoriHardwareWhereInput>
   software?: Prisma.SoftwareListRelationFilter
 }, "kodeId">
 
@@ -437,7 +437,7 @@ export type HardwareCreateInput = {
   creator?: Prisma.UserCreateNestedOneWithoutCreatedHardwareInput
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedHardwareInput
   opd: Prisma.OpdCreateNestedOneWithoutHardwareInput
-  jenisHardware: Prisma.JenisHardwareCreateNestedOneWithoutHardwareInput
+  jenisHardware: Prisma.KategoriHardwareCreateNestedOneWithoutHardwareInput
   software?: Prisma.SoftwareCreateNestedManyWithoutHardwareInput
 }
 
@@ -479,7 +479,7 @@ export type HardwareUpdateInput = {
   creator?: Prisma.UserUpdateOneWithoutCreatedHardwareNestedInput
   updater?: Prisma.UserUpdateOneWithoutUpdatedHardwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutHardwareNestedInput
-  jenisHardware?: Prisma.JenisHardwareUpdateOneRequiredWithoutHardwareNestedInput
+  jenisHardware?: Prisma.KategoriHardwareUpdateOneRequiredWithoutHardwareNestedInput
   software?: Prisma.SoftwareUpdateManyWithoutHardwareNestedInput
 }
 
@@ -853,7 +853,7 @@ export type HardwareCreateWithoutCreatorInput = {
   penyedia?: string | null
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedHardwareInput
   opd: Prisma.OpdCreateNestedOneWithoutHardwareInput
-  jenisHardware: Prisma.JenisHardwareCreateNestedOneWithoutHardwareInput
+  jenisHardware: Prisma.KategoriHardwareCreateNestedOneWithoutHardwareInput
   software?: Prisma.SoftwareCreateNestedManyWithoutHardwareInput
 }
 
@@ -903,7 +903,7 @@ export type HardwareCreateWithoutUpdaterInput = {
   penyedia?: string | null
   creator?: Prisma.UserCreateNestedOneWithoutCreatedHardwareInput
   opd: Prisma.OpdCreateNestedOneWithoutHardwareInput
-  jenisHardware: Prisma.JenisHardwareCreateNestedOneWithoutHardwareInput
+  jenisHardware: Prisma.KategoriHardwareCreateNestedOneWithoutHardwareInput
   software?: Prisma.SoftwareCreateNestedManyWithoutHardwareInput
 }
 
@@ -1008,7 +1008,7 @@ export type HardwareCreateWithoutOpdInput = {
   penyedia?: string | null
   creator?: Prisma.UserCreateNestedOneWithoutCreatedHardwareInput
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedHardwareInput
-  jenisHardware: Prisma.JenisHardwareCreateNestedOneWithoutHardwareInput
+  jenisHardware: Prisma.KategoriHardwareCreateNestedOneWithoutHardwareInput
   software?: Prisma.SoftwareCreateNestedManyWithoutHardwareInput
 }
 
@@ -1141,7 +1141,7 @@ export type HardwareCreateWithoutSoftwareInput = {
   creator?: Prisma.UserCreateNestedOneWithoutCreatedHardwareInput
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedHardwareInput
   opd: Prisma.OpdCreateNestedOneWithoutHardwareInput
-  jenisHardware: Prisma.JenisHardwareCreateNestedOneWithoutHardwareInput
+  jenisHardware: Prisma.KategoriHardwareCreateNestedOneWithoutHardwareInput
 }
 
 export type HardwareUncheckedCreateWithoutSoftwareInput = {
@@ -1197,7 +1197,7 @@ export type HardwareUpdateWithoutSoftwareInput = {
   creator?: Prisma.UserUpdateOneWithoutCreatedHardwareNestedInput
   updater?: Prisma.UserUpdateOneWithoutUpdatedHardwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutHardwareNestedInput
-  jenisHardware?: Prisma.JenisHardwareUpdateOneRequiredWithoutHardwareNestedInput
+  jenisHardware?: Prisma.KategoriHardwareUpdateOneRequiredWithoutHardwareNestedInput
 }
 
 export type HardwareUncheckedUpdateWithoutSoftwareInput = {
@@ -1274,7 +1274,7 @@ export type HardwareUpdateWithoutCreatorInput = {
   penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updater?: Prisma.UserUpdateOneWithoutUpdatedHardwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutHardwareNestedInput
-  jenisHardware?: Prisma.JenisHardwareUpdateOneRequiredWithoutHardwareNestedInput
+  jenisHardware?: Prisma.KategoriHardwareUpdateOneRequiredWithoutHardwareNestedInput
   software?: Prisma.SoftwareUpdateManyWithoutHardwareNestedInput
 }
 
@@ -1333,7 +1333,7 @@ export type HardwareUpdateWithoutUpdaterInput = {
   penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creator?: Prisma.UserUpdateOneWithoutCreatedHardwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutHardwareNestedInput
-  jenisHardware?: Prisma.JenisHardwareUpdateOneRequiredWithoutHardwareNestedInput
+  jenisHardware?: Prisma.KategoriHardwareUpdateOneRequiredWithoutHardwareNestedInput
   software?: Prisma.SoftwareUpdateManyWithoutHardwareNestedInput
 }
 
@@ -1411,7 +1411,7 @@ export type HardwareUpdateWithoutOpdInput = {
   penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creator?: Prisma.UserUpdateOneWithoutCreatedHardwareNestedInput
   updater?: Prisma.UserUpdateOneWithoutUpdatedHardwareNestedInput
-  jenisHardware?: Prisma.JenisHardwareUpdateOneRequiredWithoutHardwareNestedInput
+  jenisHardware?: Prisma.KategoriHardwareUpdateOneRequiredWithoutHardwareNestedInput
   software?: Prisma.SoftwareUpdateManyWithoutHardwareNestedInput
 }
 
@@ -1584,7 +1584,7 @@ export type HardwareSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   creator?: boolean | Prisma.Hardware$creatorArgs<ExtArgs>
   updater?: boolean | Prisma.Hardware$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
-  jenisHardware?: boolean | Prisma.JenisHardwareDefaultArgs<ExtArgs>
+  jenisHardware?: boolean | Prisma.KategoriHardwareDefaultArgs<ExtArgs>
   software?: boolean | Prisma.Hardware$softwareArgs<ExtArgs>
   _count?: boolean | Prisma.HardwareCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["hardware"]>
@@ -1610,7 +1610,7 @@ export type HardwareSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   creator?: boolean | Prisma.Hardware$creatorArgs<ExtArgs>
   updater?: boolean | Prisma.Hardware$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
-  jenisHardware?: boolean | Prisma.JenisHardwareDefaultArgs<ExtArgs>
+  jenisHardware?: boolean | Prisma.KategoriHardwareDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["hardware"]>
 
 export type HardwareSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1634,7 +1634,7 @@ export type HardwareSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   creator?: boolean | Prisma.Hardware$creatorArgs<ExtArgs>
   updater?: boolean | Prisma.Hardware$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
-  jenisHardware?: boolean | Prisma.JenisHardwareDefaultArgs<ExtArgs>
+  jenisHardware?: boolean | Prisma.KategoriHardwareDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["hardware"]>
 
 export type HardwareSelectScalar = {
@@ -1662,7 +1662,7 @@ export type HardwareInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   creator?: boolean | Prisma.Hardware$creatorArgs<ExtArgs>
   updater?: boolean | Prisma.Hardware$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
-  jenisHardware?: boolean | Prisma.JenisHardwareDefaultArgs<ExtArgs>
+  jenisHardware?: boolean | Prisma.KategoriHardwareDefaultArgs<ExtArgs>
   software?: boolean | Prisma.Hardware$softwareArgs<ExtArgs>
   _count?: boolean | Prisma.HardwareCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1670,13 +1670,13 @@ export type HardwareIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   creator?: boolean | Prisma.Hardware$creatorArgs<ExtArgs>
   updater?: boolean | Prisma.Hardware$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
-  jenisHardware?: boolean | Prisma.JenisHardwareDefaultArgs<ExtArgs>
+  jenisHardware?: boolean | Prisma.KategoriHardwareDefaultArgs<ExtArgs>
 }
 export type HardwareIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   creator?: boolean | Prisma.Hardware$creatorArgs<ExtArgs>
   updater?: boolean | Prisma.Hardware$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
-  jenisHardware?: boolean | Prisma.JenisHardwareDefaultArgs<ExtArgs>
+  jenisHardware?: boolean | Prisma.KategoriHardwareDefaultArgs<ExtArgs>
 }
 
 export type $HardwarePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1685,7 +1685,7 @@ export type $HardwarePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     creator: Prisma.$UserPayload<ExtArgs> | null
     updater: Prisma.$UserPayload<ExtArgs> | null
     opd: Prisma.$OpdPayload<ExtArgs>
-    jenisHardware: Prisma.$JenisHardwarePayload<ExtArgs>
+    jenisHardware: Prisma.$KategoriHardwarePayload<ExtArgs>
     software: Prisma.$SoftwarePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -2103,7 +2103,7 @@ export interface Prisma__HardwareClient<T, Null = never, ExtArgs extends runtime
   creator<T extends Prisma.Hardware$creatorArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Hardware$creatorArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   updater<T extends Prisma.Hardware$updaterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Hardware$updaterArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   opd<T extends Prisma.OpdDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OpdDefaultArgs<ExtArgs>>): Prisma.Prisma__OpdClient<runtime.Types.Result.GetResult<Prisma.$OpdPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  jenisHardware<T extends Prisma.JenisHardwareDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.JenisHardwareDefaultArgs<ExtArgs>>): Prisma.Prisma__JenisHardwareClient<runtime.Types.Result.GetResult<Prisma.$JenisHardwarePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  jenisHardware<T extends Prisma.KategoriHardwareDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.KategoriHardwareDefaultArgs<ExtArgs>>): Prisma.Prisma__KategoriHardwareClient<runtime.Types.Result.GetResult<Prisma.$KategoriHardwarePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   software<T extends Prisma.Hardware$softwareArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Hardware$softwareArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SoftwarePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.

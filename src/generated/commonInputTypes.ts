@@ -209,11 +209,11 @@ export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDecimalFilter<$PrismaModel>
 }
 
-export type EnumjenisLisensiFilter<$PrismaModel = never> = {
-  equals?: $Enums.jenisLisensi | Prisma.EnumjenisLisensiFieldRefInput<$PrismaModel>
-  in?: $Enums.jenisLisensi[] | Prisma.ListEnumjenisLisensiFieldRefInput<$PrismaModel>
-  notIn?: $Enums.jenisLisensi[] | Prisma.ListEnumjenisLisensiFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumjenisLisensiFilter<$PrismaModel> | $Enums.jenisLisensi
+export type EnumJenisLisensiFilter<$PrismaModel = never> = {
+  equals?: $Enums.JenisLisensi | Prisma.EnumJenisLisensiFieldRefInput<$PrismaModel>
+  in?: $Enums.JenisLisensi[] | Prisma.ListEnumJenisLisensiFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JenisLisensi[] | Prisma.ListEnumJenisLisensiFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJenisLisensiFilter<$PrismaModel> | $Enums.JenisLisensi
 }
 
 export type IntFilter<$PrismaModel = never> = {
@@ -234,14 +234,14 @@ export type EnumKritikalitasStatusFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumKritikalitasStatusFilter<$PrismaModel> | $Enums.KritikalitasStatus
 }
 
-export type EnumjenisLisensiWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.jenisLisensi | Prisma.EnumjenisLisensiFieldRefInput<$PrismaModel>
-  in?: $Enums.jenisLisensi[] | Prisma.ListEnumjenisLisensiFieldRefInput<$PrismaModel>
-  notIn?: $Enums.jenisLisensi[] | Prisma.ListEnumjenisLisensiFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumjenisLisensiWithAggregatesFilter<$PrismaModel> | $Enums.jenisLisensi
+export type EnumJenisLisensiWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.JenisLisensi | Prisma.EnumJenisLisensiFieldRefInput<$PrismaModel>
+  in?: $Enums.JenisLisensi[] | Prisma.ListEnumJenisLisensiFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JenisLisensi[] | Prisma.ListEnumJenisLisensiFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJenisLisensiWithAggregatesFilter<$PrismaModel> | $Enums.JenisLisensi
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumjenisLisensiFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumjenisLisensiFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumJenisLisensiFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumJenisLisensiFilter<$PrismaModel>
 }
 
 export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -478,11 +478,11 @@ export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDecimalFilter<$PrismaModel>
 }
 
-export type NestedEnumjenisLisensiFilter<$PrismaModel = never> = {
-  equals?: $Enums.jenisLisensi | Prisma.EnumjenisLisensiFieldRefInput<$PrismaModel>
-  in?: $Enums.jenisLisensi[] | Prisma.ListEnumjenisLisensiFieldRefInput<$PrismaModel>
-  notIn?: $Enums.jenisLisensi[] | Prisma.ListEnumjenisLisensiFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumjenisLisensiFilter<$PrismaModel> | $Enums.jenisLisensi
+export type NestedEnumJenisLisensiFilter<$PrismaModel = never> = {
+  equals?: $Enums.JenisLisensi | Prisma.EnumJenisLisensiFieldRefInput<$PrismaModel>
+  in?: $Enums.JenisLisensi[] | Prisma.ListEnumJenisLisensiFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JenisLisensi[] | Prisma.ListEnumJenisLisensiFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJenisLisensiFilter<$PrismaModel> | $Enums.JenisLisensi
 }
 
 export type NestedEnumKritikalitasStatusFilter<$PrismaModel = never> = {
@@ -492,14 +492,14 @@ export type NestedEnumKritikalitasStatusFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumKritikalitasStatusFilter<$PrismaModel> | $Enums.KritikalitasStatus
 }
 
-export type NestedEnumjenisLisensiWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.jenisLisensi | Prisma.EnumjenisLisensiFieldRefInput<$PrismaModel>
-  in?: $Enums.jenisLisensi[] | Prisma.ListEnumjenisLisensiFieldRefInput<$PrismaModel>
-  notIn?: $Enums.jenisLisensi[] | Prisma.ListEnumjenisLisensiFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumjenisLisensiWithAggregatesFilter<$PrismaModel> | $Enums.jenisLisensi
+export type NestedEnumJenisLisensiWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.JenisLisensi | Prisma.EnumJenisLisensiFieldRefInput<$PrismaModel>
+  in?: $Enums.JenisLisensi[] | Prisma.ListEnumJenisLisensiFieldRefInput<$PrismaModel>
+  notIn?: $Enums.JenisLisensi[] | Prisma.ListEnumJenisLisensiFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumJenisLisensiWithAggregatesFilter<$PrismaModel> | $Enums.JenisLisensi
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumjenisLisensiFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumjenisLisensiFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumJenisLisensiFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumJenisLisensiFilter<$PrismaModel>
 }
 
 export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {

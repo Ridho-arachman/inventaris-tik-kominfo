@@ -43,10 +43,10 @@ export type Verification = Prisma.VerificationModel
  */
 export type Opd = Prisma.OpdModel
 /**
- * Model JenisHardware
+ * Model KategoriHardware
  * 
  */
-export type JenisHardware = Prisma.JenisHardwareModel
+export type KategoriHardware = Prisma.KategoriHardwareModel
 /**
  * Model Hardware
  * 

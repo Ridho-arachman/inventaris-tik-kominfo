@@ -389,7 +389,7 @@ export const ModelName = {
   Account: 'Account',
   Verification: 'Verification',
   Opd: 'Opd',
-  JenisHardware: 'JenisHardware',
+  KategoriHardware: 'KategoriHardware',
   Hardware: 'Hardware',
   KategoriSoftware: 'KategoriSoftware',
   Software: 'Software'
@@ -408,7 +408,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "account" | "verification" | "opd" | "jenisHardware" | "hardware" | "kategoriSoftware" | "software"
+    modelProps: "user" | "session" | "account" | "verification" | "opd" | "kategoriHardware" | "hardware" | "kategoriSoftware" | "software"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -782,77 +782,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    JenisHardware: {
-      payload: Prisma.$JenisHardwarePayload<ExtArgs>
-      fields: Prisma.JenisHardwareFieldRefs
+    KategoriHardware: {
+      payload: Prisma.$KategoriHardwarePayload<ExtArgs>
+      fields: Prisma.KategoriHardwareFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.JenisHardwareFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JenisHardwarePayload> | null
+          args: Prisma.KategoriHardwareFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KategoriHardwarePayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.JenisHardwareFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JenisHardwarePayload>
+          args: Prisma.KategoriHardwareFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KategoriHardwarePayload>
         }
         findFirst: {
-          args: Prisma.JenisHardwareFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JenisHardwarePayload> | null
+          args: Prisma.KategoriHardwareFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KategoriHardwarePayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.JenisHardwareFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JenisHardwarePayload>
+          args: Prisma.KategoriHardwareFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KategoriHardwarePayload>
         }
         findMany: {
-          args: Prisma.JenisHardwareFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JenisHardwarePayload>[]
+          args: Prisma.KategoriHardwareFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KategoriHardwarePayload>[]
         }
         create: {
-          args: Prisma.JenisHardwareCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JenisHardwarePayload>
+          args: Prisma.KategoriHardwareCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KategoriHardwarePayload>
         }
         createMany: {
-          args: Prisma.JenisHardwareCreateManyArgs<ExtArgs>
+          args: Prisma.KategoriHardwareCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.JenisHardwareCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JenisHardwarePayload>[]
+          args: Prisma.KategoriHardwareCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KategoriHardwarePayload>[]
         }
         delete: {
-          args: Prisma.JenisHardwareDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JenisHardwarePayload>
+          args: Prisma.KategoriHardwareDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KategoriHardwarePayload>
         }
         update: {
-          args: Prisma.JenisHardwareUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JenisHardwarePayload>
+          args: Prisma.KategoriHardwareUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KategoriHardwarePayload>
         }
         deleteMany: {
-          args: Prisma.JenisHardwareDeleteManyArgs<ExtArgs>
+          args: Prisma.KategoriHardwareDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.JenisHardwareUpdateManyArgs<ExtArgs>
+          args: Prisma.KategoriHardwareUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.JenisHardwareUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JenisHardwarePayload>[]
+          args: Prisma.KategoriHardwareUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KategoriHardwarePayload>[]
         }
         upsert: {
-          args: Prisma.JenisHardwareUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$JenisHardwarePayload>
+          args: Prisma.KategoriHardwareUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KategoriHardwarePayload>
         }
         aggregate: {
-          args: Prisma.JenisHardwareAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateJenisHardware>
+          args: Prisma.KategoriHardwareAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKategoriHardware>
         }
         groupBy: {
-          args: Prisma.JenisHardwareGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.JenisHardwareGroupByOutputType>[]
+          args: Prisma.KategoriHardwareGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KategoriHardwareGroupByOutputType>[]
         }
         count: {
-          args: Prisma.JenisHardwareCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.JenisHardwareCountAggregateOutputType> | number
+          args: Prisma.KategoriHardwareCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KategoriHardwareCountAggregateOutputType> | number
         }
       }
     }
@@ -1187,14 +1187,14 @@ export const OpdScalarFieldEnum = {
 export type OpdScalarFieldEnum = (typeof OpdScalarFieldEnum)[keyof typeof OpdScalarFieldEnum]
 
 
-export const JenisHardwareScalarFieldEnum = {
+export const KategoriHardwareScalarFieldEnum = {
   id: 'id',
   nama: 'nama',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type JenisHardwareScalarFieldEnum = (typeof JenisHardwareScalarFieldEnum)[keyof typeof JenisHardwareScalarFieldEnum]
+export type KategoriHardwareScalarFieldEnum = (typeof KategoriHardwareScalarFieldEnum)[keyof typeof KategoriHardwareScalarFieldEnum]
 
 
 export const HardwareScalarFieldEnum = {
@@ -1362,16 +1362,16 @@ export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMo
 
 
 /**
- * Reference to a field of type 'jenisLisensi'
+ * Reference to a field of type 'JenisLisensi'
  */
-export type EnumjenisLisensiFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'jenisLisensi'>
+export type EnumJenisLisensiFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JenisLisensi'>
     
 
 
 /**
- * Reference to a field of type 'jenisLisensi[]'
+ * Reference to a field of type 'JenisLisensi[]'
  */
-export type ListEnumjenisLisensiFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'jenisLisensi[]'>
+export type ListEnumJenisLisensiFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JenisLisensi[]'>
     
 
 
@@ -1500,7 +1500,7 @@ export type GlobalOmitConfig = {
   account?: Prisma.AccountOmit
   verification?: Prisma.VerificationOmit
   opd?: Prisma.OpdOmit
-  jenisHardware?: Prisma.JenisHardwareOmit
+  kategoriHardware?: Prisma.KategoriHardwareOmit
   hardware?: Prisma.HardwareOmit
   kategoriSoftware?: Prisma.KategoriSoftwareOmit
   software?: Prisma.SoftwareOmit

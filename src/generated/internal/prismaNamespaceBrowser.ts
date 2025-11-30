@@ -56,7 +56,7 @@ export const ModelName = {
   Account: 'Account',
   Verification: 'Verification',
   Opd: 'Opd',
-  JenisHardware: 'JenisHardware',
+  KategoriHardware: 'KategoriHardware',
   Hardware: 'Hardware',
   KategoriSoftware: 'KategoriSoftware',
   Software: 'Software'
@@ -148,14 +148,14 @@ export const OpdScalarFieldEnum = {
 export type OpdScalarFieldEnum = (typeof OpdScalarFieldEnum)[keyof typeof OpdScalarFieldEnum]
 
 
-export const JenisHardwareScalarFieldEnum = {
+export const KategoriHardwareScalarFieldEnum = {
   id: 'id',
   nama: 'nama',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type JenisHardwareScalarFieldEnum = (typeof JenisHardwareScalarFieldEnum)[keyof typeof JenisHardwareScalarFieldEnum]
+export type KategoriHardwareScalarFieldEnum = (typeof KategoriHardwareScalarFieldEnum)[keyof typeof KategoriHardwareScalarFieldEnum]
 
 
 export const HardwareScalarFieldEnum = {

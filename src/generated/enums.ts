@@ -26,13 +26,13 @@ export const StatusAset = {
 export type StatusAset = (typeof StatusAset)[keyof typeof StatusAset]
 
 
-export const jenisLisensi = {
+export const JenisLisensi = {
   PERPETUAL: 'PERPETUAL',
   LANGGANAN: 'LANGGANAN',
   OPEN_SOURCE: 'OPEN_SOURCE'
 } as const
 
-export type jenisLisensi = (typeof jenisLisensi)[keyof typeof jenisLisensi]
+export type JenisLisensi = (typeof JenisLisensi)[keyof typeof JenisLisensi]
 
 
 export const KritikalitasStatus = {

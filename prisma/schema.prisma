@@ -96,7 +96,7 @@ model Opd {
   software  Software[] 
 }
 
-model JenisHardware {
+model KategoriHardware {
   id        String   @id @default(cuid())
   nama      String   @unique
   hardware  Hardware[]
@@ -133,12 +133,12 @@ model Hardware {
   opdId           String
   opd             Opd               @relation(fields: [opdId],references: [id])
   jenisId         String 
-  jenisHardware   JenisHardware     @relation(fields: [jenisId],references: [id])
+  jenisHardware   KategoriHardware     @relation(fields: [jenisId],references: [id])
 
   software        Software[]
 }
 
-enum jenisLisensi {
+enum JenisLisensi {
   PERPETUAL
   LANGGANAN
   OPEN_SOURCE
@@ -162,7 +162,7 @@ model KategoriSoftware {
 model Software {
   id                    String               @id @default(cuid())
   nama                  String      
-  jenisLisensi          jenisLisensi         @default(OPEN_SOURCE)
+  jenisLisensi          JenisLisensi         @default(OPEN_SOURCE)
   serialNumber          String          
   tglBerakhirLisensi    DateTime
   versiTerpasang        Int

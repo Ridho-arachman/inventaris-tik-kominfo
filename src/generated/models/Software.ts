@@ -39,7 +39,7 @@ export type SoftwareSumAggregateOutputType = {
 export type SoftwareMinAggregateOutputType = {
   id: string | null
   nama: string | null
-  jenisLisensi: $Enums.jenisLisensi | null
+  jenisLisensi: $Enums.JenisLisensi | null
   serialNumber: string | null
   tglBerakhirLisensi: Date | null
   versiTerpasang: number | null
@@ -60,7 +60,7 @@ export type SoftwareMinAggregateOutputType = {
 export type SoftwareMaxAggregateOutputType = {
   id: string | null
   nama: string | null
-  jenisLisensi: $Enums.jenisLisensi | null
+  jenisLisensi: $Enums.JenisLisensi | null
   serialNumber: string | null
   tglBerakhirLisensi: Date | null
   versiTerpasang: number | null
@@ -264,7 +264,7 @@ export type SoftwareGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type SoftwareGroupByOutputType = {
   id: string
   nama: string
-  jenisLisensi: $Enums.jenisLisensi
+  jenisLisensi: $Enums.JenisLisensi
   serialNumber: string
   tglBerakhirLisensi: Date
   versiTerpasang: number
@@ -308,7 +308,7 @@ export type SoftwareWhereInput = {
   NOT?: Prisma.SoftwareWhereInput | Prisma.SoftwareWhereInput[]
   id?: Prisma.StringFilter<"Software"> | string
   nama?: Prisma.StringFilter<"Software"> | string
-  jenisLisensi?: Prisma.EnumjenisLisensiFilter<"Software"> | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiFilter<"Software"> | $Enums.JenisLisensi
   serialNumber?: Prisma.StringFilter<"Software"> | string
   tglBerakhirLisensi?: Prisma.DateTimeFilter<"Software"> | Date | string
   versiTerpasang?: Prisma.IntFilter<"Software"> | number
@@ -363,7 +363,7 @@ export type SoftwareWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.SoftwareWhereInput[]
   NOT?: Prisma.SoftwareWhereInput | Prisma.SoftwareWhereInput[]
   nama?: Prisma.StringFilter<"Software"> | string
-  jenisLisensi?: Prisma.EnumjenisLisensiFilter<"Software"> | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiFilter<"Software"> | $Enums.JenisLisensi
   serialNumber?: Prisma.StringFilter<"Software"> | string
   tglBerakhirLisensi?: Prisma.DateTimeFilter<"Software"> | Date | string
   versiTerpasang?: Prisma.IntFilter<"Software"> | number
@@ -418,7 +418,7 @@ export type SoftwareScalarWhereWithAggregatesInput = {
   NOT?: Prisma.SoftwareScalarWhereWithAggregatesInput | Prisma.SoftwareScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Software"> | string
   nama?: Prisma.StringWithAggregatesFilter<"Software"> | string
-  jenisLisensi?: Prisma.EnumjenisLisensiWithAggregatesFilter<"Software"> | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiWithAggregatesFilter<"Software"> | $Enums.JenisLisensi
   serialNumber?: Prisma.StringWithAggregatesFilter<"Software"> | string
   tglBerakhirLisensi?: Prisma.DateTimeWithAggregatesFilter<"Software"> | Date | string
   versiTerpasang?: Prisma.IntWithAggregatesFilter<"Software"> | number
@@ -439,7 +439,7 @@ export type SoftwareScalarWhereWithAggregatesInput = {
 export type SoftwareCreateInput = {
   id?: string
   nama: string
-  jenisLisensi?: $Enums.jenisLisensi
+  jenisLisensi?: $Enums.JenisLisensi
   serialNumber: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
@@ -460,7 +460,7 @@ export type SoftwareCreateInput = {
 export type SoftwareUncheckedCreateInput = {
   id?: string
   nama: string
-  jenisLisensi?: $Enums.jenisLisensi
+  jenisLisensi?: $Enums.JenisLisensi
   serialNumber: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
@@ -481,7 +481,7 @@ export type SoftwareUncheckedCreateInput = {
 export type SoftwareUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisLisensi?: Prisma.EnumjenisLisensiFieldUpdateOperationsInput | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
@@ -502,7 +502,7 @@ export type SoftwareUpdateInput = {
 export type SoftwareUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisLisensi?: Prisma.EnumjenisLisensiFieldUpdateOperationsInput | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
@@ -523,7 +523,7 @@ export type SoftwareUncheckedUpdateInput = {
 export type SoftwareCreateManyInput = {
   id?: string
   nama: string
-  jenisLisensi?: $Enums.jenisLisensi
+  jenisLisensi?: $Enums.JenisLisensi
   serialNumber: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
@@ -544,7 +544,7 @@ export type SoftwareCreateManyInput = {
 export type SoftwareUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisLisensi?: Prisma.EnumjenisLisensiFieldUpdateOperationsInput | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
@@ -560,7 +560,7 @@ export type SoftwareUpdateManyMutationInput = {
 export type SoftwareUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisLisensi?: Prisma.EnumjenisLisensiFieldUpdateOperationsInput | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
@@ -871,8 +871,8 @@ export type SoftwareUncheckedUpdateManyWithoutKategoriNestedInput = {
   deleteMany?: Prisma.SoftwareScalarWhereInput | Prisma.SoftwareScalarWhereInput[]
 }
 
-export type EnumjenisLisensiFieldUpdateOperationsInput = {
-  set?: $Enums.jenisLisensi
+export type EnumJenisLisensiFieldUpdateOperationsInput = {
+  set?: $Enums.JenisLisensi
 }
 
 export type IntFieldUpdateOperationsInput = {
@@ -890,7 +890,7 @@ export type EnumKritikalitasStatusFieldUpdateOperationsInput = {
 export type SoftwareCreateWithoutCreatorInput = {
   id?: string
   nama: string
-  jenisLisensi?: $Enums.jenisLisensi
+  jenisLisensi?: $Enums.JenisLisensi
   serialNumber: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
@@ -910,7 +910,7 @@ export type SoftwareCreateWithoutCreatorInput = {
 export type SoftwareUncheckedCreateWithoutCreatorInput = {
   id?: string
   nama: string
-  jenisLisensi?: $Enums.jenisLisensi
+  jenisLisensi?: $Enums.JenisLisensi
   serialNumber: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
@@ -940,7 +940,7 @@ export type SoftwareCreateManyCreatorInputEnvelope = {
 export type SoftwareCreateWithoutUpdaterInput = {
   id?: string
   nama: string
-  jenisLisensi?: $Enums.jenisLisensi
+  jenisLisensi?: $Enums.JenisLisensi
   serialNumber: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
@@ -960,7 +960,7 @@ export type SoftwareCreateWithoutUpdaterInput = {
 export type SoftwareUncheckedCreateWithoutUpdaterInput = {
   id?: string
   nama: string
-  jenisLisensi?: $Enums.jenisLisensi
+  jenisLisensi?: $Enums.JenisLisensi
   serialNumber: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
@@ -1009,7 +1009,7 @@ export type SoftwareScalarWhereInput = {
   NOT?: Prisma.SoftwareScalarWhereInput | Prisma.SoftwareScalarWhereInput[]
   id?: Prisma.StringFilter<"Software"> | string
   nama?: Prisma.StringFilter<"Software"> | string
-  jenisLisensi?: Prisma.EnumjenisLisensiFilter<"Software"> | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiFilter<"Software"> | $Enums.JenisLisensi
   serialNumber?: Prisma.StringFilter<"Software"> | string
   tglBerakhirLisensi?: Prisma.DateTimeFilter<"Software"> | Date | string
   versiTerpasang?: Prisma.IntFilter<"Software"> | number
@@ -1046,7 +1046,7 @@ export type SoftwareUpdateManyWithWhereWithoutUpdaterInput = {
 export type SoftwareCreateWithoutOpdInput = {
   id?: string
   nama: string
-  jenisLisensi?: $Enums.jenisLisensi
+  jenisLisensi?: $Enums.JenisLisensi
   serialNumber: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
@@ -1066,7 +1066,7 @@ export type SoftwareCreateWithoutOpdInput = {
 export type SoftwareUncheckedCreateWithoutOpdInput = {
   id?: string
   nama: string
-  jenisLisensi?: $Enums.jenisLisensi
+  jenisLisensi?: $Enums.JenisLisensi
   serialNumber: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
@@ -1112,7 +1112,7 @@ export type SoftwareUpdateManyWithWhereWithoutOpdInput = {
 export type SoftwareCreateWithoutHardwareInput = {
   id?: string
   nama: string
-  jenisLisensi?: $Enums.jenisLisensi
+  jenisLisensi?: $Enums.JenisLisensi
   serialNumber: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
@@ -1132,7 +1132,7 @@ export type SoftwareCreateWithoutHardwareInput = {
 export type SoftwareUncheckedCreateWithoutHardwareInput = {
   id?: string
   nama: string
-  jenisLisensi?: $Enums.jenisLisensi
+  jenisLisensi?: $Enums.JenisLisensi
   serialNumber: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
@@ -1178,7 +1178,7 @@ export type SoftwareUpdateManyWithWhereWithoutHardwareInput = {
 export type SoftwareCreateWithoutKategoriInput = {
   id?: string
   nama: string
-  jenisLisensi?: $Enums.jenisLisensi
+  jenisLisensi?: $Enums.JenisLisensi
   serialNumber: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
@@ -1198,7 +1198,7 @@ export type SoftwareCreateWithoutKategoriInput = {
 export type SoftwareUncheckedCreateWithoutKategoriInput = {
   id?: string
   nama: string
-  jenisLisensi?: $Enums.jenisLisensi
+  jenisLisensi?: $Enums.JenisLisensi
   serialNumber: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
@@ -1244,7 +1244,7 @@ export type SoftwareUpdateManyWithWhereWithoutKategoriInput = {
 export type SoftwareCreateManyCreatorInput = {
   id?: string
   nama: string
-  jenisLisensi?: $Enums.jenisLisensi
+  jenisLisensi?: $Enums.JenisLisensi
   serialNumber: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
@@ -1264,7 +1264,7 @@ export type SoftwareCreateManyCreatorInput = {
 export type SoftwareCreateManyUpdaterInput = {
   id?: string
   nama: string
-  jenisLisensi?: $Enums.jenisLisensi
+  jenisLisensi?: $Enums.JenisLisensi
   serialNumber: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
@@ -1284,7 +1284,7 @@ export type SoftwareCreateManyUpdaterInput = {
 export type SoftwareUpdateWithoutCreatorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisLisensi?: Prisma.EnumjenisLisensiFieldUpdateOperationsInput | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1304,7 +1304,7 @@ export type SoftwareUpdateWithoutCreatorInput = {
 export type SoftwareUncheckedUpdateWithoutCreatorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisLisensi?: Prisma.EnumjenisLisensiFieldUpdateOperationsInput | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1324,7 +1324,7 @@ export type SoftwareUncheckedUpdateWithoutCreatorInput = {
 export type SoftwareUncheckedUpdateManyWithoutCreatorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisLisensi?: Prisma.EnumjenisLisensiFieldUpdateOperationsInput | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1344,7 +1344,7 @@ export type SoftwareUncheckedUpdateManyWithoutCreatorInput = {
 export type SoftwareUpdateWithoutUpdaterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisLisensi?: Prisma.EnumjenisLisensiFieldUpdateOperationsInput | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1364,7 +1364,7 @@ export type SoftwareUpdateWithoutUpdaterInput = {
 export type SoftwareUncheckedUpdateWithoutUpdaterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisLisensi?: Prisma.EnumjenisLisensiFieldUpdateOperationsInput | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1384,7 +1384,7 @@ export type SoftwareUncheckedUpdateWithoutUpdaterInput = {
 export type SoftwareUncheckedUpdateManyWithoutUpdaterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisLisensi?: Prisma.EnumjenisLisensiFieldUpdateOperationsInput | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1404,7 +1404,7 @@ export type SoftwareUncheckedUpdateManyWithoutUpdaterInput = {
 export type SoftwareCreateManyOpdInput = {
   id?: string
   nama: string
-  jenisLisensi?: $Enums.jenisLisensi
+  jenisLisensi?: $Enums.JenisLisensi
   serialNumber: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
@@ -1424,7 +1424,7 @@ export type SoftwareCreateManyOpdInput = {
 export type SoftwareUpdateWithoutOpdInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisLisensi?: Prisma.EnumjenisLisensiFieldUpdateOperationsInput | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1444,7 +1444,7 @@ export type SoftwareUpdateWithoutOpdInput = {
 export type SoftwareUncheckedUpdateWithoutOpdInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisLisensi?: Prisma.EnumjenisLisensiFieldUpdateOperationsInput | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1464,7 +1464,7 @@ export type SoftwareUncheckedUpdateWithoutOpdInput = {
 export type SoftwareUncheckedUpdateManyWithoutOpdInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisLisensi?: Prisma.EnumjenisLisensiFieldUpdateOperationsInput | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1484,7 +1484,7 @@ export type SoftwareUncheckedUpdateManyWithoutOpdInput = {
 export type SoftwareCreateManyHardwareInput = {
   id?: string
   nama: string
-  jenisLisensi?: $Enums.jenisLisensi
+  jenisLisensi?: $Enums.JenisLisensi
   serialNumber: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
@@ -1504,7 +1504,7 @@ export type SoftwareCreateManyHardwareInput = {
 export type SoftwareUpdateWithoutHardwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisLisensi?: Prisma.EnumjenisLisensiFieldUpdateOperationsInput | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1524,7 +1524,7 @@ export type SoftwareUpdateWithoutHardwareInput = {
 export type SoftwareUncheckedUpdateWithoutHardwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisLisensi?: Prisma.EnumjenisLisensiFieldUpdateOperationsInput | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1544,7 +1544,7 @@ export type SoftwareUncheckedUpdateWithoutHardwareInput = {
 export type SoftwareUncheckedUpdateManyWithoutHardwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisLisensi?: Prisma.EnumjenisLisensiFieldUpdateOperationsInput | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1564,7 +1564,7 @@ export type SoftwareUncheckedUpdateManyWithoutHardwareInput = {
 export type SoftwareCreateManyKategoriInput = {
   id?: string
   nama: string
-  jenisLisensi?: $Enums.jenisLisensi
+  jenisLisensi?: $Enums.JenisLisensi
   serialNumber: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
@@ -1584,7 +1584,7 @@ export type SoftwareCreateManyKategoriInput = {
 export type SoftwareUpdateWithoutKategoriInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisLisensi?: Prisma.EnumjenisLisensiFieldUpdateOperationsInput | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1604,7 +1604,7 @@ export type SoftwareUpdateWithoutKategoriInput = {
 export type SoftwareUncheckedUpdateWithoutKategoriInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisLisensi?: Prisma.EnumjenisLisensiFieldUpdateOperationsInput | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1624,7 +1624,7 @@ export type SoftwareUncheckedUpdateWithoutKategoriInput = {
 export type SoftwareUncheckedUpdateManyWithoutKategoriInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisLisensi?: Prisma.EnumjenisLisensiFieldUpdateOperationsInput | $Enums.jenisLisensi
+  jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
   serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1777,7 +1777,7 @@ export type $SoftwarePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     nama: string
-    jenisLisensi: $Enums.jenisLisensi
+    jenisLisensi: $Enums.JenisLisensi
     serialNumber: string
     tglBerakhirLisensi: Date
     versiTerpasang: number
@@ -2223,7 +2223,7 @@ export interface Prisma__SoftwareClient<T, Null = never, ExtArgs extends runtime
 export interface SoftwareFieldRefs {
   readonly id: Prisma.FieldRef<"Software", 'String'>
   readonly nama: Prisma.FieldRef<"Software", 'String'>
-  readonly jenisLisensi: Prisma.FieldRef<"Software", 'jenisLisensi'>
+  readonly jenisLisensi: Prisma.FieldRef<"Software", 'JenisLisensi'>
   readonly serialNumber: Prisma.FieldRef<"Software", 'String'>
   readonly tglBerakhirLisensi: Prisma.FieldRef<"Software", 'DateTime'>
   readonly versiTerpasang: Prisma.FieldRef<"Software", 'Int'>
