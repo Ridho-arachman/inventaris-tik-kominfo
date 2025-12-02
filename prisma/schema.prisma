@@ -9,22 +9,24 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  name          String?
-  role          Role      @default(OPD)
-  emailVerified Boolean   @default(false)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id              String    @id @default(cuid())
+  email           String    @unique
+  name            String?
+  role            Role      @default(OPD)
+  emailVerified   Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
-  codeOpd       String?
-  opd           Opd?       @relation(fields: [codeOpd], references: [code] )
+  idOpd           String?   @db.VarChar(100)
+  opd             Opd?      @relation(fields: [idOpd], references: [id])
 
-  sessions      Session[]
-  accounts      Account[]
+  sessions        Session[]
+  accounts        Account[]
+
   createdHardware Hardware[] @relation("HardwareCreator")
   updatedHardware Hardware[] @relation("HardwareUpdater")
-  createdSoftwrae Software[] @relation("SoftwareCreator")
+
+  createdSoftware Software[] @relation("SoftwareCreator")
   updatedSoftware Software[] @relation("SoftwareUpdater")
 
   @@map("user")
@@ -47,7 +49,7 @@ model Session {
 }
 
 model Account {
-  id                    String    @id
+  id                    String    @id  @default(cuid())
   accountId             String
   providerId            String
   userId                String
@@ -85,20 +87,21 @@ enum Role {
 
 model Opd {
   id        String   @id @default(cuid())
-  code      String   @unique// e.g., "DKES"
-  createdAt DateTime @default(now())
+  kode      String   @unique @db.VarChar(50)
+  nama     String   @unique @db.VarChar(255)
   
-  name      String   @unique // e.g., "Dinas Kesehatan"
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   users     User[]
-  hardware  Hardware[]      
-  software  Software[] 
+  hardware  Hardware[]
+  software  Software[]
 }
 
 model KategoriHardware {
   id        String   @id @default(cuid())
-  nama      String   @unique
+  nama      String   @unique @db.VarChar(255)
+
   hardware  Hardware[]
 
   createdAt DateTime @default(now())
@@ -112,30 +115,37 @@ enum StatusAset {
 }
 
 model Hardware {
-  kodeId          String           @id
-  nama            String            
-  merk            String
+  id              String           @id @default(cuid())
+  nama            String           @db.VarChar(255)
+  merk            String           @db.VarChar(50)
   spesifikasi     String
-  lokasiFisik     String
-  tglPengadaan    DateTime //tahun
+  lokasiFisik     String           @db.VarChar(255)
+  tglPengadaan    DateTime
   garansiMulai    DateTime
   garansiSelesai  DateTime
-  status          StatusAset        @default(AKTIF)
-  pic             String        
-  biayaProlehan   Decimal
-  nomorSeri       String
-  penyedia        String?
+  status          StatusAset       @default(AKTIF)
+  pic             String           @db.VarChar(255)
+  biayaPerolehan  Decimal
+  nomorSeri       String           @db.VarChar(50)
+  penyedia        String?          @db.VarChar(255)
 
-  createdBy       String?
-  creator         User?             @relation("HardwareCreator", fields: [createdBy], references: [id])
-  updatedBy       String?
-  updater         User?             @relation("HardwareUpdater", fields: [updatedBy], references: [id])
-  opdId           String
-  opd             Opd               @relation(fields: [opdId],references: [id])
-  jenisId         String 
-  jenisHardware   KategoriHardware     @relation(fields: [jenisId],references: [id])
+  createdBy       String?          @db.VarChar(100)
+  creator         User?            @relation("HardwareCreator", fields: [createdBy], references: [id])
+
+  updatedBy       String?          @db.VarChar(100)
+  updater         User?            @relation("HardwareUpdater", fields: [updatedBy], references: [id])
+
+  opdId           String           @db.VarChar(100)
+  opd             Opd              @relation(fields: [opdId], references: [id])
+
+  jenisId         String           @db.VarChar(100)
+  jenisHardware   KategoriHardware @relation(fields: [jenisId], references: [id])
 
   software        Software[]
+
+  
+  @@index([opdId])
+  @@index([jenisId])
 }
 
 enum JenisLisensi {
@@ -151,37 +161,46 @@ enum KritikalitasStatus {
 }
 
 model KategoriSoftware {
-  id        String       @id @default(cuid())
-  nama      String       @unique
-  hardware  Software[]
+  id                  String            @id @default(cuid())
+  nama                String            @unique @db.VarChar(255)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  software            Software[]
+
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
 }
 
 model Software {
   id                    String               @id @default(cuid())
-  nama                  String      
+  nama                  String               @db.VarChar(255)
   jenisLisensi          JenisLisensi         @default(OPEN_SOURCE)
-  serialNumber          String          
+  serialNumber          String               @db.VarChar(50)
   tglBerakhirLisensi    DateTime
   versiTerpasang        Int
-  vendor                String?
+  vendor                String?              @db.VarChar(255)
   inHouse               Boolean              @default(false)
-  kritikalitas          KritikalitasStatus   
+  kritikalitas          KritikalitasStatus
   hargaPerolehan        Decimal
   tahunPengadaan        DateTime
-  status                StatusAset            @default(AKTIF)
-  pic                   String
+  status                StatusAset           @default(AKTIF)
+  pic                   String               @db.VarChar(255)
 
-  createdBy       String?
-  creator         User?             @relation("SoftwareCreator", fields: [createdBy], references: [id])
-  updatedBy       String?
-  updater         User?             @relation("SoftwareUpdater", fields: [updatedBy], references: [id])
-  opdId                 String
-  opd                   Opd                  @relation(fields: [opdId],references: [id])
-  kategoriId            String
-  kategori              KategoriSoftware      @relation(fields: [kategoriId],references: [id])              
-  hardwareTerinstall    String
-  hardware              Hardware        @relation(fields: [hardwareTerinstall],references: [kodeId])
+  createdBy             String?              @db.VarChar(100)
+  creator               User?                @relation("SoftwareCreator", fields: [createdBy], references: [id])
+
+  updatedBy             String?              @db.VarChar(100)
+  updater               User?                @relation("SoftwareUpdater", fields: [updatedBy], references: [id])
+
+  opdId                 String               @db.VarChar(100)
+  opd                   Opd                  @relation(fields: [opdId], references: [id])
+
+  kategoriId            String               @db.VarChar(100)
+  kategori              KategoriSoftware     @relation(fields: [kategoriId], references: [id]) 
+
+  hardwareTerinstall    String?              @db.VarChar(100)
+  hardware              Hardware?            @relation(fields: [hardwareTerinstall], references: [id])
+
+  @@index([opdId])
+  @@index([kategoriId])
+  @@index([hardwareTerinstall])
 }

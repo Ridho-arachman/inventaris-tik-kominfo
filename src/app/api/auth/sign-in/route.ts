@@ -3,7 +3,7 @@ import { handleBetterAuthError } from "@/lib/handleBetterAuthError";
 import { handleResponse } from "@/lib/handleResponse";
 import { handleZodValidation } from "@/lib/handleZodValidation";
 import prisma from "@/lib/prisma";
-import { signInSchema } from "@/schema/signUp";
+import { signInSchema } from "@/schema/authSchema";
 import { NextRequest } from "next/server";
 
 interface UserWithRole {
@@ -14,7 +14,7 @@ interface UserWithRole {
   emailVerified: boolean;
   createdAt: Date;
   updatedAt: Date;
-  role: string; // tambahkan role
+  role: string;
 }
 
 export const POST = async (req: NextRequest) => {

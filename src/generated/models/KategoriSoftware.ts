@@ -174,7 +174,7 @@ export type KategoriSoftwareWhereInput = {
   nama?: Prisma.StringFilter<"KategoriSoftware"> | string
   createdAt?: Prisma.DateTimeFilter<"KategoriSoftware"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"KategoriSoftware"> | Date | string
-  hardware?: Prisma.SoftwareListRelationFilter
+  software?: Prisma.SoftwareListRelationFilter
 }
 
 export type KategoriSoftwareOrderByWithRelationInput = {
@@ -182,7 +182,7 @@ export type KategoriSoftwareOrderByWithRelationInput = {
   nama?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  hardware?: Prisma.SoftwareOrderByRelationAggregateInput
+  software?: Prisma.SoftwareOrderByRelationAggregateInput
 }
 
 export type KategoriSoftwareWhereUniqueInput = Prisma.AtLeast<{
@@ -193,7 +193,7 @@ export type KategoriSoftwareWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.KategoriSoftwareWhereInput | Prisma.KategoriSoftwareWhereInput[]
   createdAt?: Prisma.DateTimeFilter<"KategoriSoftware"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"KategoriSoftware"> | Date | string
-  hardware?: Prisma.SoftwareListRelationFilter
+  software?: Prisma.SoftwareListRelationFilter
 }, "id" | "nama">
 
 export type KategoriSoftwareOrderByWithAggregationInput = {
@@ -221,7 +221,7 @@ export type KategoriSoftwareCreateInput = {
   nama: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  hardware?: Prisma.SoftwareCreateNestedManyWithoutKategoriInput
+  software?: Prisma.SoftwareCreateNestedManyWithoutKategoriInput
 }
 
 export type KategoriSoftwareUncheckedCreateInput = {
@@ -229,7 +229,7 @@ export type KategoriSoftwareUncheckedCreateInput = {
   nama: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  hardware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutKategoriInput
+  software?: Prisma.SoftwareUncheckedCreateNestedManyWithoutKategoriInput
 }
 
 export type KategoriSoftwareUpdateInput = {
@@ -237,7 +237,7 @@ export type KategoriSoftwareUpdateInput = {
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  hardware?: Prisma.SoftwareUpdateManyWithoutKategoriNestedInput
+  software?: Prisma.SoftwareUpdateManyWithoutKategoriNestedInput
 }
 
 export type KategoriSoftwareUncheckedUpdateInput = {
@@ -245,7 +245,7 @@ export type KategoriSoftwareUncheckedUpdateInput = {
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  hardware?: Prisma.SoftwareUncheckedUpdateManyWithoutKategoriNestedInput
+  software?: Prisma.SoftwareUncheckedUpdateManyWithoutKategoriNestedInput
 }
 
 export type KategoriSoftwareCreateManyInput = {
@@ -295,58 +295,58 @@ export type KategoriSoftwareScalarRelationFilter = {
   isNot?: Prisma.KategoriSoftwareWhereInput
 }
 
-export type KategoriSoftwareCreateNestedOneWithoutHardwareInput = {
-  create?: Prisma.XOR<Prisma.KategoriSoftwareCreateWithoutHardwareInput, Prisma.KategoriSoftwareUncheckedCreateWithoutHardwareInput>
-  connectOrCreate?: Prisma.KategoriSoftwareCreateOrConnectWithoutHardwareInput
+export type KategoriSoftwareCreateNestedOneWithoutSoftwareInput = {
+  create?: Prisma.XOR<Prisma.KategoriSoftwareCreateWithoutSoftwareInput, Prisma.KategoriSoftwareUncheckedCreateWithoutSoftwareInput>
+  connectOrCreate?: Prisma.KategoriSoftwareCreateOrConnectWithoutSoftwareInput
   connect?: Prisma.KategoriSoftwareWhereUniqueInput
 }
 
-export type KategoriSoftwareUpdateOneRequiredWithoutHardwareNestedInput = {
-  create?: Prisma.XOR<Prisma.KategoriSoftwareCreateWithoutHardwareInput, Prisma.KategoriSoftwareUncheckedCreateWithoutHardwareInput>
-  connectOrCreate?: Prisma.KategoriSoftwareCreateOrConnectWithoutHardwareInput
-  upsert?: Prisma.KategoriSoftwareUpsertWithoutHardwareInput
+export type KategoriSoftwareUpdateOneRequiredWithoutSoftwareNestedInput = {
+  create?: Prisma.XOR<Prisma.KategoriSoftwareCreateWithoutSoftwareInput, Prisma.KategoriSoftwareUncheckedCreateWithoutSoftwareInput>
+  connectOrCreate?: Prisma.KategoriSoftwareCreateOrConnectWithoutSoftwareInput
+  upsert?: Prisma.KategoriSoftwareUpsertWithoutSoftwareInput
   connect?: Prisma.KategoriSoftwareWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.KategoriSoftwareUpdateToOneWithWhereWithoutHardwareInput, Prisma.KategoriSoftwareUpdateWithoutHardwareInput>, Prisma.KategoriSoftwareUncheckedUpdateWithoutHardwareInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.KategoriSoftwareUpdateToOneWithWhereWithoutSoftwareInput, Prisma.KategoriSoftwareUpdateWithoutSoftwareInput>, Prisma.KategoriSoftwareUncheckedUpdateWithoutSoftwareInput>
 }
 
-export type KategoriSoftwareCreateWithoutHardwareInput = {
+export type KategoriSoftwareCreateWithoutSoftwareInput = {
   id?: string
   nama: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type KategoriSoftwareUncheckedCreateWithoutHardwareInput = {
+export type KategoriSoftwareUncheckedCreateWithoutSoftwareInput = {
   id?: string
   nama: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type KategoriSoftwareCreateOrConnectWithoutHardwareInput = {
+export type KategoriSoftwareCreateOrConnectWithoutSoftwareInput = {
   where: Prisma.KategoriSoftwareWhereUniqueInput
-  create: Prisma.XOR<Prisma.KategoriSoftwareCreateWithoutHardwareInput, Prisma.KategoriSoftwareUncheckedCreateWithoutHardwareInput>
+  create: Prisma.XOR<Prisma.KategoriSoftwareCreateWithoutSoftwareInput, Prisma.KategoriSoftwareUncheckedCreateWithoutSoftwareInput>
 }
 
-export type KategoriSoftwareUpsertWithoutHardwareInput = {
-  update: Prisma.XOR<Prisma.KategoriSoftwareUpdateWithoutHardwareInput, Prisma.KategoriSoftwareUncheckedUpdateWithoutHardwareInput>
-  create: Prisma.XOR<Prisma.KategoriSoftwareCreateWithoutHardwareInput, Prisma.KategoriSoftwareUncheckedCreateWithoutHardwareInput>
+export type KategoriSoftwareUpsertWithoutSoftwareInput = {
+  update: Prisma.XOR<Prisma.KategoriSoftwareUpdateWithoutSoftwareInput, Prisma.KategoriSoftwareUncheckedUpdateWithoutSoftwareInput>
+  create: Prisma.XOR<Prisma.KategoriSoftwareCreateWithoutSoftwareInput, Prisma.KategoriSoftwareUncheckedCreateWithoutSoftwareInput>
   where?: Prisma.KategoriSoftwareWhereInput
 }
 
-export type KategoriSoftwareUpdateToOneWithWhereWithoutHardwareInput = {
+export type KategoriSoftwareUpdateToOneWithWhereWithoutSoftwareInput = {
   where?: Prisma.KategoriSoftwareWhereInput
-  data: Prisma.XOR<Prisma.KategoriSoftwareUpdateWithoutHardwareInput, Prisma.KategoriSoftwareUncheckedUpdateWithoutHardwareInput>
+  data: Prisma.XOR<Prisma.KategoriSoftwareUpdateWithoutSoftwareInput, Prisma.KategoriSoftwareUncheckedUpdateWithoutSoftwareInput>
 }
 
-export type KategoriSoftwareUpdateWithoutHardwareInput = {
+export type KategoriSoftwareUpdateWithoutSoftwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type KategoriSoftwareUncheckedUpdateWithoutHardwareInput = {
+export type KategoriSoftwareUncheckedUpdateWithoutSoftwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -359,11 +359,11 @@ export type KategoriSoftwareUncheckedUpdateWithoutHardwareInput = {
  */
 
 export type KategoriSoftwareCountOutputType = {
-  hardware: number
+  software: number
 }
 
 export type KategoriSoftwareCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  hardware?: boolean | KategoriSoftwareCountOutputTypeCountHardwareArgs
+  software?: boolean | KategoriSoftwareCountOutputTypeCountSoftwareArgs
 }
 
 /**
@@ -379,7 +379,7 @@ export type KategoriSoftwareCountOutputTypeDefaultArgs<ExtArgs extends runtime.T
 /**
  * KategoriSoftwareCountOutputType without action
  */
-export type KategoriSoftwareCountOutputTypeCountHardwareArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type KategoriSoftwareCountOutputTypeCountSoftwareArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.SoftwareWhereInput
 }
 
@@ -389,7 +389,7 @@ export type KategoriSoftwareSelect<ExtArgs extends runtime.Types.Extensions.Inte
   nama?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  hardware?: boolean | Prisma.KategoriSoftware$hardwareArgs<ExtArgs>
+  software?: boolean | Prisma.KategoriSoftware$softwareArgs<ExtArgs>
   _count?: boolean | Prisma.KategoriSoftwareCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["kategoriSoftware"]>
 
@@ -416,7 +416,7 @@ export type KategoriSoftwareSelectScalar = {
 
 export type KategoriSoftwareOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nama" | "createdAt" | "updatedAt", ExtArgs["result"]["kategoriSoftware"]>
 export type KategoriSoftwareInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  hardware?: boolean | Prisma.KategoriSoftware$hardwareArgs<ExtArgs>
+  software?: boolean | Prisma.KategoriSoftware$softwareArgs<ExtArgs>
   _count?: boolean | Prisma.KategoriSoftwareCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type KategoriSoftwareIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -425,7 +425,7 @@ export type KategoriSoftwareIncludeUpdateManyAndReturn<ExtArgs extends runtime.T
 export type $KategoriSoftwarePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "KategoriSoftware"
   objects: {
-    hardware: Prisma.$SoftwarePayload<ExtArgs>[]
+    software: Prisma.$SoftwarePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -826,7 +826,7 @@ readonly fields: KategoriSoftwareFieldRefs;
  */
 export interface Prisma__KategoriSoftwareClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  hardware<T extends Prisma.KategoriSoftware$hardwareArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.KategoriSoftware$hardwareArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SoftwarePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  software<T extends Prisma.KategoriSoftware$softwareArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.KategoriSoftware$softwareArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SoftwarePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1248,9 +1248,9 @@ export type KategoriSoftwareDeleteManyArgs<ExtArgs extends runtime.Types.Extensi
 }
 
 /**
- * KategoriSoftware.hardware
+ * KategoriSoftware.software
  */
-export type KategoriSoftware$hardwareArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type KategoriSoftware$softwareArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Software
    */

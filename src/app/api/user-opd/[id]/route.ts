@@ -1,15 +1,15 @@
-import { auth } from "@/lib/auth";
-import { handlePrismaError } from "@/lib/handlePrsimaError";
-import { handleResponse } from "@/lib/handleResponse";
-import { handleZodValidation } from "@/lib/handleZodValidation";
 import prisma from "@/lib/prisma";
-import { idOpdSchema, OpdCreateSchema } from "@/schema/opdSchema";
+import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
+import { handleResponse } from "@/lib/handleResponse";
+import { handlePrismaError } from "@/lib/handlePrsimaError";
+import { handleZodValidation } from "@/lib/handleZodValidation";
+import { userQuerySchemaById, userUpdateSchema } from "@/schema/userOpdSchema";
 
-export const GET = async (
+export const DELETE = async (
   _req: NextRequest,
-  ctx: RouteContext<"/api/opd/[id]">
+  ctx: RouteContext<"/api/user-opd/[id]">
 ) => {
   try {
     const user = await auth.api.getSession({
@@ -26,26 +26,16 @@ export const GET = async (
 
     const { id } = await ctx.params;
 
-    const parsedId = idOpdSchema.safeParse({ id });
+    const parsedId = userQuerySchemaById.safeParse({ id });
 
     if (!parsedId.success) return handleZodValidation(parsedId);
 
-    const opdId = parsedId.data.id;
-
-    const opd = await prisma.opd.findMany({ where: { id: opdId } });
-
-    if (opd.length === 0) {
-      return handleResponse({
-        success: false,
-        message: "Data OPD Tidak Ditemukan",
-        status: 404,
-      });
-    }
+    const userOpd = await prisma.user.delete({ where: { id } });
 
     return handleResponse({
       success: true,
-      message: "Data OPD Berhasil Ditemukan",
-      data: opd,
+      message: "User OPD Berhasil Dihapus",
+      data: userOpd,
       status: 200,
     });
   } catch (error) {
@@ -68,97 +58,106 @@ export const GET = async (
   }
 };
 
-export const PUT = async (
+export const GET = async (
   req: NextRequest,
-  ctx: RouteContext<"/api/opd/[id]">
+  ctx: RouteContext<"/api/user-opd/[id]">
 ) => {
   try {
     const user = await auth.api.getSession({
       headers: await headers(),
     });
 
-    if (!user) {
+    if (!user)
       return handleResponse({
         success: false,
         message: "User Belum Login",
         status: 403,
       });
-    }
-
-    const body = await req.json();
     const { id } = await ctx.params;
 
-    const parsedId = idOpdSchema.safeParse({ id });
-    const parsed = OpdCreateSchema.safeParse(body);
+    const parsedId = userQuerySchemaById.safeParse({ id });
+
+    if (!parsedId.success) return handleZodValidation(parsedId);
+
+    const userId = parsedId.data.id;
+
+    const userRes = await prisma.user.findUniqueOrThrow({
+      where: { id: userId },
+      include: {
+        opd: {
+          select: {
+            id: true,
+            kode: true,
+            nama: true,
+          },
+        },
+      },
+    });
+
+    return handleResponse({
+      success: true,
+      message: "Data User OPD Berhasil Ditemukan",
+      data: userRes,
+      status: 200,
+    });
+  } catch (error) {
+    // PRISMA HANDLER ERROR
+    const prismaResponse = handlePrismaError(error);
+    if (prismaResponse) {
+      return handleResponse({
+        success: false,
+        message: prismaResponse.message,
+        status: prismaResponse.status,
+      });
+    }
+
+    // Internal Server Error
+    return handleResponse({
+      success: false,
+      message: "Terjadi kesalahan pada server",
+      status: 500,
+    });
+  }
+};
+
+export const PATCH = async (
+  req: NextRequest,
+  ctx: RouteContext<"/api/user-opd/[id]">
+) => {
+  try {
+    const user = await auth.api.getSession({
+      headers: await headers(),
+    });
+
+    if (!user)
+      return handleResponse({
+        success: false,
+        message: "User Belum Login",
+        status: 403,
+      });
+
+    const { id } = await ctx.params;
+    const body = await req.json();
+
+    const parsedId = userQuerySchemaById.safeParse({ id });
+    const parsed = userUpdateSchema.safeParse(body);
 
     if (!parsedId.success) return handleZodValidation(parsedId);
     if (!parsed.success) return handleZodValidation(parsed);
 
     const data = parsed.data;
+    const dataId = parsedId.data.id;
 
-    const opd = await prisma.opd.update({ where: { id }, data });
-
-    return handleResponse({
-      success: true,
-      message: "OPD Berhasil Diperbarui",
-      data: opd,
-      status: 200,
-    });
-  } catch (error) {
-    // Prisma Error Handler
-    const prismaResponse = handlePrismaError(error);
-    if (prismaResponse) {
-      return handleResponse({
-        success: false,
-        message: prismaResponse.message,
-        status: prismaResponse.status,
-      });
-    }
-
-    // Internal Server Error
-    return handleResponse({
-      success: false,
-      message: "Terjadi kesalahan pada server",
-      status: 500,
-    });
-  }
-};
-
-export const DELETE = async (
-  _req: NextRequest,
-  ctx: RouteContext<"/api/opd/[id]">
-) => {
-  try {
-    const user = await auth.api.getSession({
-      headers: await headers(),
-    });
-
-    if (!user) {
-      return handleResponse({
-        success: false,
-        message: "User Belum Login",
-        status: 403,
-      });
-    }
-
-    const { id } = await ctx.params;
-
-    const parsedId = idOpdSchema.safeParse({ id });
-
-    if (!parsedId.success) return handleZodValidation(parsedId);
-
-    const opd = await prisma.opd.delete({ where: { id } });
+    const userOpd = await prisma.user.update({ where: { id: dataId }, data });
 
     return handleResponse({
       success: true,
-      message: "OPD Berhasil Dihapus",
-      data: opd,
+      message: "User OPD Berhasil Diupdate",
+      data: userOpd,
       status: 200,
     });
   } catch (error) {
-    console.log(error);
-
-    // Prisma Error Handler
+    // PRISMA HANDLER ERROR
     const prismaResponse = handlePrismaError(error);
     if (prismaResponse) {
       return handleResponse({

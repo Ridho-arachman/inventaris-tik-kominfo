@@ -26,25 +26,25 @@ export type AggregateOpd = {
 
 export type OpdMinAggregateOutputType = {
   id: string | null
-  code: string | null
+  kode: string | null
+  nama: string | null
   createdAt: Date | null
-  name: string | null
   updatedAt: Date | null
 }
 
 export type OpdMaxAggregateOutputType = {
   id: string | null
-  code: string | null
+  kode: string | null
+  nama: string | null
   createdAt: Date | null
-  name: string | null
   updatedAt: Date | null
 }
 
 export type OpdCountAggregateOutputType = {
   id: number
-  code: number
+  kode: number
+  nama: number
   createdAt: number
-  name: number
   updatedAt: number
   _all: number
 }
@@ -52,25 +52,25 @@ export type OpdCountAggregateOutputType = {
 
 export type OpdMinAggregateInputType = {
   id?: true
-  code?: true
+  kode?: true
+  nama?: true
   createdAt?: true
-  name?: true
   updatedAt?: true
 }
 
 export type OpdMaxAggregateInputType = {
   id?: true
-  code?: true
+  kode?: true
+  nama?: true
   createdAt?: true
-  name?: true
   updatedAt?: true
 }
 
 export type OpdCountAggregateInputType = {
   id?: true
-  code?: true
+  kode?: true
+  nama?: true
   createdAt?: true
-  name?: true
   updatedAt?: true
   _all?: true
 }
@@ -149,9 +149,9 @@ export type OpdGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
 
 export type OpdGroupByOutputType = {
   id: string
-  code: string
+  kode: string
+  nama: string
   createdAt: Date
-  name: string
   updatedAt: Date
   _count: OpdCountAggregateOutputType | null
   _min: OpdMinAggregateOutputType | null
@@ -178,9 +178,9 @@ export type OpdWhereInput = {
   OR?: Prisma.OpdWhereInput[]
   NOT?: Prisma.OpdWhereInput | Prisma.OpdWhereInput[]
   id?: Prisma.StringFilter<"Opd"> | string
-  code?: Prisma.StringFilter<"Opd"> | string
+  kode?: Prisma.StringFilter<"Opd"> | string
+  nama?: Prisma.StringFilter<"Opd"> | string
   createdAt?: Prisma.DateTimeFilter<"Opd"> | Date | string
-  name?: Prisma.StringFilter<"Opd"> | string
   updatedAt?: Prisma.DateTimeFilter<"Opd"> | Date | string
   users?: Prisma.UserListRelationFilter
   hardware?: Prisma.HardwareListRelationFilter
@@ -189,9 +189,9 @@ export type OpdWhereInput = {
 
 export type OpdOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  code?: Prisma.SortOrder
+  kode?: Prisma.SortOrder
+  nama?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   users?: Prisma.UserOrderByRelationAggregateInput
   hardware?: Prisma.HardwareOrderByRelationAggregateInput
@@ -200,8 +200,8 @@ export type OpdOrderByWithRelationInput = {
 
 export type OpdWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  code?: string
-  name?: string
+  kode?: string
+  nama?: string
   AND?: Prisma.OpdWhereInput | Prisma.OpdWhereInput[]
   OR?: Prisma.OpdWhereInput[]
   NOT?: Prisma.OpdWhereInput | Prisma.OpdWhereInput[]
@@ -210,13 +210,13 @@ export type OpdWhereUniqueInput = Prisma.AtLeast<{
   users?: Prisma.UserListRelationFilter
   hardware?: Prisma.HardwareListRelationFilter
   software?: Prisma.SoftwareListRelationFilter
-}, "id" | "code" | "name">
+}, "id" | "kode" | "nama">
 
 export type OpdOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  code?: Prisma.SortOrder
+  kode?: Prisma.SortOrder
+  nama?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.OpdCountOrderByAggregateInput
   _max?: Prisma.OpdMaxOrderByAggregateInput
@@ -228,17 +228,17 @@ export type OpdScalarWhereWithAggregatesInput = {
   OR?: Prisma.OpdScalarWhereWithAggregatesInput[]
   NOT?: Prisma.OpdScalarWhereWithAggregatesInput | Prisma.OpdScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Opd"> | string
-  code?: Prisma.StringWithAggregatesFilter<"Opd"> | string
+  kode?: Prisma.StringWithAggregatesFilter<"Opd"> | string
+  nama?: Prisma.StringWithAggregatesFilter<"Opd"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Opd"> | Date | string
-  name?: Prisma.StringWithAggregatesFilter<"Opd"> | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Opd"> | Date | string
 }
 
 export type OpdCreateInput = {
   id?: string
-  code: string
+  kode: string
+  nama: string
   createdAt?: Date | string
-  name: string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOpdInput
   hardware?: Prisma.HardwareCreateNestedManyWithoutOpdInput
@@ -247,9 +247,9 @@ export type OpdCreateInput = {
 
 export type OpdUncheckedCreateInput = {
   id?: string
-  code: string
+  kode: string
+  nama: string
   createdAt?: Date | string
-  name: string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOpdInput
   hardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutOpdInput
@@ -258,9 +258,9 @@ export type OpdUncheckedCreateInput = {
 
 export type OpdUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
+  kode?: Prisma.StringFieldUpdateOperationsInput | string
+  nama?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOpdNestedInput
   hardware?: Prisma.HardwareUpdateManyWithoutOpdNestedInput
@@ -269,9 +269,9 @@ export type OpdUpdateInput = {
 
 export type OpdUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
+  kode?: Prisma.StringFieldUpdateOperationsInput | string
+  nama?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOpdNestedInput
   hardware?: Prisma.HardwareUncheckedUpdateManyWithoutOpdNestedInput
@@ -280,25 +280,25 @@ export type OpdUncheckedUpdateInput = {
 
 export type OpdCreateManyInput = {
   id?: string
-  code: string
+  kode: string
+  nama: string
   createdAt?: Date | string
-  name: string
   updatedAt?: Date | string
 }
 
 export type OpdUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
+  kode?: Prisma.StringFieldUpdateOperationsInput | string
+  nama?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type OpdUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
+  kode?: Prisma.StringFieldUpdateOperationsInput | string
+  nama?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -309,25 +309,25 @@ export type OpdNullableScalarRelationFilter = {
 
 export type OpdCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  code?: Prisma.SortOrder
+  kode?: Prisma.SortOrder
+  nama?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type OpdMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  code?: Prisma.SortOrder
+  kode?: Prisma.SortOrder
+  nama?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type OpdMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  code?: Prisma.SortOrder
+  kode?: Prisma.SortOrder
+  nama?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -382,9 +382,9 @@ export type OpdUpdateOneRequiredWithoutSoftwareNestedInput = {
 
 export type OpdCreateWithoutUsersInput = {
   id?: string
-  code: string
+  kode: string
+  nama: string
   createdAt?: Date | string
-  name: string
   updatedAt?: Date | string
   hardware?: Prisma.HardwareCreateNestedManyWithoutOpdInput
   software?: Prisma.SoftwareCreateNestedManyWithoutOpdInput
@@ -392,9 +392,9 @@ export type OpdCreateWithoutUsersInput = {
 
 export type OpdUncheckedCreateWithoutUsersInput = {
   id?: string
-  code: string
+  kode: string
+  nama: string
   createdAt?: Date | string
-  name: string
   updatedAt?: Date | string
   hardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutOpdInput
   software?: Prisma.SoftwareUncheckedCreateNestedManyWithoutOpdInput
@@ -418,9 +418,9 @@ export type OpdUpdateToOneWithWhereWithoutUsersInput = {
 
 export type OpdUpdateWithoutUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
+  kode?: Prisma.StringFieldUpdateOperationsInput | string
+  nama?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hardware?: Prisma.HardwareUpdateManyWithoutOpdNestedInput
   software?: Prisma.SoftwareUpdateManyWithoutOpdNestedInput
@@ -428,9 +428,9 @@ export type OpdUpdateWithoutUsersInput = {
 
 export type OpdUncheckedUpdateWithoutUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
+  kode?: Prisma.StringFieldUpdateOperationsInput | string
+  nama?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   hardware?: Prisma.HardwareUncheckedUpdateManyWithoutOpdNestedInput
   software?: Prisma.SoftwareUncheckedUpdateManyWithoutOpdNestedInput
@@ -438,9 +438,9 @@ export type OpdUncheckedUpdateWithoutUsersInput = {
 
 export type OpdCreateWithoutHardwareInput = {
   id?: string
-  code: string
+  kode: string
+  nama: string
   createdAt?: Date | string
-  name: string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOpdInput
   software?: Prisma.SoftwareCreateNestedManyWithoutOpdInput
@@ -448,9 +448,9 @@ export type OpdCreateWithoutHardwareInput = {
 
 export type OpdUncheckedCreateWithoutHardwareInput = {
   id?: string
-  code: string
+  kode: string
+  nama: string
   createdAt?: Date | string
-  name: string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOpdInput
   software?: Prisma.SoftwareUncheckedCreateNestedManyWithoutOpdInput
@@ -474,9 +474,9 @@ export type OpdUpdateToOneWithWhereWithoutHardwareInput = {
 
 export type OpdUpdateWithoutHardwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
+  kode?: Prisma.StringFieldUpdateOperationsInput | string
+  nama?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOpdNestedInput
   software?: Prisma.SoftwareUpdateManyWithoutOpdNestedInput
@@ -484,9 +484,9 @@ export type OpdUpdateWithoutHardwareInput = {
 
 export type OpdUncheckedUpdateWithoutHardwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
+  kode?: Prisma.StringFieldUpdateOperationsInput | string
+  nama?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOpdNestedInput
   software?: Prisma.SoftwareUncheckedUpdateManyWithoutOpdNestedInput
@@ -494,9 +494,9 @@ export type OpdUncheckedUpdateWithoutHardwareInput = {
 
 export type OpdCreateWithoutSoftwareInput = {
   id?: string
-  code: string
+  kode: string
+  nama: string
   createdAt?: Date | string
-  name: string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutOpdInput
   hardware?: Prisma.HardwareCreateNestedManyWithoutOpdInput
@@ -504,9 +504,9 @@ export type OpdCreateWithoutSoftwareInput = {
 
 export type OpdUncheckedCreateWithoutSoftwareInput = {
   id?: string
-  code: string
+  kode: string
+  nama: string
   createdAt?: Date | string
-  name: string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutOpdInput
   hardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutOpdInput
@@ -530,9 +530,9 @@ export type OpdUpdateToOneWithWhereWithoutSoftwareInput = {
 
 export type OpdUpdateWithoutSoftwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
+  kode?: Prisma.StringFieldUpdateOperationsInput | string
+  nama?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutOpdNestedInput
   hardware?: Prisma.HardwareUpdateManyWithoutOpdNestedInput
@@ -540,9 +540,9 @@ export type OpdUpdateWithoutSoftwareInput = {
 
 export type OpdUncheckedUpdateWithoutSoftwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
+  kode?: Prisma.StringFieldUpdateOperationsInput | string
+  nama?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutOpdNestedInput
   hardware?: Prisma.HardwareUncheckedUpdateManyWithoutOpdNestedInput
@@ -599,9 +599,9 @@ export type OpdCountOutputTypeCountSoftwareArgs<ExtArgs extends runtime.Types.Ex
 
 export type OpdSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  code?: boolean
+  kode?: boolean
+  nama?: boolean
   createdAt?: boolean
-  name?: boolean
   updatedAt?: boolean
   users?: boolean | Prisma.Opd$usersArgs<ExtArgs>
   hardware?: boolean | Prisma.Opd$hardwareArgs<ExtArgs>
@@ -611,29 +611,29 @@ export type OpdSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
 
 export type OpdSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  code?: boolean
+  kode?: boolean
+  nama?: boolean
   createdAt?: boolean
-  name?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["opd"]>
 
 export type OpdSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  code?: boolean
+  kode?: boolean
+  nama?: boolean
   createdAt?: boolean
-  name?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["opd"]>
 
 export type OpdSelectScalar = {
   id?: boolean
-  code?: boolean
+  kode?: boolean
+  nama?: boolean
   createdAt?: boolean
-  name?: boolean
   updatedAt?: boolean
 }
 
-export type OpdOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "createdAt" | "name" | "updatedAt", ExtArgs["result"]["opd"]>
+export type OpdOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "kode" | "nama" | "createdAt" | "updatedAt", ExtArgs["result"]["opd"]>
 export type OpdInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.Opd$usersArgs<ExtArgs>
   hardware?: boolean | Prisma.Opd$hardwareArgs<ExtArgs>
@@ -652,9 +652,9 @@ export type $OpdPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    code: string
+    kode: string
+    nama: string
     createdAt: Date
-    name: string
     updatedAt: Date
   }, ExtArgs["result"]["opd"]>
   composites: {}
@@ -1083,9 +1083,9 @@ export interface Prisma__OpdClient<T, Null = never, ExtArgs extends runtime.Type
  */
 export interface OpdFieldRefs {
   readonly id: Prisma.FieldRef<"Opd", 'String'>
-  readonly code: Prisma.FieldRef<"Opd", 'String'>
+  readonly kode: Prisma.FieldRef<"Opd", 'String'>
+  readonly nama: Prisma.FieldRef<"Opd", 'String'>
   readonly createdAt: Prisma.FieldRef<"Opd", 'DateTime'>
-  readonly name: Prisma.FieldRef<"Opd", 'String'>
   readonly updatedAt: Prisma.FieldRef<"Opd", 'DateTime'>
 }
     

@@ -3,17 +3,12 @@ import { handlePrismaError } from "@/lib/handlePrsimaError";
 import { handleResponse } from "@/lib/handleResponse";
 import { handleZodValidation } from "@/lib/handleZodValidation";
 import prisma from "@/lib/prisma";
+import {
+  kategoriHardwareIdSchema,
+  kategoriHardwareSchema,
+} from "@/schema/ketegoriHardwareSchema";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
-import z from "zod";
-
-export const kategoriHardwareSchema = z.object({
-  nama: z.string().trim().min(1, "name wajib diisi"),
-});
-
-export const kategoriHardwareIdSchema = z.object({
-  id: z.string().trim().cuid("id wajib diisi"),
-});
 
 export const GET = async (
   req: NextRequest,

@@ -32,7 +32,7 @@ export type UserMinAggregateOutputType = {
   emailVerified: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
-  codeOpd: string | null
+  idOpd: string | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -43,7 +43,7 @@ export type UserMaxAggregateOutputType = {
   emailVerified: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
-  codeOpd: string | null
+  idOpd: string | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -54,7 +54,7 @@ export type UserCountAggregateOutputType = {
   emailVerified: number
   createdAt: number
   updatedAt: number
-  codeOpd: number
+  idOpd: number
   _all: number
 }
 
@@ -67,7 +67,7 @@ export type UserMinAggregateInputType = {
   emailVerified?: true
   createdAt?: true
   updatedAt?: true
-  codeOpd?: true
+  idOpd?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -78,7 +78,7 @@ export type UserMaxAggregateInputType = {
   emailVerified?: true
   createdAt?: true
   updatedAt?: true
-  codeOpd?: true
+  idOpd?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -89,7 +89,7 @@ export type UserCountAggregateInputType = {
   emailVerified?: true
   createdAt?: true
   updatedAt?: true
-  codeOpd?: true
+  idOpd?: true
   _all?: true
 }
 
@@ -173,7 +173,7 @@ export type UserGroupByOutputType = {
   emailVerified: boolean
   createdAt: Date
   updatedAt: Date
-  codeOpd: string | null
+  idOpd: string | null
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -205,13 +205,13 @@ export type UserWhereInput = {
   emailVerified?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  codeOpd?: Prisma.StringNullableFilter<"User"> | string | null
+  idOpd?: Prisma.StringNullableFilter<"User"> | string | null
   opd?: Prisma.XOR<Prisma.OpdNullableScalarRelationFilter, Prisma.OpdWhereInput> | null
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
   createdHardware?: Prisma.HardwareListRelationFilter
   updatedHardware?: Prisma.HardwareListRelationFilter
-  createdSoftwrae?: Prisma.SoftwareListRelationFilter
+  createdSoftware?: Prisma.SoftwareListRelationFilter
   updatedSoftware?: Prisma.SoftwareListRelationFilter
 }
 
@@ -223,13 +223,13 @@ export type UserOrderByWithRelationInput = {
   emailVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  codeOpd?: Prisma.SortOrderInput | Prisma.SortOrder
+  idOpd?: Prisma.SortOrderInput | Prisma.SortOrder
   opd?: Prisma.OpdOrderByWithRelationInput
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   accounts?: Prisma.AccountOrderByRelationAggregateInput
   createdHardware?: Prisma.HardwareOrderByRelationAggregateInput
   updatedHardware?: Prisma.HardwareOrderByRelationAggregateInput
-  createdSoftwrae?: Prisma.SoftwareOrderByRelationAggregateInput
+  createdSoftware?: Prisma.SoftwareOrderByRelationAggregateInput
   updatedSoftware?: Prisma.SoftwareOrderByRelationAggregateInput
 }
 
@@ -244,13 +244,13 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   emailVerified?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  codeOpd?: Prisma.StringNullableFilter<"User"> | string | null
+  idOpd?: Prisma.StringNullableFilter<"User"> | string | null
   opd?: Prisma.XOR<Prisma.OpdNullableScalarRelationFilter, Prisma.OpdWhereInput> | null
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
   createdHardware?: Prisma.HardwareListRelationFilter
   updatedHardware?: Prisma.HardwareListRelationFilter
-  createdSoftwrae?: Prisma.SoftwareListRelationFilter
+  createdSoftware?: Prisma.SoftwareListRelationFilter
   updatedSoftware?: Prisma.SoftwareListRelationFilter
 }, "id" | "email">
 
@@ -262,7 +262,7 @@ export type UserOrderByWithAggregationInput = {
   emailVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  codeOpd?: Prisma.SortOrderInput | Prisma.SortOrder
+  idOpd?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -279,7 +279,7 @@ export type UserScalarWhereWithAggregatesInput = {
   emailVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
-  codeOpd?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  idOpd?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
 }
 
 export type UserCreateInput = {
@@ -295,7 +295,7 @@ export type UserCreateInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareCreateNestedManyWithoutCreatorInput
   updatedHardware?: Prisma.HardwareCreateNestedManyWithoutUpdaterInput
-  createdSoftwrae?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
+  createdSoftware?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareCreateNestedManyWithoutUpdaterInput
 }
 
@@ -307,12 +307,12 @@ export type UserUncheckedCreateInput = {
   emailVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  codeOpd?: string | null
+  idOpd?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutUpdaterInput
-  createdSoftwrae?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
+  createdSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutUpdaterInput
 }
 
@@ -329,7 +329,7 @@ export type UserUpdateInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUpdateManyWithoutCreatorNestedInput
   updatedHardware?: Prisma.HardwareUpdateManyWithoutUpdaterNestedInput
-  createdSoftwrae?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
+  createdSoftware?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUpdateManyWithoutUpdaterNestedInput
 }
 
@@ -341,12 +341,12 @@ export type UserUncheckedUpdateInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  codeOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutUpdaterNestedInput
-  createdSoftwrae?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
+  createdSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutUpdaterNestedInput
 }
 
@@ -358,7 +358,7 @@ export type UserCreateManyInput = {
   emailVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  codeOpd?: string | null
+  idOpd?: string | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -379,7 +379,7 @@ export type UserUncheckedUpdateManyInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  codeOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -390,7 +390,7 @@ export type UserCountOrderByAggregateInput = {
   emailVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  codeOpd?: Prisma.SortOrder
+  idOpd?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -401,7 +401,7 @@ export type UserMaxOrderByAggregateInput = {
   emailVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  codeOpd?: Prisma.SortOrder
+  idOpd?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -412,7 +412,7 @@ export type UserMinOrderByAggregateInput = {
   emailVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  codeOpd?: Prisma.SortOrder
+  idOpd?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -557,9 +557,9 @@ export type UserUpdateOneWithoutUpdatedHardwareNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUpdatedHardwareInput, Prisma.UserUpdateWithoutUpdatedHardwareInput>, Prisma.UserUncheckedUpdateWithoutUpdatedHardwareInput>
 }
 
-export type UserCreateNestedOneWithoutCreatedSoftwraeInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedSoftwraeInput, Prisma.UserUncheckedCreateWithoutCreatedSoftwraeInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedSoftwraeInput
+export type UserCreateNestedOneWithoutCreatedSoftwareInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedSoftwareInput, Prisma.UserUncheckedCreateWithoutCreatedSoftwareInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedSoftwareInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
@@ -569,14 +569,14 @@ export type UserCreateNestedOneWithoutUpdatedSoftwareInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneWithoutCreatedSoftwraeNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedSoftwraeInput, Prisma.UserUncheckedCreateWithoutCreatedSoftwraeInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedSoftwraeInput
-  upsert?: Prisma.UserUpsertWithoutCreatedSoftwraeInput
+export type UserUpdateOneWithoutCreatedSoftwareNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedSoftwareInput, Prisma.UserUncheckedCreateWithoutCreatedSoftwareInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedSoftwareInput
+  upsert?: Prisma.UserUpsertWithoutCreatedSoftwareInput
   disconnect?: Prisma.UserWhereInput | boolean
   delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreatedSoftwraeInput, Prisma.UserUpdateWithoutCreatedSoftwraeInput>, Prisma.UserUncheckedUpdateWithoutCreatedSoftwraeInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreatedSoftwareInput, Prisma.UserUpdateWithoutCreatedSoftwareInput>, Prisma.UserUncheckedUpdateWithoutCreatedSoftwareInput>
 }
 
 export type UserUpdateOneWithoutUpdatedSoftwareNestedInput = {
@@ -601,7 +601,7 @@ export type UserCreateWithoutSessionsInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareCreateNestedManyWithoutCreatorInput
   updatedHardware?: Prisma.HardwareCreateNestedManyWithoutUpdaterInput
-  createdSoftwrae?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
+  createdSoftware?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareCreateNestedManyWithoutUpdaterInput
 }
 
@@ -613,11 +613,11 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   emailVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  codeOpd?: string | null
+  idOpd?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutUpdaterInput
-  createdSoftwrae?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
+  createdSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutUpdaterInput
 }
 
@@ -649,7 +649,7 @@ export type UserUpdateWithoutSessionsInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUpdateManyWithoutCreatorNestedInput
   updatedHardware?: Prisma.HardwareUpdateManyWithoutUpdaterNestedInput
-  createdSoftwrae?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
+  createdSoftware?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUpdateManyWithoutUpdaterNestedInput
 }
 
@@ -661,11 +661,11 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  codeOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutUpdaterNestedInput
-  createdSoftwrae?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
+  createdSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutUpdaterNestedInput
 }
 
@@ -681,7 +681,7 @@ export type UserCreateWithoutAccountsInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareCreateNestedManyWithoutCreatorInput
   updatedHardware?: Prisma.HardwareCreateNestedManyWithoutUpdaterInput
-  createdSoftwrae?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
+  createdSoftware?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareCreateNestedManyWithoutUpdaterInput
 }
 
@@ -693,11 +693,11 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   emailVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  codeOpd?: string | null
+  idOpd?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutUpdaterInput
-  createdSoftwrae?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
+  createdSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutUpdaterInput
 }
 
@@ -729,7 +729,7 @@ export type UserUpdateWithoutAccountsInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUpdateManyWithoutCreatorNestedInput
   updatedHardware?: Prisma.HardwareUpdateManyWithoutUpdaterNestedInput
-  createdSoftwrae?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
+  createdSoftware?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUpdateManyWithoutUpdaterNestedInput
 }
 
@@ -741,11 +741,11 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  codeOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutUpdaterNestedInput
-  createdSoftwrae?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
+  createdSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutUpdaterNestedInput
 }
 
@@ -761,7 +761,7 @@ export type UserCreateWithoutOpdInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareCreateNestedManyWithoutCreatorInput
   updatedHardware?: Prisma.HardwareCreateNestedManyWithoutUpdaterInput
-  createdSoftwrae?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
+  createdSoftware?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareCreateNestedManyWithoutUpdaterInput
 }
 
@@ -777,7 +777,7 @@ export type UserUncheckedCreateWithoutOpdInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutUpdaterInput
-  createdSoftwrae?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
+  createdSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutUpdaterInput
 }
 
@@ -818,7 +818,7 @@ export type UserScalarWhereInput = {
   emailVerified?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  codeOpd?: Prisma.StringNullableFilter<"User"> | string | null
+  idOpd?: Prisma.StringNullableFilter<"User"> | string | null
 }
 
 export type UserCreateWithoutCreatedHardwareInput = {
@@ -833,7 +833,7 @@ export type UserCreateWithoutCreatedHardwareInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   updatedHardware?: Prisma.HardwareCreateNestedManyWithoutUpdaterInput
-  createdSoftwrae?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
+  createdSoftware?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareCreateNestedManyWithoutUpdaterInput
 }
 
@@ -845,11 +845,11 @@ export type UserUncheckedCreateWithoutCreatedHardwareInput = {
   emailVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  codeOpd?: string | null
+  idOpd?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   updatedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutUpdaterInput
-  createdSoftwrae?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
+  createdSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutUpdaterInput
 }
 
@@ -870,7 +870,7 @@ export type UserCreateWithoutUpdatedHardwareInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareCreateNestedManyWithoutCreatorInput
-  createdSoftwrae?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
+  createdSoftware?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareCreateNestedManyWithoutUpdaterInput
 }
 
@@ -882,11 +882,11 @@ export type UserUncheckedCreateWithoutUpdatedHardwareInput = {
   emailVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  codeOpd?: string | null
+  idOpd?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutCreatorInput
-  createdSoftwrae?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
+  createdSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutUpdaterInput
 }
 
@@ -918,7 +918,7 @@ export type UserUpdateWithoutCreatedHardwareInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   updatedHardware?: Prisma.HardwareUpdateManyWithoutUpdaterNestedInput
-  createdSoftwrae?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
+  createdSoftware?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUpdateManyWithoutUpdaterNestedInput
 }
 
@@ -930,11 +930,11 @@ export type UserUncheckedUpdateWithoutCreatedHardwareInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  codeOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   updatedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutUpdaterNestedInput
-  createdSoftwrae?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
+  createdSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutUpdaterNestedInput
 }
 
@@ -961,7 +961,7 @@ export type UserUpdateWithoutUpdatedHardwareInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUpdateManyWithoutCreatorNestedInput
-  createdSoftwrae?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
+  createdSoftware?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUpdateManyWithoutUpdaterNestedInput
 }
 
@@ -973,15 +973,15 @@ export type UserUncheckedUpdateWithoutUpdatedHardwareInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  codeOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUncheckedUpdateManyWithoutCreatorNestedInput
-  createdSoftwrae?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
+  createdSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutUpdaterNestedInput
 }
 
-export type UserCreateWithoutCreatedSoftwraeInput = {
+export type UserCreateWithoutCreatedSoftwareInput = {
   id?: string
   email: string
   name?: string | null
@@ -997,7 +997,7 @@ export type UserCreateWithoutCreatedSoftwraeInput = {
   updatedSoftware?: Prisma.SoftwareCreateNestedManyWithoutUpdaterInput
 }
 
-export type UserUncheckedCreateWithoutCreatedSoftwraeInput = {
+export type UserUncheckedCreateWithoutCreatedSoftwareInput = {
   id?: string
   email: string
   name?: string | null
@@ -1005,7 +1005,7 @@ export type UserUncheckedCreateWithoutCreatedSoftwraeInput = {
   emailVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  codeOpd?: string | null
+  idOpd?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutCreatorInput
@@ -1013,9 +1013,9 @@ export type UserUncheckedCreateWithoutCreatedSoftwraeInput = {
   updatedSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutUpdaterInput
 }
 
-export type UserCreateOrConnectWithoutCreatedSoftwraeInput = {
+export type UserCreateOrConnectWithoutCreatedSoftwareInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedSoftwraeInput, Prisma.UserUncheckedCreateWithoutCreatedSoftwraeInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedSoftwareInput, Prisma.UserUncheckedCreateWithoutCreatedSoftwareInput>
 }
 
 export type UserCreateWithoutUpdatedSoftwareInput = {
@@ -1031,7 +1031,7 @@ export type UserCreateWithoutUpdatedSoftwareInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareCreateNestedManyWithoutCreatorInput
   updatedHardware?: Prisma.HardwareCreateNestedManyWithoutUpdaterInput
-  createdSoftwrae?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
+  createdSoftware?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedSoftwareInput = {
@@ -1042,12 +1042,12 @@ export type UserUncheckedCreateWithoutUpdatedSoftwareInput = {
   emailVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  codeOpd?: string | null
+  idOpd?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutUpdaterInput
-  createdSoftwrae?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
+  createdSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedSoftwareInput = {
@@ -1055,18 +1055,18 @@ export type UserCreateOrConnectWithoutUpdatedSoftwareInput = {
   create: Prisma.XOR<Prisma.UserCreateWithoutUpdatedSoftwareInput, Prisma.UserUncheckedCreateWithoutUpdatedSoftwareInput>
 }
 
-export type UserUpsertWithoutCreatedSoftwraeInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutCreatedSoftwraeInput, Prisma.UserUncheckedUpdateWithoutCreatedSoftwraeInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedSoftwraeInput, Prisma.UserUncheckedCreateWithoutCreatedSoftwraeInput>
+export type UserUpsertWithoutCreatedSoftwareInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCreatedSoftwareInput, Prisma.UserUncheckedUpdateWithoutCreatedSoftwareInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedSoftwareInput, Prisma.UserUncheckedCreateWithoutCreatedSoftwareInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutCreatedSoftwraeInput = {
+export type UserUpdateToOneWithWhereWithoutCreatedSoftwareInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutCreatedSoftwraeInput, Prisma.UserUncheckedUpdateWithoutCreatedSoftwraeInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCreatedSoftwareInput, Prisma.UserUncheckedUpdateWithoutCreatedSoftwareInput>
 }
 
-export type UserUpdateWithoutCreatedSoftwraeInput = {
+export type UserUpdateWithoutCreatedSoftwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1082,7 +1082,7 @@ export type UserUpdateWithoutCreatedSoftwraeInput = {
   updatedSoftware?: Prisma.SoftwareUpdateManyWithoutUpdaterNestedInput
 }
 
-export type UserUncheckedUpdateWithoutCreatedSoftwraeInput = {
+export type UserUncheckedUpdateWithoutCreatedSoftwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1090,7 +1090,7 @@ export type UserUncheckedUpdateWithoutCreatedSoftwraeInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  codeOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUncheckedUpdateManyWithoutCreatorNestedInput
@@ -1122,7 +1122,7 @@ export type UserUpdateWithoutUpdatedSoftwareInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUpdateManyWithoutCreatorNestedInput
   updatedHardware?: Prisma.HardwareUpdateManyWithoutUpdaterNestedInput
-  createdSoftwrae?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
+  createdSoftware?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedSoftwareInput = {
@@ -1133,12 +1133,12 @@ export type UserUncheckedUpdateWithoutUpdatedSoftwareInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  codeOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutUpdaterNestedInput
-  createdSoftwrae?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
+  createdSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
 }
 
 export type UserCreateManyOpdInput = {
@@ -1163,7 +1163,7 @@ export type UserUpdateWithoutOpdInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUpdateManyWithoutCreatorNestedInput
   updatedHardware?: Prisma.HardwareUpdateManyWithoutUpdaterNestedInput
-  createdSoftwrae?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
+  createdSoftware?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUpdateManyWithoutUpdaterNestedInput
 }
 
@@ -1179,7 +1179,7 @@ export type UserUncheckedUpdateWithoutOpdInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutUpdaterNestedInput
-  createdSoftwrae?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
+  createdSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutUpdaterNestedInput
 }
 
@@ -1203,7 +1203,7 @@ export type UserCountOutputType = {
   accounts: number
   createdHardware: number
   updatedHardware: number
-  createdSoftwrae: number
+  createdSoftware: number
   updatedSoftware: number
 }
 
@@ -1212,7 +1212,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs
   createdHardware?: boolean | UserCountOutputTypeCountCreatedHardwareArgs
   updatedHardware?: boolean | UserCountOutputTypeCountUpdatedHardwareArgs
-  createdSoftwrae?: boolean | UserCountOutputTypeCountCreatedSoftwraeArgs
+  createdSoftware?: boolean | UserCountOutputTypeCountCreatedSoftwareArgs
   updatedSoftware?: boolean | UserCountOutputTypeCountUpdatedSoftwareArgs
 }
 
@@ -1257,7 +1257,7 @@ export type UserCountOutputTypeCountUpdatedHardwareArgs<ExtArgs extends runtime.
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountCreatedSoftwraeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type UserCountOutputTypeCountCreatedSoftwareArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.SoftwareWhereInput
 }
 
@@ -1277,13 +1277,13 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   emailVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  codeOpd?: boolean
+  idOpd?: boolean
   opd?: boolean | Prisma.User$opdArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   createdHardware?: boolean | Prisma.User$createdHardwareArgs<ExtArgs>
   updatedHardware?: boolean | Prisma.User$updatedHardwareArgs<ExtArgs>
-  createdSoftwrae?: boolean | Prisma.User$createdSoftwraeArgs<ExtArgs>
+  createdSoftware?: boolean | Prisma.User$createdSoftwareArgs<ExtArgs>
   updatedSoftware?: boolean | Prisma.User$updatedSoftwareArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -1296,7 +1296,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   emailVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  codeOpd?: boolean
+  idOpd?: boolean
   opd?: boolean | Prisma.User$opdArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1308,7 +1308,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   emailVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  codeOpd?: boolean
+  idOpd?: boolean
   opd?: boolean | Prisma.User$opdArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1320,17 +1320,17 @@ export type UserSelectScalar = {
   emailVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  codeOpd?: boolean
+  idOpd?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "role" | "emailVerified" | "createdAt" | "updatedAt" | "codeOpd", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "role" | "emailVerified" | "createdAt" | "updatedAt" | "idOpd", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   opd?: boolean | Prisma.User$opdArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   createdHardware?: boolean | Prisma.User$createdHardwareArgs<ExtArgs>
   updatedHardware?: boolean | Prisma.User$updatedHardwareArgs<ExtArgs>
-  createdSoftwrae?: boolean | Prisma.User$createdSoftwraeArgs<ExtArgs>
+  createdSoftware?: boolean | Prisma.User$createdSoftwareArgs<ExtArgs>
   updatedSoftware?: boolean | Prisma.User$updatedSoftwareArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1349,7 +1349,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     accounts: Prisma.$AccountPayload<ExtArgs>[]
     createdHardware: Prisma.$HardwarePayload<ExtArgs>[]
     updatedHardware: Prisma.$HardwarePayload<ExtArgs>[]
-    createdSoftwrae: Prisma.$SoftwarePayload<ExtArgs>[]
+    createdSoftware: Prisma.$SoftwarePayload<ExtArgs>[]
     updatedSoftware: Prisma.$SoftwarePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1360,7 +1360,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     emailVerified: boolean
     createdAt: Date
     updatedAt: Date
-    codeOpd: string | null
+    idOpd: string | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1760,7 +1760,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdHardware<T extends Prisma.User$createdHardwareArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdHardwareArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HardwarePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedHardware<T extends Prisma.User$updatedHardwareArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedHardwareArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HardwarePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  createdSoftwrae<T extends Prisma.User$createdSoftwraeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdSoftwraeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SoftwarePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdSoftware<T extends Prisma.User$createdSoftwareArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdSoftwareArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SoftwarePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedSoftware<T extends Prisma.User$updatedSoftwareArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedSoftwareArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SoftwarePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1798,7 +1798,7 @@ export interface UserFieldRefs {
   readonly emailVerified: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
-  readonly codeOpd: Prisma.FieldRef<"User", 'String'>
+  readonly idOpd: Prisma.FieldRef<"User", 'String'>
 }
     
 
@@ -2310,9 +2310,9 @@ export type User$updatedHardwareArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
- * User.createdSoftwrae
+ * User.createdSoftware
  */
-export type User$createdSoftwraeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$createdSoftwareArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Software
    */

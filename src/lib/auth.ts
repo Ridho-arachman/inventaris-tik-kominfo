@@ -32,7 +32,7 @@ export const auth = betterAuth({
       role: {
         type: "string",
         required: false,
-        defaultValue: "user",
+        defaultValue: "OPD",
         input: false, // don't allow user to set role
       },
       codeOpd: {

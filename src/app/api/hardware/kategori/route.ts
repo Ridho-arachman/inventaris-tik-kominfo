@@ -3,26 +3,12 @@ import { handlePrismaError } from "@/lib/handlePrsimaError";
 import { handleResponse } from "@/lib/handleResponse";
 import { handleZodValidation } from "@/lib/handleZodValidation";
 import prisma from "@/lib/prisma";
+import {
+  kategoriHardwareQuerySchema,
+  kategoriHardwareSchema,
+} from "@/schema/ketegoriHardwareSchema";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
-import z from "zod";
-
-export const kategoriHardwareSchema = z.object({
-  nama: z
-    .string("Name harus berupa string")
-    .trim()
-    .min(1, "Name wajib diisi")
-    .max(100, "Nama maksimal 100 karakter")
-    .uppercase("Name harus huruf besar"),
-});
-
-export const kategoriHardwareQuerySchema = z.object({
-  nama: z
-    .string("Name harus berupa string")
-    .trim()
-    .max(100, "Nama maksimal 100 karakter")
-    .optional(),
-});
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -91,11 +77,11 @@ export const GET = async (req: NextRequest) => {
     const searchParams = req.nextUrl.searchParams;
     const q = searchParams.get("q") || "";
 
-    const parsedQ = kategoriHardwareQuerySchema.safeParse({ nama: q });
+    const parsedQ = kategoriHardwareQuerySchema.safeParse({ q });
 
     if (!parsedQ.success) return handleZodValidation(parsedQ);
 
-    const query = parsedQ.data.nama;
+    const query = parsedQ.data.q;
 
     const kategoriHardware = await prisma.kategoriHardware.findMany({
       where: query ? { nama: { contains: query, mode: "insensitive" } } : {},

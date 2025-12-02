@@ -4,18 +4,9 @@ import { handlePrismaError } from "@/lib/handlePrsimaError";
 import { handleResponse } from "@/lib/handleResponse";
 import { handleZodValidation } from "@/lib/handleZodValidation";
 import prisma from "@/lib/prisma";
+import { OpdCreateSchema, opdQuerySchema } from "@/schema/opdSchema";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
-import z from "zod";
-
-export const OpdCreateSchema = z.object({
-  code: z.string().trim().min(1, "code wajib diisi"), // contoh: "DKES"
-  name: z.string().trim().min(1, "name wajib diisi"), // contoh: "Dinas Kesehatan"
-});
-
-export const opdQuerySchema = z.object({
-  q: z.string("Query harus berupa string").trim().uppercase().optional(),
-});
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -92,8 +83,8 @@ export const GET = async (req: NextRequest) => {
     const where: Prisma.OpdWhereInput = query
       ? {
           OR: [
-            { code: { contains: query, mode: "insensitive" } },
-            { name: { contains: query, mode: "insensitive" } },
+            { kode: { contains: query, mode: "insensitive" } },
+            { nama: { contains: query, mode: "insensitive" } },
           ],
         }
       : {};

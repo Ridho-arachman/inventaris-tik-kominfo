@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 
 import { SearchForm } from "@/components/search-form";
@@ -14,22 +15,28 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { isActiveRoute } from "@/lib/isActive";
+import { usePathname } from "next/navigation";
 
 // This is sample data.
 const data = {
   versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
   navMain: [
     {
-      title: "Getting Started",
-      url: "#",
+      title: "Application Management",
+      url: "/admin",
       items: [
         {
-          title: "Installation",
-          url: "#",
+          title: "Dashboard",
+          url: "/admin/",
         },
         {
-          title: "Project Structure",
-          url: "#",
+          title: "OPD",
+          url: "/admin/opd",
+        },
+        {
+          title: "User OPD",
+          url: "/admin/manage-user-opd",
         },
       ],
     },
@@ -148,6 +155,7 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const pathname = usePathname();
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -166,7 +174,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <SidebarMenu>
                 {item.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={item.isActive}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={isActiveRoute(pathname, item.url)}
+                    >
                       <a href={item.url}>{item.title}</a>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

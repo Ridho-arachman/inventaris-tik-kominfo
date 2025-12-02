@@ -86,7 +86,7 @@ export const UserScalarFieldEnum = {
   emailVerified: 'emailVerified',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  codeOpd: 'codeOpd'
+  idOpd: 'idOpd'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -139,9 +139,9 @@ export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[k
 
 export const OpdScalarFieldEnum = {
   id: 'id',
-  code: 'code',
+  kode: 'kode',
+  nama: 'nama',
   createdAt: 'createdAt',
-  name: 'name',
   updatedAt: 'updatedAt'
 } as const
 
@@ -159,7 +159,7 @@ export type KategoriHardwareScalarFieldEnum = (typeof KategoriHardwareScalarFiel
 
 
 export const HardwareScalarFieldEnum = {
-  kodeId: 'kodeId',
+  id: 'id',
   nama: 'nama',
   merk: 'merk',
   spesifikasi: 'spesifikasi',
@@ -169,7 +169,7 @@ export const HardwareScalarFieldEnum = {
   garansiSelesai: 'garansiSelesai',
   status: 'status',
   pic: 'pic',
-  biayaProlehan: 'biayaProlehan',
+  biayaPerolehan: 'biayaPerolehan',
   nomorSeri: 'nomorSeri',
   penyedia: 'penyedia',
   createdBy: 'createdBy',

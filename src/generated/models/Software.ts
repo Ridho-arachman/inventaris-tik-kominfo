@@ -279,7 +279,7 @@ export type SoftwareGroupByOutputType = {
   updatedBy: string | null
   opdId: string
   kategoriId: string
-  hardwareTerinstall: string
+  hardwareTerinstall: string | null
   _count: SoftwareCountAggregateOutputType | null
   _avg: SoftwareAvgAggregateOutputType | null
   _sum: SoftwareSumAggregateOutputType | null
@@ -323,12 +323,12 @@ export type SoftwareWhereInput = {
   updatedBy?: Prisma.StringNullableFilter<"Software"> | string | null
   opdId?: Prisma.StringFilter<"Software"> | string
   kategoriId?: Prisma.StringFilter<"Software"> | string
-  hardwareTerinstall?: Prisma.StringFilter<"Software"> | string
+  hardwareTerinstall?: Prisma.StringNullableFilter<"Software"> | string | null
   creator?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updater?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   opd?: Prisma.XOR<Prisma.OpdScalarRelationFilter, Prisma.OpdWhereInput>
   kategori?: Prisma.XOR<Prisma.KategoriSoftwareScalarRelationFilter, Prisma.KategoriSoftwareWhereInput>
-  hardware?: Prisma.XOR<Prisma.HardwareScalarRelationFilter, Prisma.HardwareWhereInput>
+  hardware?: Prisma.XOR<Prisma.HardwareNullableScalarRelationFilter, Prisma.HardwareWhereInput> | null
 }
 
 export type SoftwareOrderByWithRelationInput = {
@@ -349,7 +349,7 @@ export type SoftwareOrderByWithRelationInput = {
   updatedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   opdId?: Prisma.SortOrder
   kategoriId?: Prisma.SortOrder
-  hardwareTerinstall?: Prisma.SortOrder
+  hardwareTerinstall?: Prisma.SortOrderInput | Prisma.SortOrder
   creator?: Prisma.UserOrderByWithRelationInput
   updater?: Prisma.UserOrderByWithRelationInput
   opd?: Prisma.OpdOrderByWithRelationInput
@@ -378,12 +378,12 @@ export type SoftwareWhereUniqueInput = Prisma.AtLeast<{
   updatedBy?: Prisma.StringNullableFilter<"Software"> | string | null
   opdId?: Prisma.StringFilter<"Software"> | string
   kategoriId?: Prisma.StringFilter<"Software"> | string
-  hardwareTerinstall?: Prisma.StringFilter<"Software"> | string
+  hardwareTerinstall?: Prisma.StringNullableFilter<"Software"> | string | null
   creator?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updater?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   opd?: Prisma.XOR<Prisma.OpdScalarRelationFilter, Prisma.OpdWhereInput>
   kategori?: Prisma.XOR<Prisma.KategoriSoftwareScalarRelationFilter, Prisma.KategoriSoftwareWhereInput>
-  hardware?: Prisma.XOR<Prisma.HardwareScalarRelationFilter, Prisma.HardwareWhereInput>
+  hardware?: Prisma.XOR<Prisma.HardwareNullableScalarRelationFilter, Prisma.HardwareWhereInput> | null
 }, "id">
 
 export type SoftwareOrderByWithAggregationInput = {
@@ -404,7 +404,7 @@ export type SoftwareOrderByWithAggregationInput = {
   updatedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   opdId?: Prisma.SortOrder
   kategoriId?: Prisma.SortOrder
-  hardwareTerinstall?: Prisma.SortOrder
+  hardwareTerinstall?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.SoftwareCountOrderByAggregateInput
   _avg?: Prisma.SoftwareAvgOrderByAggregateInput
   _max?: Prisma.SoftwareMaxOrderByAggregateInput
@@ -433,7 +433,7 @@ export type SoftwareScalarWhereWithAggregatesInput = {
   updatedBy?: Prisma.StringNullableWithAggregatesFilter<"Software"> | string | null
   opdId?: Prisma.StringWithAggregatesFilter<"Software"> | string
   kategoriId?: Prisma.StringWithAggregatesFilter<"Software"> | string
-  hardwareTerinstall?: Prisma.StringWithAggregatesFilter<"Software"> | string
+  hardwareTerinstall?: Prisma.StringNullableWithAggregatesFilter<"Software"> | string | null
 }
 
 export type SoftwareCreateInput = {
@@ -450,11 +450,11 @@ export type SoftwareCreateInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
-  creator?: Prisma.UserCreateNestedOneWithoutCreatedSoftwraeInput
+  creator?: Prisma.UserCreateNestedOneWithoutCreatedSoftwareInput
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedSoftwareInput
   opd: Prisma.OpdCreateNestedOneWithoutSoftwareInput
-  kategori: Prisma.KategoriSoftwareCreateNestedOneWithoutHardwareInput
-  hardware: Prisma.HardwareCreateNestedOneWithoutSoftwareInput
+  kategori: Prisma.KategoriSoftwareCreateNestedOneWithoutSoftwareInput
+  hardware?: Prisma.HardwareCreateNestedOneWithoutSoftwareInput
 }
 
 export type SoftwareUncheckedCreateInput = {
@@ -475,7 +475,7 @@ export type SoftwareUncheckedCreateInput = {
   updatedBy?: string | null
   opdId: string
   kategoriId: string
-  hardwareTerinstall: string
+  hardwareTerinstall?: string | null
 }
 
 export type SoftwareUpdateInput = {
@@ -492,11 +492,11 @@ export type SoftwareUpdateInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
-  creator?: Prisma.UserUpdateOneWithoutCreatedSoftwraeNestedInput
+  creator?: Prisma.UserUpdateOneWithoutCreatedSoftwareNestedInput
   updater?: Prisma.UserUpdateOneWithoutUpdatedSoftwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutSoftwareNestedInput
-  kategori?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutHardwareNestedInput
-  hardware?: Prisma.HardwareUpdateOneRequiredWithoutSoftwareNestedInput
+  kategori?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutSoftwareNestedInput
+  hardware?: Prisma.HardwareUpdateOneWithoutSoftwareNestedInput
 }
 
 export type SoftwareUncheckedUpdateInput = {
@@ -517,7 +517,7 @@ export type SoftwareUncheckedUpdateInput = {
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
-  hardwareTerinstall?: Prisma.StringFieldUpdateOperationsInput | string
+  hardwareTerinstall?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SoftwareCreateManyInput = {
@@ -538,7 +538,7 @@ export type SoftwareCreateManyInput = {
   updatedBy?: string | null
   opdId: string
   kategoriId: string
-  hardwareTerinstall: string
+  hardwareTerinstall?: string | null
 }
 
 export type SoftwareUpdateManyMutationInput = {
@@ -575,7 +575,7 @@ export type SoftwareUncheckedUpdateManyInput = {
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
-  hardwareTerinstall?: Prisma.StringFieldUpdateOperationsInput | string
+  hardwareTerinstall?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SoftwareListRelationFilter = {
@@ -903,8 +903,8 @@ export type SoftwareCreateWithoutCreatorInput = {
   pic: string
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedSoftwareInput
   opd: Prisma.OpdCreateNestedOneWithoutSoftwareInput
-  kategori: Prisma.KategoriSoftwareCreateNestedOneWithoutHardwareInput
-  hardware: Prisma.HardwareCreateNestedOneWithoutSoftwareInput
+  kategori: Prisma.KategoriSoftwareCreateNestedOneWithoutSoftwareInput
+  hardware?: Prisma.HardwareCreateNestedOneWithoutSoftwareInput
 }
 
 export type SoftwareUncheckedCreateWithoutCreatorInput = {
@@ -924,7 +924,7 @@ export type SoftwareUncheckedCreateWithoutCreatorInput = {
   updatedBy?: string | null
   opdId: string
   kategoriId: string
-  hardwareTerinstall: string
+  hardwareTerinstall?: string | null
 }
 
 export type SoftwareCreateOrConnectWithoutCreatorInput = {
@@ -951,10 +951,10 @@ export type SoftwareCreateWithoutUpdaterInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
-  creator?: Prisma.UserCreateNestedOneWithoutCreatedSoftwraeInput
+  creator?: Prisma.UserCreateNestedOneWithoutCreatedSoftwareInput
   opd: Prisma.OpdCreateNestedOneWithoutSoftwareInput
-  kategori: Prisma.KategoriSoftwareCreateNestedOneWithoutHardwareInput
-  hardware: Prisma.HardwareCreateNestedOneWithoutSoftwareInput
+  kategori: Prisma.KategoriSoftwareCreateNestedOneWithoutSoftwareInput
+  hardware?: Prisma.HardwareCreateNestedOneWithoutSoftwareInput
 }
 
 export type SoftwareUncheckedCreateWithoutUpdaterInput = {
@@ -974,7 +974,7 @@ export type SoftwareUncheckedCreateWithoutUpdaterInput = {
   createdBy?: string | null
   opdId: string
   kategoriId: string
-  hardwareTerinstall: string
+  hardwareTerinstall?: string | null
 }
 
 export type SoftwareCreateOrConnectWithoutUpdaterInput = {
@@ -1024,7 +1024,7 @@ export type SoftwareScalarWhereInput = {
   updatedBy?: Prisma.StringNullableFilter<"Software"> | string | null
   opdId?: Prisma.StringFilter<"Software"> | string
   kategoriId?: Prisma.StringFilter<"Software"> | string
-  hardwareTerinstall?: Prisma.StringFilter<"Software"> | string
+  hardwareTerinstall?: Prisma.StringNullableFilter<"Software"> | string | null
 }
 
 export type SoftwareUpsertWithWhereUniqueWithoutUpdaterInput = {
@@ -1057,10 +1057,10 @@ export type SoftwareCreateWithoutOpdInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
-  creator?: Prisma.UserCreateNestedOneWithoutCreatedSoftwraeInput
+  creator?: Prisma.UserCreateNestedOneWithoutCreatedSoftwareInput
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedSoftwareInput
-  kategori: Prisma.KategoriSoftwareCreateNestedOneWithoutHardwareInput
-  hardware: Prisma.HardwareCreateNestedOneWithoutSoftwareInput
+  kategori: Prisma.KategoriSoftwareCreateNestedOneWithoutSoftwareInput
+  hardware?: Prisma.HardwareCreateNestedOneWithoutSoftwareInput
 }
 
 export type SoftwareUncheckedCreateWithoutOpdInput = {
@@ -1080,7 +1080,7 @@ export type SoftwareUncheckedCreateWithoutOpdInput = {
   createdBy?: string | null
   updatedBy?: string | null
   kategoriId: string
-  hardwareTerinstall: string
+  hardwareTerinstall?: string | null
 }
 
 export type SoftwareCreateOrConnectWithoutOpdInput = {
@@ -1123,10 +1123,10 @@ export type SoftwareCreateWithoutHardwareInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
-  creator?: Prisma.UserCreateNestedOneWithoutCreatedSoftwraeInput
+  creator?: Prisma.UserCreateNestedOneWithoutCreatedSoftwareInput
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedSoftwareInput
   opd: Prisma.OpdCreateNestedOneWithoutSoftwareInput
-  kategori: Prisma.KategoriSoftwareCreateNestedOneWithoutHardwareInput
+  kategori: Prisma.KategoriSoftwareCreateNestedOneWithoutSoftwareInput
 }
 
 export type SoftwareUncheckedCreateWithoutHardwareInput = {
@@ -1189,10 +1189,10 @@ export type SoftwareCreateWithoutKategoriInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
-  creator?: Prisma.UserCreateNestedOneWithoutCreatedSoftwraeInput
+  creator?: Prisma.UserCreateNestedOneWithoutCreatedSoftwareInput
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedSoftwareInput
   opd: Prisma.OpdCreateNestedOneWithoutSoftwareInput
-  hardware: Prisma.HardwareCreateNestedOneWithoutSoftwareInput
+  hardware?: Prisma.HardwareCreateNestedOneWithoutSoftwareInput
 }
 
 export type SoftwareUncheckedCreateWithoutKategoriInput = {
@@ -1212,7 +1212,7 @@ export type SoftwareUncheckedCreateWithoutKategoriInput = {
   createdBy?: string | null
   updatedBy?: string | null
   opdId: string
-  hardwareTerinstall: string
+  hardwareTerinstall?: string | null
 }
 
 export type SoftwareCreateOrConnectWithoutKategoriInput = {
@@ -1258,7 +1258,7 @@ export type SoftwareCreateManyCreatorInput = {
   updatedBy?: string | null
   opdId: string
   kategoriId: string
-  hardwareTerinstall: string
+  hardwareTerinstall?: string | null
 }
 
 export type SoftwareCreateManyUpdaterInput = {
@@ -1278,7 +1278,7 @@ export type SoftwareCreateManyUpdaterInput = {
   createdBy?: string | null
   opdId: string
   kategoriId: string
-  hardwareTerinstall: string
+  hardwareTerinstall?: string | null
 }
 
 export type SoftwareUpdateWithoutCreatorInput = {
@@ -1297,8 +1297,8 @@ export type SoftwareUpdateWithoutCreatorInput = {
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   updater?: Prisma.UserUpdateOneWithoutUpdatedSoftwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutSoftwareNestedInput
-  kategori?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutHardwareNestedInput
-  hardware?: Prisma.HardwareUpdateOneRequiredWithoutSoftwareNestedInput
+  kategori?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutSoftwareNestedInput
+  hardware?: Prisma.HardwareUpdateOneWithoutSoftwareNestedInput
 }
 
 export type SoftwareUncheckedUpdateWithoutCreatorInput = {
@@ -1318,7 +1318,7 @@ export type SoftwareUncheckedUpdateWithoutCreatorInput = {
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
-  hardwareTerinstall?: Prisma.StringFieldUpdateOperationsInput | string
+  hardwareTerinstall?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SoftwareUncheckedUpdateManyWithoutCreatorInput = {
@@ -1338,7 +1338,7 @@ export type SoftwareUncheckedUpdateManyWithoutCreatorInput = {
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
-  hardwareTerinstall?: Prisma.StringFieldUpdateOperationsInput | string
+  hardwareTerinstall?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SoftwareUpdateWithoutUpdaterInput = {
@@ -1355,10 +1355,10 @@ export type SoftwareUpdateWithoutUpdaterInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
-  creator?: Prisma.UserUpdateOneWithoutCreatedSoftwraeNestedInput
+  creator?: Prisma.UserUpdateOneWithoutCreatedSoftwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutSoftwareNestedInput
-  kategori?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutHardwareNestedInput
-  hardware?: Prisma.HardwareUpdateOneRequiredWithoutSoftwareNestedInput
+  kategori?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutSoftwareNestedInput
+  hardware?: Prisma.HardwareUpdateOneWithoutSoftwareNestedInput
 }
 
 export type SoftwareUncheckedUpdateWithoutUpdaterInput = {
@@ -1378,7 +1378,7 @@ export type SoftwareUncheckedUpdateWithoutUpdaterInput = {
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
-  hardwareTerinstall?: Prisma.StringFieldUpdateOperationsInput | string
+  hardwareTerinstall?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SoftwareUncheckedUpdateManyWithoutUpdaterInput = {
@@ -1398,7 +1398,7 @@ export type SoftwareUncheckedUpdateManyWithoutUpdaterInput = {
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
-  hardwareTerinstall?: Prisma.StringFieldUpdateOperationsInput | string
+  hardwareTerinstall?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SoftwareCreateManyOpdInput = {
@@ -1418,7 +1418,7 @@ export type SoftwareCreateManyOpdInput = {
   createdBy?: string | null
   updatedBy?: string | null
   kategoriId: string
-  hardwareTerinstall: string
+  hardwareTerinstall?: string | null
 }
 
 export type SoftwareUpdateWithoutOpdInput = {
@@ -1435,10 +1435,10 @@ export type SoftwareUpdateWithoutOpdInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
-  creator?: Prisma.UserUpdateOneWithoutCreatedSoftwraeNestedInput
+  creator?: Prisma.UserUpdateOneWithoutCreatedSoftwareNestedInput
   updater?: Prisma.UserUpdateOneWithoutUpdatedSoftwareNestedInput
-  kategori?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutHardwareNestedInput
-  hardware?: Prisma.HardwareUpdateOneRequiredWithoutSoftwareNestedInput
+  kategori?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutSoftwareNestedInput
+  hardware?: Prisma.HardwareUpdateOneWithoutSoftwareNestedInput
 }
 
 export type SoftwareUncheckedUpdateWithoutOpdInput = {
@@ -1458,7 +1458,7 @@ export type SoftwareUncheckedUpdateWithoutOpdInput = {
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
-  hardwareTerinstall?: Prisma.StringFieldUpdateOperationsInput | string
+  hardwareTerinstall?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SoftwareUncheckedUpdateManyWithoutOpdInput = {
@@ -1478,7 +1478,7 @@ export type SoftwareUncheckedUpdateManyWithoutOpdInput = {
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
-  hardwareTerinstall?: Prisma.StringFieldUpdateOperationsInput | string
+  hardwareTerinstall?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SoftwareCreateManyHardwareInput = {
@@ -1515,10 +1515,10 @@ export type SoftwareUpdateWithoutHardwareInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
-  creator?: Prisma.UserUpdateOneWithoutCreatedSoftwraeNestedInput
+  creator?: Prisma.UserUpdateOneWithoutCreatedSoftwareNestedInput
   updater?: Prisma.UserUpdateOneWithoutUpdatedSoftwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutSoftwareNestedInput
-  kategori?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutHardwareNestedInput
+  kategori?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutSoftwareNestedInput
 }
 
 export type SoftwareUncheckedUpdateWithoutHardwareInput = {
@@ -1578,7 +1578,7 @@ export type SoftwareCreateManyKategoriInput = {
   createdBy?: string | null
   updatedBy?: string | null
   opdId: string
-  hardwareTerinstall: string
+  hardwareTerinstall?: string | null
 }
 
 export type SoftwareUpdateWithoutKategoriInput = {
@@ -1595,10 +1595,10 @@ export type SoftwareUpdateWithoutKategoriInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
-  creator?: Prisma.UserUpdateOneWithoutCreatedSoftwraeNestedInput
+  creator?: Prisma.UserUpdateOneWithoutCreatedSoftwareNestedInput
   updater?: Prisma.UserUpdateOneWithoutUpdatedSoftwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutSoftwareNestedInput
-  hardware?: Prisma.HardwareUpdateOneRequiredWithoutSoftwareNestedInput
+  hardware?: Prisma.HardwareUpdateOneWithoutSoftwareNestedInput
 }
 
 export type SoftwareUncheckedUpdateWithoutKategoriInput = {
@@ -1618,7 +1618,7 @@ export type SoftwareUncheckedUpdateWithoutKategoriInput = {
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
-  hardwareTerinstall?: Prisma.StringFieldUpdateOperationsInput | string
+  hardwareTerinstall?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SoftwareUncheckedUpdateManyWithoutKategoriInput = {
@@ -1638,7 +1638,7 @@ export type SoftwareUncheckedUpdateManyWithoutKategoriInput = {
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
-  hardwareTerinstall?: Prisma.StringFieldUpdateOperationsInput | string
+  hardwareTerinstall?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1666,7 +1666,7 @@ export type SoftwareSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   updater?: boolean | Prisma.Software$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
   kategori?: boolean | Prisma.KategoriSoftwareDefaultArgs<ExtArgs>
-  hardware?: boolean | Prisma.HardwareDefaultArgs<ExtArgs>
+  hardware?: boolean | Prisma.Software$hardwareArgs<ExtArgs>
 }, ExtArgs["result"]["software"]>
 
 export type SoftwareSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1692,7 +1692,7 @@ export type SoftwareSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   updater?: boolean | Prisma.Software$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
   kategori?: boolean | Prisma.KategoriSoftwareDefaultArgs<ExtArgs>
-  hardware?: boolean | Prisma.HardwareDefaultArgs<ExtArgs>
+  hardware?: boolean | Prisma.Software$hardwareArgs<ExtArgs>
 }, ExtArgs["result"]["software"]>
 
 export type SoftwareSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1718,7 +1718,7 @@ export type SoftwareSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   updater?: boolean | Prisma.Software$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
   kategori?: boolean | Prisma.KategoriSoftwareDefaultArgs<ExtArgs>
-  hardware?: boolean | Prisma.HardwareDefaultArgs<ExtArgs>
+  hardware?: boolean | Prisma.Software$hardwareArgs<ExtArgs>
 }, ExtArgs["result"]["software"]>
 
 export type SoftwareSelectScalar = {
@@ -1748,21 +1748,21 @@ export type SoftwareInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   updater?: boolean | Prisma.Software$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
   kategori?: boolean | Prisma.KategoriSoftwareDefaultArgs<ExtArgs>
-  hardware?: boolean | Prisma.HardwareDefaultArgs<ExtArgs>
+  hardware?: boolean | Prisma.Software$hardwareArgs<ExtArgs>
 }
 export type SoftwareIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   creator?: boolean | Prisma.Software$creatorArgs<ExtArgs>
   updater?: boolean | Prisma.Software$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
   kategori?: boolean | Prisma.KategoriSoftwareDefaultArgs<ExtArgs>
-  hardware?: boolean | Prisma.HardwareDefaultArgs<ExtArgs>
+  hardware?: boolean | Prisma.Software$hardwareArgs<ExtArgs>
 }
 export type SoftwareIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   creator?: boolean | Prisma.Software$creatorArgs<ExtArgs>
   updater?: boolean | Prisma.Software$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
   kategori?: boolean | Prisma.KategoriSoftwareDefaultArgs<ExtArgs>
-  hardware?: boolean | Prisma.HardwareDefaultArgs<ExtArgs>
+  hardware?: boolean | Prisma.Software$hardwareArgs<ExtArgs>
 }
 
 export type $SoftwarePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1772,7 +1772,7 @@ export type $SoftwarePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     updater: Prisma.$UserPayload<ExtArgs> | null
     opd: Prisma.$OpdPayload<ExtArgs>
     kategori: Prisma.$KategoriSoftwarePayload<ExtArgs>
-    hardware: Prisma.$HardwarePayload<ExtArgs>
+    hardware: Prisma.$HardwarePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1792,7 +1792,7 @@ export type $SoftwarePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     updatedBy: string | null
     opdId: string
     kategoriId: string
-    hardwareTerinstall: string
+    hardwareTerinstall: string | null
   }, ExtArgs["result"]["software"]>
   composites: {}
 }
@@ -2191,7 +2191,7 @@ export interface Prisma__SoftwareClient<T, Null = never, ExtArgs extends runtime
   updater<T extends Prisma.Software$updaterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Software$updaterArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   opd<T extends Prisma.OpdDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OpdDefaultArgs<ExtArgs>>): Prisma.Prisma__OpdClient<runtime.Types.Result.GetResult<Prisma.$OpdPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   kategori<T extends Prisma.KategoriSoftwareDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.KategoriSoftwareDefaultArgs<ExtArgs>>): Prisma.Prisma__KategoriSoftwareClient<runtime.Types.Result.GetResult<Prisma.$KategoriSoftwarePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  hardware<T extends Prisma.HardwareDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.HardwareDefaultArgs<ExtArgs>>): Prisma.Prisma__HardwareClient<runtime.Types.Result.GetResult<Prisma.$HardwarePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  hardware<T extends Prisma.Software$hardwareArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Software$hardwareArgs<ExtArgs>>): Prisma.Prisma__HardwareClient<runtime.Types.Result.GetResult<Prisma.$HardwarePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2670,6 +2670,25 @@ export type Software$updaterArgs<ExtArgs extends runtime.Types.Extensions.Intern
    */
   include?: Prisma.UserInclude<ExtArgs> | null
   where?: Prisma.UserWhereInput
+}
+
+/**
+ * Software.hardware
+ */
+export type Software$hardwareArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Hardware
+   */
+  select?: Prisma.HardwareSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Hardware
+   */
+  omit?: Prisma.HardwareOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HardwareInclude<ExtArgs> | null
+  where?: Prisma.HardwareWhereInput
 }
 
 /**

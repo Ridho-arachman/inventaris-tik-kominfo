@@ -18,7 +18,7 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  if (request.nextUrl.pathname.startsWith("/admin") && role !== "Admin") {
+  if (request.nextUrl.pathname.startsWith("/admin") && role !== "ADMIN") {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 

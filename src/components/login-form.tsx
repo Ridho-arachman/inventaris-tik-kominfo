@@ -21,7 +21,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { signInSchema } from "@/schema/signUp";
+import { signInSchema } from "@/schema/authSchema";
 import { usePost } from "@/hooks/useApi";
 import { notifier } from "./ToastNotifier";
 import { AxiosError } from "axios";
@@ -45,17 +45,15 @@ export function LoginForm() {
 
   const onSubmit = async (data: z.infer<typeof signInSchema>) => {
     try {
-      console.log("data", data);
       const res = await post(data);
       notifier.success(
         res.message,
         `Selamat datang, ${res.data.user.name}!!!..`
       );
+
       if (res.data.user.role === "OPD") router.push("/opd");
       if (res.data.user.role === "ADMIN") router.push("/admin");
     } catch (error) {
-      console.log(error);
-
       let message = "Terjadi kesalahan";
 
       if (error instanceof AxiosError) {
