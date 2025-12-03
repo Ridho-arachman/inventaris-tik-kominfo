@@ -32,15 +32,7 @@ export const GET = async (
 
     const opdId = parsedId.data.id;
 
-    const opd = await prisma.opd.findMany({ where: { id: opdId } });
-
-    if (opd.length === 0) {
-      return handleResponse({
-        success: false,
-        message: "Data OPD Tidak Ditemukan",
-        status: 404,
-      });
-    }
+    const opd = await prisma.opd.findUniqueOrThrow({ where: { id: opdId } });
 
     return handleResponse({
       success: true,

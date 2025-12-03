@@ -89,7 +89,7 @@ export const GET = async (req: NextRequest) => {
         }
       : {};
 
-    const opd = await prisma.opd.findMany({ where });
+    const opd = await prisma.opd.findMany({ where, orderBy: { nama: "desc" } });
 
     if (opd.length === 0) {
       return handleResponse({

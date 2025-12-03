@@ -10,7 +10,7 @@ export function useGet(url: string | null) {
   const { data, error, isLoading, mutate } = useSWR(url, fetcher);
 
   return {
-    data: data?.data,
+    data: data?.data || [],
     message: data?.message,
     success: data?.success,
     isLoading,

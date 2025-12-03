@@ -2,100 +2,213 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { useRouter, useSearchParams } from "next/navigation";
+import * as React from "react";
 
-// =====================
-// Dummy Data OPD
-// Sesuai schema DB
-// =====================
-const dummyOPD = [
-  {
-    id: 1,
-    name: "Dinas Pendidikan",
-    email: "pendidikan@domain.go.id",
-    phone: "021-123456",
-    totalAssets: 12,
-    aktif: 10,
-    nonAktif: 2,
-  },
-  {
-    id: 2,
-    name: "Dinas Kesehatan",
-    email: "kesehatan@domain.go.id",
-    phone: "021-234567",
-    totalAssets: 8,
-    aktif: 6,
-    nonAktif: 2,
-  },
-  {
-    id: 3,
-    name: "Dinas Perhubungan",
-    email: "perhubungan@domain.go.id",
-    phone: "021-345678",
-    totalAssets: 15,
-    aktif: 12,
-    nonAktif: 3,
-  },
-];
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+
+import { useDelete, useGet } from "@/hooks/useApi";
+import { Opd } from "@/generated/client";
+import { Skeleton } from "@/components/ui/skeleton";
+
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+
+import { MoreHorizontal, Pencil, Trash, Plus } from "lucide-react";
+import { notifier } from "@/components/ToastNotifier";
+import { AxiosError } from "axios";
+import { ApiError } from "@/types/ApiError";
+
+import { useDebounce } from "use-debounce";
 
 export default function OPDListPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const q = searchParams.get("q") ?? "";
+
+  // State untuk search
+  const [searchValue, setSearchValue] = React.useState(q);
+
+  // Debounce 400ms
+  const [debounced] = useDebounce(searchValue, 400);
+
+  // Konversi searchParams jadi string yang stabil
+  const paramsString = React.useMemo(
+    () => searchParams.toString(),
+    [searchParams]
+  );
+
+  // Update URL hanya ketika debounce berubah
+  React.useEffect(() => {
+    const newParams = new URLSearchParams(paramsString);
+
+    if (debounced) newParams.set("q", debounced);
+    else newParams.delete("q");
+
+    router.push(`/admin/manage-opd?${newParams.toString()}`);
+  }, [debounced, paramsString, router]);
+
+  const {
+    data: opdList = [],
+    isLoading,
+    error,
+    mutate,
+  } = useGet(`/opd?q=${q}`);
+
+  const { del, loading } = useDelete();
+
+  function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
+    setSearchValue(e.target.value);
+  }
+
+  async function handleDelete(id: string) {
+    try {
+      const res = await del(`/opd/${id}`);
+
+      notifier.success("Berhasil", `OPD ${res.data.nama} berhasil dihapus`);
+      mutate();
+    } catch (error) {
+      const err = error as AxiosError<ApiError>;
+      notifier.error(
+        "Gagal Menghapus OPD",
+        err.response?.data?.message || "Terjadi kesalahan"
+      );
+    }
+  }
+
   return (
     <div className="min-h-screen px-6 py-10">
+      {/* Title */}
       <motion.h1
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-3xl font-bold mb-8"
+        className="text-3xl font-bold mb-6"
       >
         Daftar OPD
       </motion.h1>
 
+      {/* Search + Button */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div className="w-full sm:w-1/2">
+          <Input
+            placeholder="Cari OPD..."
+            value={searchValue}
+            onChange={handleSearch}
+          />
+        </div>
+
+        <Link href="/admin/manage-opd/add">
+          <Button className="flex items-center gap-2">
+            <Plus className="w-4 h-4" />
+            Tambah OPD
+          </Button>
+        </Link>
+      </div>
+
+      {error && <p className="text-red-500">{error.response?.data?.message}</p>}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {dummyOPD.map((opd, idx) => (
-          <motion.div
-            key={opd.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: idx * 0.1 }}
-          >
-            <Link href={`/admin/opd/${opd.id}`}>
-              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-                <CardHeader>
-                  <CardTitle className="text-lg font-semibold">
-                    {opd.name}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  <div>
-                    <p className="text-sm text-gray-500">Email</p>
-                    <p className="font-medium">{opd.email}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">Telepon</p>
-                    <p className="font-medium">{opd.phone}</p>
-                  </div>
-                  <div className="flex justify-between mt-2">
-                    <p>Total Asset:</p>
-                    <p className="font-semibold">{opd.totalAssets}</p>
-                  </div>
-                  <div className="flex justify-between">
-                    <p>Aktif:</p>
-                    <Badge className="bg-green-100 text-green-700">
-                      {opd.aktif}
-                    </Badge>
-                  </div>
-                  <div className="flex justify-between">
-                    <p>Non Aktif:</p>
-                    <Badge className="bg-red-100 text-red-700">
-                      {opd.nonAktif}
-                    </Badge>
-                  </div>
-                </CardContent>
+        {/* Loading skeleton */}
+        {isLoading &&
+          Array.from({ length: 3 }).map((_, i) => (
+            <Card key={i} className="p-4 space-y-4">
+              <Skeleton className="h-6 w-3/4" />
+              <Skeleton className="h-4 w-1/2" />
+              <Skeleton className="h-4 w-2/3" />
+              <Skeleton className="h-4 w-1/2" />
+              <Skeleton className="h-4 w-2/3" />
+            </Card>
+          ))}
+
+        {/* Data */}
+        {!isLoading &&
+          opdList.map((opd: Opd, idx: number) => (
+            <motion.div
+              key={opd.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: idx * 0.1 }}
+            >
+              <Card className="hover:shadow-lg transition-shadow relative">
+                {/* ACTION (⋮) */}
+                <div className="absolute top-3 right-3 z-10">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button className="p-1 rounded hover:bg-gray-100 cursor-pointer">
+                        <MoreHorizontal className="w-5 h-5" />
+                      </button>
+                    </DropdownMenuTrigger>
+
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem asChild className="cursor-pointer">
+                        <Link
+                          href={`/admin/manage-opd/${opd.id}/edit`}
+                          className="flex items-center gap-2"
+                        >
+                          <Pencil className="w-4 h-4" /> Edit
+                        </Link>
+                      </DropdownMenuItem>
+
+                      <DropdownMenuItem
+                        className="text-red-600 flex items-center gap-2 cursor-pointer"
+                        onClick={() => handleDelete(opd.id)}
+                        disabled={loading}
+                      >
+                        <Trash className="w-4 h-4" /> Hapus
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+
+                <Link href={`/admin/manage-opd/${opd.id}`}>
+                  <CardHeader>
+                    <CardTitle className="text-lg font-semibold">
+                      {opd.nama}
+                    </CardTitle>
+                  </CardHeader>
+
+                  <CardContent className="space-y-2">
+                    <div>
+                      <p className="text-sm text-gray-500">Kode OPD</p>
+                      <p className="font-medium">{opd.kode}</p>
+                    </div>
+
+                    <div>
+                      <p className="text-sm text-gray-500">Dibuat Pada</p>
+                      <p className="font-medium">
+                        {new Date(opd.createdAt).toLocaleDateString("id-ID", {
+                          day: "2-digit",
+                          month: "long",
+                          year: "numeric",
+                        })}
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-sm text-gray-500">
+                        Terakhir Diperbarui
+                      </p>
+                      <p className="font-medium">
+                        {new Date(opd.updatedAt).toLocaleDateString("id-ID", {
+                          day: "2-digit",
+                          month: "long",
+                          year: "numeric",
+                        })}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Link>
               </Card>
-            </Link>
-          </motion.div>
-        ))}
+            </motion.div>
+          ))}
       </div>
     </div>
   );

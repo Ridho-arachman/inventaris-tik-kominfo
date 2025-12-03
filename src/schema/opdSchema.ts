@@ -5,7 +5,8 @@ export const OpdCreateSchema = z.object({
     .string()
     .trim()
     .nonempty("Code wajib diisi")
-    .max(50, "Code maksimal 20 karakter"),
+    .max(50, "Code maksimal 20 karakter")
+    .uppercase("Code harus huruf besar"),
 
   nama: z
     .string()
@@ -15,7 +16,7 @@ export const OpdCreateSchema = z.object({
 });
 
 export const opdQuerySchema = z.object({
-  q: z.string("Query harus berupa string").trim().uppercase().optional(),
+  q: z.string("Query harus berupa string").trim().optional(),
 });
 
 export const idOpdSchema = z.object({

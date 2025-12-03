@@ -18,7 +18,7 @@ model User {
   updatedAt       DateTime  @updatedAt
 
   idOpd           String?   @db.VarChar(100)
-  opd             Opd?      @relation(fields: [idOpd], references: [id])
+  opd             Opd?      @relation(fields: [idOpd], references: [id],onDelete:Restrict,onUpdate: Cascade)
 
   sessions        Session[]
   accounts        Account[]
