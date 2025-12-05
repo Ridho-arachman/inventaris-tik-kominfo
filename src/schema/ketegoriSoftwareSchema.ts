@@ -1,6 +1,6 @@
 import z from "zod";
 
-export const kategoriHardwareSchema = z.object({
+export const kategoriSoftwareSchema = z.object({
   nama: z
     .string("Name harus berupa string")
     .trim()
@@ -9,7 +9,7 @@ export const kategoriHardwareSchema = z.object({
     .uppercase("Name harus huruf besar"),
 });
 
-export const kategoriHardwareQuerySchema = z.object({
+export const kategoriSoftwareQuerySchema = z.object({
   q: z
     .string("Name harus berupa string")
     .trim()
@@ -17,6 +17,6 @@ export const kategoriHardwareQuerySchema = z.object({
     .optional(),
 });
 
-export const kategoriHardwareIdSchema = z.object({
+export const kategoriSoftwareIdSchema = z.object({
   id: z.string().trim().cuid("Id Tidak Valid"),
 });

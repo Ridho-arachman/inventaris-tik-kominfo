@@ -3,14 +3,15 @@ import { handleBetterAuthError } from "@/lib/handleBetterAuthError";
 import { handleResponse } from "@/lib/handleResponse";
 import { handleZodValidation } from "@/lib/handleZodValidation";
 import prisma from "@/lib/prisma";
-import { signUpSchema } from "@/schema/authSchema";
+import { signUpAdminSchema } from "@/schema/authSchema";
+
 import { NextRequest } from "next/server";
 
 export const POST = async (req: NextRequest) => {
   try {
     const body = await req.json();
 
-    const parsed = signUpSchema.safeParse(body);
+    const parsed = signUpAdminSchema.safeParse(body);
 
     if (!parsed.success) return handleZodValidation(parsed);
 

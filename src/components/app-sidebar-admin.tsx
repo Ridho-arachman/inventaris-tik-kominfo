@@ -26,6 +26,7 @@ type MenuItem = {
   title: string;
   url: string;
   onClick?: () => void; // optional
+  classname?: string;
 };
 
 type NavGroup = {
@@ -62,12 +63,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             url: "/admin/manage-user-opd",
           },
           {
+            title: "Manage Kategori Asset TIK",
+            url: "/admin/manage-kategori-asset",
+          },
+          {
             title: "Manage Asset TIK",
             url: "/admin/manage-asset",
           },
           {
             title: "Logout",
             url: "#",
+            classname: "bg-red-500 text-white",
             onClick: async () => {
               try {
                 await post({});
@@ -78,62 +84,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 notifier.error("Logout Gagal", err.response?.data?.message);
               }
             },
-          },
-        ],
-      },
-      {
-        title: "API Reference",
-        url: "#",
-        items: [
-          {
-            title: "Components",
-            url: "#",
-          },
-          {
-            title: "File Conventions",
-            url: "#",
-          },
-          {
-            title: "Functions",
-            url: "#",
-          },
-          {
-            title: "next.config.js Options",
-            url: "#",
-          },
-          {
-            title: "CLI",
-            url: "#",
-          },
-          {
-            title: "Edge Runtime",
-            url: "#",
-          },
-        ],
-      },
-      {
-        title: "Architecture",
-        url: "#",
-        items: [
-          {
-            title: "Accessibility",
-            url: "#",
-          },
-          {
-            title: "Fast Refresh",
-            url: "#",
-          },
-          {
-            title: "Next.js Compiler",
-            url: "#",
-          },
-          {
-            title: "Supported Browsers",
-            url: "#",
-          },
-          {
-            title: "Turbopack",
-            url: "#",
           },
         ],
       },
@@ -163,6 +113,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                       isActive={isActiveRoute(pathname, item.url)}
                       onClick={item.onClick || undefined}
                       disabled={loading}
+                      className={item.classname}
                     >
                       <a href={item.url}>{item.title}</a>
                     </SidebarMenuButton>

@@ -111,7 +111,6 @@ model KategoriHardware {
 enum StatusAset {
   AKTIF
   NON_AKTIF
-  CADANGAN
 }
 
 model Hardware {
@@ -130,22 +129,22 @@ model Hardware {
   penyedia        String?          @db.VarChar(255)
 
   createdBy       String?          @db.VarChar(100)
-  creator         User?            @relation("HardwareCreator", fields: [createdBy], references: [id])
+  creator         User?            @relation("HardwareCreator", fields: [createdBy], references: [id], onDelete: Restrict,onUpdate: Cascade)
 
   updatedBy       String?          @db.VarChar(100)
-  updater         User?            @relation("HardwareUpdater", fields: [updatedBy], references: [id])
+  updater         User?            @relation("HardwareUpdater", fields: [updatedBy], references: [id], onDelete: Restrict,onUpdate: Cascade)
 
   opdId           String           @db.VarChar(100)
-  opd             Opd              @relation(fields: [opdId], references: [id])
+  opd             Opd              @relation(fields: [opdId], references: [id],onDelete: Restrict,onUpdate: Cascade)
 
-  jenisId         String           @db.VarChar(100)
-  jenisHardware   KategoriHardware @relation(fields: [jenisId], references: [id])
+  kategoriId         String           @db.VarChar(100)
+  kategoriHardware   KategoriHardware @relation(fields: [kategoriId], references: [id],onUpdate: Cascade, onDelete: Restrict)
 
   software        Software[]
 
   
   @@index([opdId])
-  @@index([jenisId])
+  @@index([kategoriId])
 }
 
 enum JenisLisensi {
@@ -186,19 +185,19 @@ model Software {
   pic                   String               @db.VarChar(255)
 
   createdBy             String?              @db.VarChar(100)
-  creator               User?                @relation("SoftwareCreator", fields: [createdBy], references: [id])
+  creator               User?                @relation("SoftwareCreator", fields: [createdBy], references: [id], onDelete: Restrict,onUpdate: Cascade)
 
   updatedBy             String?              @db.VarChar(100)
-  updater               User?                @relation("SoftwareUpdater", fields: [updatedBy], references: [id])
+  updater               User?                @relation("SoftwareUpdater", fields: [updatedBy], references: [id], onDelete: Restrict,onUpdate: Cascade)
 
   opdId                 String               @db.VarChar(100)
-  opd                   Opd                  @relation(fields: [opdId], references: [id])
+  opd                   Opd                  @relation(fields: [opdId], references: [id],onDelete: Restrict, onUpdate: Cascade)
 
   kategoriId            String               @db.VarChar(100)
-  kategori              KategoriSoftware     @relation(fields: [kategoriId], references: [id]) 
+  kategoriSoftware              KategoriSoftware     @relation(fields: [kategoriId], references: [id],onDelete: Restrict, onUpdate: Cascade) 
 
   hardwareTerinstall    String?              @db.VarChar(100)
-  hardware              Hardware?            @relation(fields: [hardwareTerinstall], references: [id])
+  hardware              Hardware?            @relation(fields: [hardwareTerinstall], references: [id],onDelete: Restrict, onUpdate: Cascade)
 
   @@index([opdId])
   @@index([kategoriId])

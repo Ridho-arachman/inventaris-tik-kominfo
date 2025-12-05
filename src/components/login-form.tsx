@@ -29,6 +29,7 @@ import { AxiosError } from "axios";
 // Lucide Icons
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { ApiError } from "@/types/ApiError";
 
 export function LoginForm() {
   const router = useRouter();
@@ -54,15 +55,11 @@ export function LoginForm() {
       if (res.data.user.role === "OPD") router.push("/opd");
       if (res.data.user.role === "ADMIN") router.push("/admin");
     } catch (error) {
-      let message = "Terjadi kesalahan";
+      console.log(error);
 
-      if (error instanceof AxiosError) {
-        message = error.response?.data?.message ?? message;
-      } else if (error instanceof Error) {
-        message = error.message;
-      }
+      const err = error as AxiosError<ApiError>;
 
-      notifier.error("Login Gagal", message);
+      notifier.error("Login Gagal", err.response?.data.message);
     }
   };
 

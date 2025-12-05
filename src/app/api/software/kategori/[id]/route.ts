@@ -4,15 +4,15 @@ import { handleResponse } from "@/lib/handleResponse";
 import { handleZodValidation } from "@/lib/handleZodValidation";
 import prisma from "@/lib/prisma";
 import {
-  kategoriHardwareIdSchema,
-  kategoriHardwareSchema,
-} from "@/schema/ketegoriHardwareSchema";
+  kategoriSoftwareIdSchema,
+  kategoriSoftwareSchema,
+} from "@/schema/ketegoriSoftwareSchema";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
 
 export const GET = async (
-  req: NextRequest,
-  ctx: RouteContext<"/api/hardware/kategori/[id]">
+  _req: NextRequest,
+  ctx: RouteContext<"/api/software/kategori/[id]">
 ) => {
   try {
     const user = await auth.api.getSession({
@@ -29,20 +29,20 @@ export const GET = async (
 
     const { id } = await ctx.params;
 
-    const parsedId = kategoriHardwareIdSchema.safeParse({ id });
+    const parsedId = kategoriSoftwareIdSchema.safeParse({ id });
 
     if (!parsedId.success) return handleZodValidation(parsedId);
 
-    const kategoriHardwareId = parsedId.data.id;
+    const kategoriSoftwareId = parsedId.data.id;
 
-    const kategoriHardware = await prisma.kategoriHardware.findUniqueOrThrow({
-      where: { id: kategoriHardwareId },
+    const kategoriSoftware = await prisma.kategoriSoftware.findUniqueOrThrow({
+      where: { id: kategoriSoftwareId },
     });
 
     return handleResponse({
       success: true,
-      message: "Data Kategori Hardware Berhasil Ditemukan",
-      data: kategoriHardware,
+      message: "Data Kategori Software Berhasil Ditemukan",
+      data: kategoriSoftware,
       status: 200,
     });
   } catch (error) {
@@ -85,8 +85,8 @@ export const PUT = async (
     const body = await req.json();
     const { id } = await ctx.params;
 
-    const parsedId = kategoriHardwareIdSchema.safeParse({ id });
-    const parsed = kategoriHardwareSchema.safeParse(body);
+    const parsedId = kategoriSoftwareIdSchema.safeParse({ id });
+    const parsed = kategoriSoftwareSchema.safeParse(body);
 
     if (!parsedId.success) return handleZodValidation(parsedId);
     if (!parsed.success) return handleZodValidation(parsed);
@@ -94,15 +94,15 @@ export const PUT = async (
     const data = parsed.data;
     const dataId = parsedId.data.id;
 
-    const kategoriHardware = await prisma.kategoriHardware.update({
+    const kategoriSoftware = await prisma.kategoriSoftware.update({
       where: { id: dataId },
       data,
     });
 
     return handleResponse({
       success: true,
-      message: "Kategori Hardware Berhasil Diperbarui",
-      data: kategoriHardware,
+      message: "Kategori Software Berhasil Diperbarui",
+      data: kategoriSoftware,
       status: 200,
     });
   } catch (error) {
@@ -127,7 +127,7 @@ export const PUT = async (
 
 export const DELETE = async (
   _req: NextRequest,
-  ctx: RouteContext<"/api/opd/[id]">
+  ctx: RouteContext<"/api/software/kategori/[id]">
 ) => {
   try {
     const user = await auth.api.getSession({
@@ -144,18 +144,18 @@ export const DELETE = async (
 
     const { id } = await ctx.params;
 
-    const parsedId = kategoriHardwareIdSchema.safeParse({ id });
+    const parsedId = kategoriSoftwareIdSchema.safeParse({ id });
 
     if (!parsedId.success) return handleZodValidation(parsedId);
 
-    const kategoriHardware = await prisma.kategoriHardware.delete({
+    const kategoriSoftware = await prisma.kategoriSoftware.delete({
       where: { id },
     });
 
     return handleResponse({
       success: true,
-      message: "Kategori Hardware Berhasil Dihapus",
-      data: kategoriHardware,
+      message: "Kategori Software Berhasil Dihapus",
+      data: kategoriSoftware,
       status: 200,
     });
   } catch (error) {

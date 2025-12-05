@@ -1,12 +1,14 @@
-import { Prisma } from "@/generated/client";
-import { auth } from "@/lib/auth";
-import { handlePrismaError } from "@/lib/handlePrsimaError";
-import { handleResponse } from "@/lib/handleResponse";
-import { handleZodValidation } from "@/lib/handleZodValidation";
 import prisma from "@/lib/prisma";
-import { OpdCreateSchema, opdQuerySchema } from "@/schema/opdSchema";
+import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
+import { handleResponse } from "@/lib/handleResponse";
+import { handlePrismaError } from "@/lib/handlePrsimaError";
+import { handleZodValidation } from "@/lib/handleZodValidation";
+import {
+  kategoriSoftwareQuerySchema,
+  kategoriSoftwareSchema,
+} from "@/schema/ketegoriSoftwareSchema";
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -24,18 +26,18 @@ export const POST = async (req: NextRequest) => {
 
     const body = await req.json();
 
-    const parsed = OpdCreateSchema.safeParse(body);
+    const parsed = kategoriSoftwareSchema.safeParse(body);
 
     if (!parsed.success) return handleZodValidation(parsed);
 
     const data = parsed.data;
 
-    const opd = await prisma.opd.create({ data });
+    const kategoriSoftware = await prisma.kategoriSoftware.create({ data });
 
     return handleResponse({
       success: true,
-      message: "OPD Berhasil Dibuat",
-      data: opd,
+      message: "Kategori Software Berhasil Dibuat",
+      data: kategoriSoftware,
       status: 201,
     });
   } catch (error) {
@@ -64,80 +66,39 @@ export const GET = async (req: NextRequest) => {
       headers: await headers(),
     });
 
-    if (!user)
+    if (!user) {
       return handleResponse({
         success: false,
         message: "User Belum Login",
         status: 403,
       });
+    }
 
     const searchParams = req.nextUrl.searchParams;
     const q = searchParams.get("q") || "";
 
-    const parsedQ = opdQuerySchema.safeParse({ q });
+    const parsedQ = kategoriSoftwareQuerySchema.safeParse({ q });
 
     if (!parsedQ.success) return handleZodValidation(parsedQ);
 
     const query = parsedQ.data.q;
 
-    const where: Prisma.OpdWhereInput = query
-      ? {
-          OR: [
-            { kode: { contains: query, mode: "insensitive" } },
-            { nama: { contains: query, mode: "insensitive" } },
-          ],
-        }
-      : {};
-
-    const opds = await prisma.opd.findMany({
-      where, // filter OPD
-      orderBy: { nama: "asc" },
-      include: {
-        hardware: { select: { status: true } },
-        software: { select: { status: true } },
-      },
+    const kategoriSoftware = await prisma.kategoriSoftware.findMany({
+      where: query ? { nama: { contains: query, mode: "insensitive" } } : {},
     });
 
-    // Hitung per status
-    const opdsWithCounts = opds.map((opd) => {
-      const hardwareCount: Record<string, number> = {
-        AKTIF: 0,
-        NON_AKTIF: 0,
-      };
-      const softwareCount: Record<string, number> = {
-        AKTIF: 0,
-        NON_AKTIF: 0,
-      };
-
-      opd.hardware.forEach((h) => {
-        if (hardwareCount[h.status] !== undefined) hardwareCount[h.status] += 1;
-      });
-
-      opd.software.forEach((s) => {
-        if (softwareCount[s.status] !== undefined) softwareCount[s.status] += 1;
-      });
-
-      return {
-        ...opd,
-        _count: {
-          hardwareByStatus: hardwareCount,
-          softwareByStatus: softwareCount,
-        },
-      };
-    });
-
-    if (opdsWithCounts.length === 0) {
+    if (kategoriSoftware.length === 0) {
       return handleResponse({
         success: false,
-        message: "Data OPD Tidak Ditemukan",
+        message: "Data Kategori Software Tidak Ditemukan",
         status: 404,
       });
     }
 
     return handleResponse({
       success: true,
-      message: "Data OPD Berhasil Ditemukan",
-      data: opdsWithCounts,
+      message: "Data Kategori Software Berhasil Ditemukan",
+      data: kategoriSoftware,
       status: 200,
     });
   } catch (error) {

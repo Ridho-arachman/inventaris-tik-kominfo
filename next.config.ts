@@ -4,7 +4,18 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
   images: {
-    domains: ["cdn-icons-png.flaticon.com", "images.pexels.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn-icons-png.flaticon.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "images.pexels.com",
+        port: "",
+      },
+    ],
   },
 };
 
