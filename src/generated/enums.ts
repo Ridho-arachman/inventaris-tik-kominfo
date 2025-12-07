@@ -19,11 +19,20 @@ export type Role = (typeof Role)[keyof typeof Role]
 
 export const StatusAset = {
   AKTIF: 'AKTIF',
-  NON_AKTIF: 'NON_AKTIF',
-  CADANGAN: 'CADANGAN'
+  NON_AKTIF: 'NON_AKTIF'
 } as const
 
 export type StatusAset = (typeof StatusAset)[keyof typeof StatusAset]
+
+
+export const SumberPengadaan = {
+  PEMBELIAN: 'PEMBELIAN',
+  HIBAH: 'HIBAH',
+  TRANSFER_OPD: 'TRANSFER_OPD',
+  PROYEK_PAKET: 'PROYEK_PAKET'
+} as const
+
+export type SumberPengadaan = (typeof SumberPengadaan)[keyof typeof SumberPengadaan]
 
 
 export const JenisLisensi = {

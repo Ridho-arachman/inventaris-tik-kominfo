@@ -221,7 +221,7 @@ export type KategoriSoftwareCreateInput = {
   nama: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  software?: Prisma.SoftwareCreateNestedManyWithoutKategoriInput
+  software?: Prisma.SoftwareCreateNestedManyWithoutKategoriSoftwareInput
 }
 
 export type KategoriSoftwareUncheckedCreateInput = {
@@ -229,7 +229,7 @@ export type KategoriSoftwareUncheckedCreateInput = {
   nama: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  software?: Prisma.SoftwareUncheckedCreateNestedManyWithoutKategoriInput
+  software?: Prisma.SoftwareUncheckedCreateNestedManyWithoutKategoriSoftwareInput
 }
 
 export type KategoriSoftwareUpdateInput = {
@@ -237,7 +237,7 @@ export type KategoriSoftwareUpdateInput = {
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  software?: Prisma.SoftwareUpdateManyWithoutKategoriNestedInput
+  software?: Prisma.SoftwareUpdateManyWithoutKategoriSoftwareNestedInput
 }
 
 export type KategoriSoftwareUncheckedUpdateInput = {
@@ -245,7 +245,7 @@ export type KategoriSoftwareUncheckedUpdateInput = {
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  software?: Prisma.SoftwareUncheckedUpdateManyWithoutKategoriNestedInput
+  software?: Prisma.SoftwareUncheckedUpdateManyWithoutKategoriSoftwareNestedInput
 }
 
 export type KategoriSoftwareCreateManyInput = {

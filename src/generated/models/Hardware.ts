@@ -47,11 +47,16 @@ export type HardwareMinAggregateOutputType = {
   pic: string | null
   biayaPerolehan: runtime.Decimal | null
   nomorSeri: string | null
+  sumber: $Enums.SumberPengadaan | null
   penyedia: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
+  deletedAt: Date | null
   createdBy: string | null
   updatedBy: string | null
+  deletedBy: string | null
   opdId: string | null
-  jenisId: string | null
+  kategoriId: string | null
 }
 
 export type HardwareMaxAggregateOutputType = {
@@ -67,11 +72,16 @@ export type HardwareMaxAggregateOutputType = {
   pic: string | null
   biayaPerolehan: runtime.Decimal | null
   nomorSeri: string | null
+  sumber: $Enums.SumberPengadaan | null
   penyedia: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
+  deletedAt: Date | null
   createdBy: string | null
   updatedBy: string | null
+  deletedBy: string | null
   opdId: string | null
-  jenisId: string | null
+  kategoriId: string | null
 }
 
 export type HardwareCountAggregateOutputType = {
@@ -87,11 +97,16 @@ export type HardwareCountAggregateOutputType = {
   pic: number
   biayaPerolehan: number
   nomorSeri: number
+  sumber: number
   penyedia: number
+  createdAt: number
+  updatedAt: number
+  deletedAt: number
   createdBy: number
   updatedBy: number
+  deletedBy: number
   opdId: number
-  jenisId: number
+  kategoriId: number
   _all: number
 }
 
@@ -117,11 +132,16 @@ export type HardwareMinAggregateInputType = {
   pic?: true
   biayaPerolehan?: true
   nomorSeri?: true
+  sumber?: true
   penyedia?: true
+  createdAt?: true
+  updatedAt?: true
+  deletedAt?: true
   createdBy?: true
   updatedBy?: true
+  deletedBy?: true
   opdId?: true
-  jenisId?: true
+  kategoriId?: true
 }
 
 export type HardwareMaxAggregateInputType = {
@@ -137,11 +157,16 @@ export type HardwareMaxAggregateInputType = {
   pic?: true
   biayaPerolehan?: true
   nomorSeri?: true
+  sumber?: true
   penyedia?: true
+  createdAt?: true
+  updatedAt?: true
+  deletedAt?: true
   createdBy?: true
   updatedBy?: true
+  deletedBy?: true
   opdId?: true
-  jenisId?: true
+  kategoriId?: true
 }
 
 export type HardwareCountAggregateInputType = {
@@ -157,11 +182,16 @@ export type HardwareCountAggregateInputType = {
   pic?: true
   biayaPerolehan?: true
   nomorSeri?: true
+  sumber?: true
   penyedia?: true
+  createdAt?: true
+  updatedAt?: true
+  deletedAt?: true
   createdBy?: true
   updatedBy?: true
+  deletedBy?: true
   opdId?: true
-  jenisId?: true
+  kategoriId?: true
   _all?: true
 }
 
@@ -264,11 +294,16 @@ export type HardwareGroupByOutputType = {
   pic: string
   biayaPerolehan: runtime.Decimal
   nomorSeri: string
+  sumber: $Enums.SumberPengadaan
   penyedia: string | null
-  createdBy: string | null
+  createdAt: Date
+  updatedAt: Date
+  deletedAt: Date | null
+  createdBy: string
   updatedBy: string | null
+  deletedBy: string | null
   opdId: string
-  jenisId: string
+  kategoriId: string
   _count: HardwareCountAggregateOutputType | null
   _avg: HardwareAvgAggregateOutputType | null
   _sum: HardwareSumAggregateOutputType | null
@@ -307,15 +342,21 @@ export type HardwareWhereInput = {
   pic?: Prisma.StringFilter<"Hardware"> | string
   biayaPerolehan?: Prisma.DecimalFilter<"Hardware"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri?: Prisma.StringFilter<"Hardware"> | string
+  sumber?: Prisma.EnumSumberPengadaanFilter<"Hardware"> | $Enums.SumberPengadaan
   penyedia?: Prisma.StringNullableFilter<"Hardware"> | string | null
-  createdBy?: Prisma.StringNullableFilter<"Hardware"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Hardware"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Hardware"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Hardware"> | Date | string | null
+  createdBy?: Prisma.StringFilter<"Hardware"> | string
   updatedBy?: Prisma.StringNullableFilter<"Hardware"> | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Hardware"> | string | null
   opdId?: Prisma.StringFilter<"Hardware"> | string
-  jenisId?: Prisma.StringFilter<"Hardware"> | string
-  creator?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  kategoriId?: Prisma.StringFilter<"Hardware"> | string
+  creator?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   updater?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  delete?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   opd?: Prisma.XOR<Prisma.OpdScalarRelationFilter, Prisma.OpdWhereInput>
-  jenisHardware?: Prisma.XOR<Prisma.KategoriHardwareScalarRelationFilter, Prisma.KategoriHardwareWhereInput>
+  kategoriHardware?: Prisma.XOR<Prisma.KategoriHardwareScalarRelationFilter, Prisma.KategoriHardwareWhereInput>
   software?: Prisma.SoftwareListRelationFilter
 }
 
@@ -332,20 +373,27 @@ export type HardwareOrderByWithRelationInput = {
   pic?: Prisma.SortOrder
   biayaPerolehan?: Prisma.SortOrder
   nomorSeri?: Prisma.SortOrder
+  sumber?: Prisma.SortOrder
   penyedia?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
   updatedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   opdId?: Prisma.SortOrder
-  jenisId?: Prisma.SortOrder
+  kategoriId?: Prisma.SortOrder
   creator?: Prisma.UserOrderByWithRelationInput
   updater?: Prisma.UserOrderByWithRelationInput
+  delete?: Prisma.UserOrderByWithRelationInput
   opd?: Prisma.OpdOrderByWithRelationInput
-  jenisHardware?: Prisma.KategoriHardwareOrderByWithRelationInput
+  kategoriHardware?: Prisma.KategoriHardwareOrderByWithRelationInput
   software?: Prisma.SoftwareOrderByRelationAggregateInput
 }
 
 export type HardwareWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  nomorSeri?: string
   AND?: Prisma.HardwareWhereInput | Prisma.HardwareWhereInput[]
   OR?: Prisma.HardwareWhereInput[]
   NOT?: Prisma.HardwareWhereInput | Prisma.HardwareWhereInput[]
@@ -359,18 +407,23 @@ export type HardwareWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumStatusAsetFilter<"Hardware"> | $Enums.StatusAset
   pic?: Prisma.StringFilter<"Hardware"> | string
   biayaPerolehan?: Prisma.DecimalFilter<"Hardware"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  nomorSeri?: Prisma.StringFilter<"Hardware"> | string
+  sumber?: Prisma.EnumSumberPengadaanFilter<"Hardware"> | $Enums.SumberPengadaan
   penyedia?: Prisma.StringNullableFilter<"Hardware"> | string | null
-  createdBy?: Prisma.StringNullableFilter<"Hardware"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Hardware"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Hardware"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Hardware"> | Date | string | null
+  createdBy?: Prisma.StringFilter<"Hardware"> | string
   updatedBy?: Prisma.StringNullableFilter<"Hardware"> | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Hardware"> | string | null
   opdId?: Prisma.StringFilter<"Hardware"> | string
-  jenisId?: Prisma.StringFilter<"Hardware"> | string
-  creator?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  kategoriId?: Prisma.StringFilter<"Hardware"> | string
+  creator?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   updater?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  delete?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   opd?: Prisma.XOR<Prisma.OpdScalarRelationFilter, Prisma.OpdWhereInput>
-  jenisHardware?: Prisma.XOR<Prisma.KategoriHardwareScalarRelationFilter, Prisma.KategoriHardwareWhereInput>
+  kategoriHardware?: Prisma.XOR<Prisma.KategoriHardwareScalarRelationFilter, Prisma.KategoriHardwareWhereInput>
   software?: Prisma.SoftwareListRelationFilter
-}, "id">
+}, "id" | "nomorSeri">
 
 export type HardwareOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -385,11 +438,16 @@ export type HardwareOrderByWithAggregationInput = {
   pic?: Prisma.SortOrder
   biayaPerolehan?: Prisma.SortOrder
   nomorSeri?: Prisma.SortOrder
+  sumber?: Prisma.SortOrder
   penyedia?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
   updatedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   opdId?: Prisma.SortOrder
-  jenisId?: Prisma.SortOrder
+  kategoriId?: Prisma.SortOrder
   _count?: Prisma.HardwareCountOrderByAggregateInput
   _avg?: Prisma.HardwareAvgOrderByAggregateInput
   _max?: Prisma.HardwareMaxOrderByAggregateInput
@@ -413,11 +471,16 @@ export type HardwareScalarWhereWithAggregatesInput = {
   pic?: Prisma.StringWithAggregatesFilter<"Hardware"> | string
   biayaPerolehan?: Prisma.DecimalWithAggregatesFilter<"Hardware"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri?: Prisma.StringWithAggregatesFilter<"Hardware"> | string
+  sumber?: Prisma.EnumSumberPengadaanWithAggregatesFilter<"Hardware"> | $Enums.SumberPengadaan
   penyedia?: Prisma.StringNullableWithAggregatesFilter<"Hardware"> | string | null
-  createdBy?: Prisma.StringNullableWithAggregatesFilter<"Hardware"> | string | null
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Hardware"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Hardware"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Hardware"> | Date | string | null
+  createdBy?: Prisma.StringWithAggregatesFilter<"Hardware"> | string
   updatedBy?: Prisma.StringNullableWithAggregatesFilter<"Hardware"> | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"Hardware"> | string | null
   opdId?: Prisma.StringWithAggregatesFilter<"Hardware"> | string
-  jenisId?: Prisma.StringWithAggregatesFilter<"Hardware"> | string
+  kategoriId?: Prisma.StringWithAggregatesFilter<"Hardware"> | string
 }
 
 export type HardwareCreateInput = {
@@ -433,11 +496,16 @@ export type HardwareCreateInput = {
   pic: string
   biayaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri: string
+  sumber?: $Enums.SumberPengadaan
   penyedia?: string | null
-  creator?: Prisma.UserCreateNestedOneWithoutCreatedHardwareInput
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  creator: Prisma.UserCreateNestedOneWithoutCreatedHardwareInput
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedHardwareInput
+  delete?: Prisma.UserCreateNestedOneWithoutDeletedHardwareInput
   opd: Prisma.OpdCreateNestedOneWithoutHardwareInput
-  jenisHardware: Prisma.KategoriHardwareCreateNestedOneWithoutHardwareInput
+  kategoriHardware: Prisma.KategoriHardwareCreateNestedOneWithoutHardwareInput
   software?: Prisma.SoftwareCreateNestedManyWithoutHardwareInput
 }
 
@@ -454,11 +522,16 @@ export type HardwareUncheckedCreateInput = {
   pic: string
   biayaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri: string
+  sumber?: $Enums.SumberPengadaan
   penyedia?: string | null
-  createdBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy: string
   updatedBy?: string | null
+  deletedBy?: string | null
   opdId: string
-  jenisId: string
+  kategoriId: string
   software?: Prisma.SoftwareUncheckedCreateNestedManyWithoutHardwareInput
 }
 
@@ -475,11 +548,16 @@ export type HardwareUpdateInput = {
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   biayaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
+  sumber?: Prisma.EnumSumberPengadaanFieldUpdateOperationsInput | $Enums.SumberPengadaan
   penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  creator?: Prisma.UserUpdateOneWithoutCreatedHardwareNestedInput
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  creator?: Prisma.UserUpdateOneRequiredWithoutCreatedHardwareNestedInput
   updater?: Prisma.UserUpdateOneWithoutUpdatedHardwareNestedInput
+  delete?: Prisma.UserUpdateOneWithoutDeletedHardwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutHardwareNestedInput
-  jenisHardware?: Prisma.KategoriHardwareUpdateOneRequiredWithoutHardwareNestedInput
+  kategoriHardware?: Prisma.KategoriHardwareUpdateOneRequiredWithoutHardwareNestedInput
   software?: Prisma.SoftwareUpdateManyWithoutHardwareNestedInput
 }
 
@@ -496,11 +574,16 @@ export type HardwareUncheckedUpdateInput = {
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   biayaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
+  sumber?: Prisma.EnumSumberPengadaanFieldUpdateOperationsInput | $Enums.SumberPengadaan
   penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisId?: Prisma.StringFieldUpdateOperationsInput | string
+  kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
   software?: Prisma.SoftwareUncheckedUpdateManyWithoutHardwareNestedInput
 }
 
@@ -517,11 +600,16 @@ export type HardwareCreateManyInput = {
   pic: string
   biayaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri: string
+  sumber?: $Enums.SumberPengadaan
   penyedia?: string | null
-  createdBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy: string
   updatedBy?: string | null
+  deletedBy?: string | null
   opdId: string
-  jenisId: string
+  kategoriId: string
 }
 
 export type HardwareUpdateManyMutationInput = {
@@ -537,7 +625,11 @@ export type HardwareUpdateManyMutationInput = {
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   biayaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
+  sumber?: Prisma.EnumSumberPengadaanFieldUpdateOperationsInput | $Enums.SumberPengadaan
   penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type HardwareUncheckedUpdateManyInput = {
@@ -553,11 +645,16 @@ export type HardwareUncheckedUpdateManyInput = {
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   biayaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
+  sumber?: Prisma.EnumSumberPengadaanFieldUpdateOperationsInput | $Enums.SumberPengadaan
   penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisId?: Prisma.StringFieldUpdateOperationsInput | string
+  kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type HardwareListRelationFilter = {
@@ -583,11 +680,16 @@ export type HardwareCountOrderByAggregateInput = {
   pic?: Prisma.SortOrder
   biayaPerolehan?: Prisma.SortOrder
   nomorSeri?: Prisma.SortOrder
+  sumber?: Prisma.SortOrder
   penyedia?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   updatedBy?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
   opdId?: Prisma.SortOrder
-  jenisId?: Prisma.SortOrder
+  kategoriId?: Prisma.SortOrder
 }
 
 export type HardwareAvgOrderByAggregateInput = {
@@ -607,11 +709,16 @@ export type HardwareMaxOrderByAggregateInput = {
   pic?: Prisma.SortOrder
   biayaPerolehan?: Prisma.SortOrder
   nomorSeri?: Prisma.SortOrder
+  sumber?: Prisma.SortOrder
   penyedia?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   updatedBy?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
   opdId?: Prisma.SortOrder
-  jenisId?: Prisma.SortOrder
+  kategoriId?: Prisma.SortOrder
 }
 
 export type HardwareMinOrderByAggregateInput = {
@@ -627,11 +734,16 @@ export type HardwareMinOrderByAggregateInput = {
   pic?: Prisma.SortOrder
   biayaPerolehan?: Prisma.SortOrder
   nomorSeri?: Prisma.SortOrder
+  sumber?: Prisma.SortOrder
   penyedia?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   updatedBy?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
   opdId?: Prisma.SortOrder
-  jenisId?: Prisma.SortOrder
+  kategoriId?: Prisma.SortOrder
 }
 
 export type HardwareSumOrderByAggregateInput = {
@@ -657,6 +769,13 @@ export type HardwareCreateNestedManyWithoutUpdaterInput = {
   connect?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
 }
 
+export type HardwareCreateNestedManyWithoutDeleteInput = {
+  create?: Prisma.XOR<Prisma.HardwareCreateWithoutDeleteInput, Prisma.HardwareUncheckedCreateWithoutDeleteInput> | Prisma.HardwareCreateWithoutDeleteInput[] | Prisma.HardwareUncheckedCreateWithoutDeleteInput[]
+  connectOrCreate?: Prisma.HardwareCreateOrConnectWithoutDeleteInput | Prisma.HardwareCreateOrConnectWithoutDeleteInput[]
+  createMany?: Prisma.HardwareCreateManyDeleteInputEnvelope
+  connect?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
+}
+
 export type HardwareUncheckedCreateNestedManyWithoutCreatorInput = {
   create?: Prisma.XOR<Prisma.HardwareCreateWithoutCreatorInput, Prisma.HardwareUncheckedCreateWithoutCreatorInput> | Prisma.HardwareCreateWithoutCreatorInput[] | Prisma.HardwareUncheckedCreateWithoutCreatorInput[]
   connectOrCreate?: Prisma.HardwareCreateOrConnectWithoutCreatorInput | Prisma.HardwareCreateOrConnectWithoutCreatorInput[]
@@ -668,6 +787,13 @@ export type HardwareUncheckedCreateNestedManyWithoutUpdaterInput = {
   create?: Prisma.XOR<Prisma.HardwareCreateWithoutUpdaterInput, Prisma.HardwareUncheckedCreateWithoutUpdaterInput> | Prisma.HardwareCreateWithoutUpdaterInput[] | Prisma.HardwareUncheckedCreateWithoutUpdaterInput[]
   connectOrCreate?: Prisma.HardwareCreateOrConnectWithoutUpdaterInput | Prisma.HardwareCreateOrConnectWithoutUpdaterInput[]
   createMany?: Prisma.HardwareCreateManyUpdaterInputEnvelope
+  connect?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
+}
+
+export type HardwareUncheckedCreateNestedManyWithoutDeleteInput = {
+  create?: Prisma.XOR<Prisma.HardwareCreateWithoutDeleteInput, Prisma.HardwareUncheckedCreateWithoutDeleteInput> | Prisma.HardwareCreateWithoutDeleteInput[] | Prisma.HardwareUncheckedCreateWithoutDeleteInput[]
+  connectOrCreate?: Prisma.HardwareCreateOrConnectWithoutDeleteInput | Prisma.HardwareCreateOrConnectWithoutDeleteInput[]
+  createMany?: Prisma.HardwareCreateManyDeleteInputEnvelope
   connect?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
 }
 
@@ -699,6 +825,20 @@ export type HardwareUpdateManyWithoutUpdaterNestedInput = {
   deleteMany?: Prisma.HardwareScalarWhereInput | Prisma.HardwareScalarWhereInput[]
 }
 
+export type HardwareUpdateManyWithoutDeleteNestedInput = {
+  create?: Prisma.XOR<Prisma.HardwareCreateWithoutDeleteInput, Prisma.HardwareUncheckedCreateWithoutDeleteInput> | Prisma.HardwareCreateWithoutDeleteInput[] | Prisma.HardwareUncheckedCreateWithoutDeleteInput[]
+  connectOrCreate?: Prisma.HardwareCreateOrConnectWithoutDeleteInput | Prisma.HardwareCreateOrConnectWithoutDeleteInput[]
+  upsert?: Prisma.HardwareUpsertWithWhereUniqueWithoutDeleteInput | Prisma.HardwareUpsertWithWhereUniqueWithoutDeleteInput[]
+  createMany?: Prisma.HardwareCreateManyDeleteInputEnvelope
+  set?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
+  disconnect?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
+  delete?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
+  connect?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
+  update?: Prisma.HardwareUpdateWithWhereUniqueWithoutDeleteInput | Prisma.HardwareUpdateWithWhereUniqueWithoutDeleteInput[]
+  updateMany?: Prisma.HardwareUpdateManyWithWhereWithoutDeleteInput | Prisma.HardwareUpdateManyWithWhereWithoutDeleteInput[]
+  deleteMany?: Prisma.HardwareScalarWhereInput | Prisma.HardwareScalarWhereInput[]
+}
+
 export type HardwareUncheckedUpdateManyWithoutCreatorNestedInput = {
   create?: Prisma.XOR<Prisma.HardwareCreateWithoutCreatorInput, Prisma.HardwareUncheckedCreateWithoutCreatorInput> | Prisma.HardwareCreateWithoutCreatorInput[] | Prisma.HardwareUncheckedCreateWithoutCreatorInput[]
   connectOrCreate?: Prisma.HardwareCreateOrConnectWithoutCreatorInput | Prisma.HardwareCreateOrConnectWithoutCreatorInput[]
@@ -724,6 +864,20 @@ export type HardwareUncheckedUpdateManyWithoutUpdaterNestedInput = {
   connect?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
   update?: Prisma.HardwareUpdateWithWhereUniqueWithoutUpdaterInput | Prisma.HardwareUpdateWithWhereUniqueWithoutUpdaterInput[]
   updateMany?: Prisma.HardwareUpdateManyWithWhereWithoutUpdaterInput | Prisma.HardwareUpdateManyWithWhereWithoutUpdaterInput[]
+  deleteMany?: Prisma.HardwareScalarWhereInput | Prisma.HardwareScalarWhereInput[]
+}
+
+export type HardwareUncheckedUpdateManyWithoutDeleteNestedInput = {
+  create?: Prisma.XOR<Prisma.HardwareCreateWithoutDeleteInput, Prisma.HardwareUncheckedCreateWithoutDeleteInput> | Prisma.HardwareCreateWithoutDeleteInput[] | Prisma.HardwareUncheckedCreateWithoutDeleteInput[]
+  connectOrCreate?: Prisma.HardwareCreateOrConnectWithoutDeleteInput | Prisma.HardwareCreateOrConnectWithoutDeleteInput[]
+  upsert?: Prisma.HardwareUpsertWithWhereUniqueWithoutDeleteInput | Prisma.HardwareUpsertWithWhereUniqueWithoutDeleteInput[]
+  createMany?: Prisma.HardwareCreateManyDeleteInputEnvelope
+  set?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
+  disconnect?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
+  delete?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
+  connect?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
+  update?: Prisma.HardwareUpdateWithWhereUniqueWithoutDeleteInput | Prisma.HardwareUpdateWithWhereUniqueWithoutDeleteInput[]
+  updateMany?: Prisma.HardwareUpdateManyWithWhereWithoutDeleteInput | Prisma.HardwareUpdateManyWithWhereWithoutDeleteInput[]
   deleteMany?: Prisma.HardwareScalarWhereInput | Prisma.HardwareScalarWhereInput[]
 }
 
@@ -769,45 +923,45 @@ export type HardwareUncheckedUpdateManyWithoutOpdNestedInput = {
   deleteMany?: Prisma.HardwareScalarWhereInput | Prisma.HardwareScalarWhereInput[]
 }
 
-export type HardwareCreateNestedManyWithoutJenisHardwareInput = {
-  create?: Prisma.XOR<Prisma.HardwareCreateWithoutJenisHardwareInput, Prisma.HardwareUncheckedCreateWithoutJenisHardwareInput> | Prisma.HardwareCreateWithoutJenisHardwareInput[] | Prisma.HardwareUncheckedCreateWithoutJenisHardwareInput[]
-  connectOrCreate?: Prisma.HardwareCreateOrConnectWithoutJenisHardwareInput | Prisma.HardwareCreateOrConnectWithoutJenisHardwareInput[]
-  createMany?: Prisma.HardwareCreateManyJenisHardwareInputEnvelope
+export type HardwareCreateNestedManyWithoutKategoriHardwareInput = {
+  create?: Prisma.XOR<Prisma.HardwareCreateWithoutKategoriHardwareInput, Prisma.HardwareUncheckedCreateWithoutKategoriHardwareInput> | Prisma.HardwareCreateWithoutKategoriHardwareInput[] | Prisma.HardwareUncheckedCreateWithoutKategoriHardwareInput[]
+  connectOrCreate?: Prisma.HardwareCreateOrConnectWithoutKategoriHardwareInput | Prisma.HardwareCreateOrConnectWithoutKategoriHardwareInput[]
+  createMany?: Prisma.HardwareCreateManyKategoriHardwareInputEnvelope
   connect?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
 }
 
-export type HardwareUncheckedCreateNestedManyWithoutJenisHardwareInput = {
-  create?: Prisma.XOR<Prisma.HardwareCreateWithoutJenisHardwareInput, Prisma.HardwareUncheckedCreateWithoutJenisHardwareInput> | Prisma.HardwareCreateWithoutJenisHardwareInput[] | Prisma.HardwareUncheckedCreateWithoutJenisHardwareInput[]
-  connectOrCreate?: Prisma.HardwareCreateOrConnectWithoutJenisHardwareInput | Prisma.HardwareCreateOrConnectWithoutJenisHardwareInput[]
-  createMany?: Prisma.HardwareCreateManyJenisHardwareInputEnvelope
+export type HardwareUncheckedCreateNestedManyWithoutKategoriHardwareInput = {
+  create?: Prisma.XOR<Prisma.HardwareCreateWithoutKategoriHardwareInput, Prisma.HardwareUncheckedCreateWithoutKategoriHardwareInput> | Prisma.HardwareCreateWithoutKategoriHardwareInput[] | Prisma.HardwareUncheckedCreateWithoutKategoriHardwareInput[]
+  connectOrCreate?: Prisma.HardwareCreateOrConnectWithoutKategoriHardwareInput | Prisma.HardwareCreateOrConnectWithoutKategoriHardwareInput[]
+  createMany?: Prisma.HardwareCreateManyKategoriHardwareInputEnvelope
   connect?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
 }
 
-export type HardwareUpdateManyWithoutJenisHardwareNestedInput = {
-  create?: Prisma.XOR<Prisma.HardwareCreateWithoutJenisHardwareInput, Prisma.HardwareUncheckedCreateWithoutJenisHardwareInput> | Prisma.HardwareCreateWithoutJenisHardwareInput[] | Prisma.HardwareUncheckedCreateWithoutJenisHardwareInput[]
-  connectOrCreate?: Prisma.HardwareCreateOrConnectWithoutJenisHardwareInput | Prisma.HardwareCreateOrConnectWithoutJenisHardwareInput[]
-  upsert?: Prisma.HardwareUpsertWithWhereUniqueWithoutJenisHardwareInput | Prisma.HardwareUpsertWithWhereUniqueWithoutJenisHardwareInput[]
-  createMany?: Prisma.HardwareCreateManyJenisHardwareInputEnvelope
+export type HardwareUpdateManyWithoutKategoriHardwareNestedInput = {
+  create?: Prisma.XOR<Prisma.HardwareCreateWithoutKategoriHardwareInput, Prisma.HardwareUncheckedCreateWithoutKategoriHardwareInput> | Prisma.HardwareCreateWithoutKategoriHardwareInput[] | Prisma.HardwareUncheckedCreateWithoutKategoriHardwareInput[]
+  connectOrCreate?: Prisma.HardwareCreateOrConnectWithoutKategoriHardwareInput | Prisma.HardwareCreateOrConnectWithoutKategoriHardwareInput[]
+  upsert?: Prisma.HardwareUpsertWithWhereUniqueWithoutKategoriHardwareInput | Prisma.HardwareUpsertWithWhereUniqueWithoutKategoriHardwareInput[]
+  createMany?: Prisma.HardwareCreateManyKategoriHardwareInputEnvelope
   set?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
   disconnect?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
   delete?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
   connect?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
-  update?: Prisma.HardwareUpdateWithWhereUniqueWithoutJenisHardwareInput | Prisma.HardwareUpdateWithWhereUniqueWithoutJenisHardwareInput[]
-  updateMany?: Prisma.HardwareUpdateManyWithWhereWithoutJenisHardwareInput | Prisma.HardwareUpdateManyWithWhereWithoutJenisHardwareInput[]
+  update?: Prisma.HardwareUpdateWithWhereUniqueWithoutKategoriHardwareInput | Prisma.HardwareUpdateWithWhereUniqueWithoutKategoriHardwareInput[]
+  updateMany?: Prisma.HardwareUpdateManyWithWhereWithoutKategoriHardwareInput | Prisma.HardwareUpdateManyWithWhereWithoutKategoriHardwareInput[]
   deleteMany?: Prisma.HardwareScalarWhereInput | Prisma.HardwareScalarWhereInput[]
 }
 
-export type HardwareUncheckedUpdateManyWithoutJenisHardwareNestedInput = {
-  create?: Prisma.XOR<Prisma.HardwareCreateWithoutJenisHardwareInput, Prisma.HardwareUncheckedCreateWithoutJenisHardwareInput> | Prisma.HardwareCreateWithoutJenisHardwareInput[] | Prisma.HardwareUncheckedCreateWithoutJenisHardwareInput[]
-  connectOrCreate?: Prisma.HardwareCreateOrConnectWithoutJenisHardwareInput | Prisma.HardwareCreateOrConnectWithoutJenisHardwareInput[]
-  upsert?: Prisma.HardwareUpsertWithWhereUniqueWithoutJenisHardwareInput | Prisma.HardwareUpsertWithWhereUniqueWithoutJenisHardwareInput[]
-  createMany?: Prisma.HardwareCreateManyJenisHardwareInputEnvelope
+export type HardwareUncheckedUpdateManyWithoutKategoriHardwareNestedInput = {
+  create?: Prisma.XOR<Prisma.HardwareCreateWithoutKategoriHardwareInput, Prisma.HardwareUncheckedCreateWithoutKategoriHardwareInput> | Prisma.HardwareCreateWithoutKategoriHardwareInput[] | Prisma.HardwareUncheckedCreateWithoutKategoriHardwareInput[]
+  connectOrCreate?: Prisma.HardwareCreateOrConnectWithoutKategoriHardwareInput | Prisma.HardwareCreateOrConnectWithoutKategoriHardwareInput[]
+  upsert?: Prisma.HardwareUpsertWithWhereUniqueWithoutKategoriHardwareInput | Prisma.HardwareUpsertWithWhereUniqueWithoutKategoriHardwareInput[]
+  createMany?: Prisma.HardwareCreateManyKategoriHardwareInputEnvelope
   set?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
   disconnect?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
   delete?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
   connect?: Prisma.HardwareWhereUniqueInput | Prisma.HardwareWhereUniqueInput[]
-  update?: Prisma.HardwareUpdateWithWhereUniqueWithoutJenisHardwareInput | Prisma.HardwareUpdateWithWhereUniqueWithoutJenisHardwareInput[]
-  updateMany?: Prisma.HardwareUpdateManyWithWhereWithoutJenisHardwareInput | Prisma.HardwareUpdateManyWithWhereWithoutJenisHardwareInput[]
+  update?: Prisma.HardwareUpdateWithWhereUniqueWithoutKategoriHardwareInput | Prisma.HardwareUpdateWithWhereUniqueWithoutKategoriHardwareInput[]
+  updateMany?: Prisma.HardwareUpdateManyWithWhereWithoutKategoriHardwareInput | Prisma.HardwareUpdateManyWithWhereWithoutKategoriHardwareInput[]
   deleteMany?: Prisma.HardwareScalarWhereInput | Prisma.HardwareScalarWhereInput[]
 }
 
@@ -821,6 +975,10 @@ export type DecimalFieldUpdateOperationsInput = {
   decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
   multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
   divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type EnumSumberPengadaanFieldUpdateOperationsInput = {
+  set?: $Enums.SumberPengadaan
 }
 
 export type HardwareCreateNestedOneWithoutSoftwareInput = {
@@ -852,10 +1010,15 @@ export type HardwareCreateWithoutCreatorInput = {
   pic: string
   biayaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri: string
+  sumber?: $Enums.SumberPengadaan
   penyedia?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedHardwareInput
+  delete?: Prisma.UserCreateNestedOneWithoutDeletedHardwareInput
   opd: Prisma.OpdCreateNestedOneWithoutHardwareInput
-  jenisHardware: Prisma.KategoriHardwareCreateNestedOneWithoutHardwareInput
+  kategoriHardware: Prisma.KategoriHardwareCreateNestedOneWithoutHardwareInput
   software?: Prisma.SoftwareCreateNestedManyWithoutHardwareInput
 }
 
@@ -872,10 +1035,15 @@ export type HardwareUncheckedCreateWithoutCreatorInput = {
   pic: string
   biayaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri: string
+  sumber?: $Enums.SumberPengadaan
   penyedia?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
   updatedBy?: string | null
+  deletedBy?: string | null
   opdId: string
-  jenisId: string
+  kategoriId: string
   software?: Prisma.SoftwareUncheckedCreateNestedManyWithoutHardwareInput
 }
 
@@ -902,10 +1070,15 @@ export type HardwareCreateWithoutUpdaterInput = {
   pic: string
   biayaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri: string
+  sumber?: $Enums.SumberPengadaan
   penyedia?: string | null
-  creator?: Prisma.UserCreateNestedOneWithoutCreatedHardwareInput
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  creator: Prisma.UserCreateNestedOneWithoutCreatedHardwareInput
+  delete?: Prisma.UserCreateNestedOneWithoutDeletedHardwareInput
   opd: Prisma.OpdCreateNestedOneWithoutHardwareInput
-  jenisHardware: Prisma.KategoriHardwareCreateNestedOneWithoutHardwareInput
+  kategoriHardware: Prisma.KategoriHardwareCreateNestedOneWithoutHardwareInput
   software?: Prisma.SoftwareCreateNestedManyWithoutHardwareInput
 }
 
@@ -922,10 +1095,15 @@ export type HardwareUncheckedCreateWithoutUpdaterInput = {
   pic: string
   biayaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri: string
+  sumber?: $Enums.SumberPengadaan
   penyedia?: string | null
-  createdBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy: string
+  deletedBy?: string | null
   opdId: string
-  jenisId: string
+  kategoriId: string
   software?: Prisma.SoftwareUncheckedCreateNestedManyWithoutHardwareInput
 }
 
@@ -936,6 +1114,66 @@ export type HardwareCreateOrConnectWithoutUpdaterInput = {
 
 export type HardwareCreateManyUpdaterInputEnvelope = {
   data: Prisma.HardwareCreateManyUpdaterInput | Prisma.HardwareCreateManyUpdaterInput[]
+  skipDuplicates?: boolean
+}
+
+export type HardwareCreateWithoutDeleteInput = {
+  id?: string
+  nama: string
+  merk: string
+  spesifikasi: string
+  lokasiFisik: string
+  tglPengadaan: Date | string
+  garansiMulai: Date | string
+  garansiSelesai: Date | string
+  status?: $Enums.StatusAset
+  pic: string
+  biayaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
+  nomorSeri: string
+  sumber?: $Enums.SumberPengadaan
+  penyedia?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  creator: Prisma.UserCreateNestedOneWithoutCreatedHardwareInput
+  updater?: Prisma.UserCreateNestedOneWithoutUpdatedHardwareInput
+  opd: Prisma.OpdCreateNestedOneWithoutHardwareInput
+  kategoriHardware: Prisma.KategoriHardwareCreateNestedOneWithoutHardwareInput
+  software?: Prisma.SoftwareCreateNestedManyWithoutHardwareInput
+}
+
+export type HardwareUncheckedCreateWithoutDeleteInput = {
+  id?: string
+  nama: string
+  merk: string
+  spesifikasi: string
+  lokasiFisik: string
+  tglPengadaan: Date | string
+  garansiMulai: Date | string
+  garansiSelesai: Date | string
+  status?: $Enums.StatusAset
+  pic: string
+  biayaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
+  nomorSeri: string
+  sumber?: $Enums.SumberPengadaan
+  penyedia?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy: string
+  updatedBy?: string | null
+  opdId: string
+  kategoriId: string
+  software?: Prisma.SoftwareUncheckedCreateNestedManyWithoutHardwareInput
+}
+
+export type HardwareCreateOrConnectWithoutDeleteInput = {
+  where: Prisma.HardwareWhereUniqueInput
+  create: Prisma.XOR<Prisma.HardwareCreateWithoutDeleteInput, Prisma.HardwareUncheckedCreateWithoutDeleteInput>
+}
+
+export type HardwareCreateManyDeleteInputEnvelope = {
+  data: Prisma.HardwareCreateManyDeleteInput | Prisma.HardwareCreateManyDeleteInput[]
   skipDuplicates?: boolean
 }
 
@@ -971,11 +1209,16 @@ export type HardwareScalarWhereInput = {
   pic?: Prisma.StringFilter<"Hardware"> | string
   biayaPerolehan?: Prisma.DecimalFilter<"Hardware"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri?: Prisma.StringFilter<"Hardware"> | string
+  sumber?: Prisma.EnumSumberPengadaanFilter<"Hardware"> | $Enums.SumberPengadaan
   penyedia?: Prisma.StringNullableFilter<"Hardware"> | string | null
-  createdBy?: Prisma.StringNullableFilter<"Hardware"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Hardware"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Hardware"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Hardware"> | Date | string | null
+  createdBy?: Prisma.StringFilter<"Hardware"> | string
   updatedBy?: Prisma.StringNullableFilter<"Hardware"> | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Hardware"> | string | null
   opdId?: Prisma.StringFilter<"Hardware"> | string
-  jenisId?: Prisma.StringFilter<"Hardware"> | string
+  kategoriId?: Prisma.StringFilter<"Hardware"> | string
 }
 
 export type HardwareUpsertWithWhereUniqueWithoutUpdaterInput = {
@@ -994,6 +1237,22 @@ export type HardwareUpdateManyWithWhereWithoutUpdaterInput = {
   data: Prisma.XOR<Prisma.HardwareUpdateManyMutationInput, Prisma.HardwareUncheckedUpdateManyWithoutUpdaterInput>
 }
 
+export type HardwareUpsertWithWhereUniqueWithoutDeleteInput = {
+  where: Prisma.HardwareWhereUniqueInput
+  update: Prisma.XOR<Prisma.HardwareUpdateWithoutDeleteInput, Prisma.HardwareUncheckedUpdateWithoutDeleteInput>
+  create: Prisma.XOR<Prisma.HardwareCreateWithoutDeleteInput, Prisma.HardwareUncheckedCreateWithoutDeleteInput>
+}
+
+export type HardwareUpdateWithWhereUniqueWithoutDeleteInput = {
+  where: Prisma.HardwareWhereUniqueInput
+  data: Prisma.XOR<Prisma.HardwareUpdateWithoutDeleteInput, Prisma.HardwareUncheckedUpdateWithoutDeleteInput>
+}
+
+export type HardwareUpdateManyWithWhereWithoutDeleteInput = {
+  where: Prisma.HardwareScalarWhereInput
+  data: Prisma.XOR<Prisma.HardwareUpdateManyMutationInput, Prisma.HardwareUncheckedUpdateManyWithoutDeleteInput>
+}
+
 export type HardwareCreateWithoutOpdInput = {
   id?: string
   nama: string
@@ -1007,10 +1266,15 @@ export type HardwareCreateWithoutOpdInput = {
   pic: string
   biayaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri: string
+  sumber?: $Enums.SumberPengadaan
   penyedia?: string | null
-  creator?: Prisma.UserCreateNestedOneWithoutCreatedHardwareInput
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  creator: Prisma.UserCreateNestedOneWithoutCreatedHardwareInput
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedHardwareInput
-  jenisHardware: Prisma.KategoriHardwareCreateNestedOneWithoutHardwareInput
+  delete?: Prisma.UserCreateNestedOneWithoutDeletedHardwareInput
+  kategoriHardware: Prisma.KategoriHardwareCreateNestedOneWithoutHardwareInput
   software?: Prisma.SoftwareCreateNestedManyWithoutHardwareInput
 }
 
@@ -1027,10 +1291,15 @@ export type HardwareUncheckedCreateWithoutOpdInput = {
   pic: string
   biayaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri: string
+  sumber?: $Enums.SumberPengadaan
   penyedia?: string | null
-  createdBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy: string
   updatedBy?: string | null
-  jenisId: string
+  deletedBy?: string | null
+  kategoriId: string
   software?: Prisma.SoftwareUncheckedCreateNestedManyWithoutHardwareInput
 }
 
@@ -1060,7 +1329,7 @@ export type HardwareUpdateManyWithWhereWithoutOpdInput = {
   data: Prisma.XOR<Prisma.HardwareUpdateManyMutationInput, Prisma.HardwareUncheckedUpdateManyWithoutOpdInput>
 }
 
-export type HardwareCreateWithoutJenisHardwareInput = {
+export type HardwareCreateWithoutKategoriHardwareInput = {
   id?: string
   nama: string
   merk: string
@@ -1073,14 +1342,19 @@ export type HardwareCreateWithoutJenisHardwareInput = {
   pic: string
   biayaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri: string
+  sumber?: $Enums.SumberPengadaan
   penyedia?: string | null
-  creator?: Prisma.UserCreateNestedOneWithoutCreatedHardwareInput
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  creator: Prisma.UserCreateNestedOneWithoutCreatedHardwareInput
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedHardwareInput
+  delete?: Prisma.UserCreateNestedOneWithoutDeletedHardwareInput
   opd: Prisma.OpdCreateNestedOneWithoutHardwareInput
   software?: Prisma.SoftwareCreateNestedManyWithoutHardwareInput
 }
 
-export type HardwareUncheckedCreateWithoutJenisHardwareInput = {
+export type HardwareUncheckedCreateWithoutKategoriHardwareInput = {
   id?: string
   nama: string
   merk: string
@@ -1093,37 +1367,42 @@ export type HardwareUncheckedCreateWithoutJenisHardwareInput = {
   pic: string
   biayaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri: string
+  sumber?: $Enums.SumberPengadaan
   penyedia?: string | null
-  createdBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy: string
   updatedBy?: string | null
+  deletedBy?: string | null
   opdId: string
   software?: Prisma.SoftwareUncheckedCreateNestedManyWithoutHardwareInput
 }
 
-export type HardwareCreateOrConnectWithoutJenisHardwareInput = {
+export type HardwareCreateOrConnectWithoutKategoriHardwareInput = {
   where: Prisma.HardwareWhereUniqueInput
-  create: Prisma.XOR<Prisma.HardwareCreateWithoutJenisHardwareInput, Prisma.HardwareUncheckedCreateWithoutJenisHardwareInput>
+  create: Prisma.XOR<Prisma.HardwareCreateWithoutKategoriHardwareInput, Prisma.HardwareUncheckedCreateWithoutKategoriHardwareInput>
 }
 
-export type HardwareCreateManyJenisHardwareInputEnvelope = {
-  data: Prisma.HardwareCreateManyJenisHardwareInput | Prisma.HardwareCreateManyJenisHardwareInput[]
+export type HardwareCreateManyKategoriHardwareInputEnvelope = {
+  data: Prisma.HardwareCreateManyKategoriHardwareInput | Prisma.HardwareCreateManyKategoriHardwareInput[]
   skipDuplicates?: boolean
 }
 
-export type HardwareUpsertWithWhereUniqueWithoutJenisHardwareInput = {
+export type HardwareUpsertWithWhereUniqueWithoutKategoriHardwareInput = {
   where: Prisma.HardwareWhereUniqueInput
-  update: Prisma.XOR<Prisma.HardwareUpdateWithoutJenisHardwareInput, Prisma.HardwareUncheckedUpdateWithoutJenisHardwareInput>
-  create: Prisma.XOR<Prisma.HardwareCreateWithoutJenisHardwareInput, Prisma.HardwareUncheckedCreateWithoutJenisHardwareInput>
+  update: Prisma.XOR<Prisma.HardwareUpdateWithoutKategoriHardwareInput, Prisma.HardwareUncheckedUpdateWithoutKategoriHardwareInput>
+  create: Prisma.XOR<Prisma.HardwareCreateWithoutKategoriHardwareInput, Prisma.HardwareUncheckedCreateWithoutKategoriHardwareInput>
 }
 
-export type HardwareUpdateWithWhereUniqueWithoutJenisHardwareInput = {
+export type HardwareUpdateWithWhereUniqueWithoutKategoriHardwareInput = {
   where: Prisma.HardwareWhereUniqueInput
-  data: Prisma.XOR<Prisma.HardwareUpdateWithoutJenisHardwareInput, Prisma.HardwareUncheckedUpdateWithoutJenisHardwareInput>
+  data: Prisma.XOR<Prisma.HardwareUpdateWithoutKategoriHardwareInput, Prisma.HardwareUncheckedUpdateWithoutKategoriHardwareInput>
 }
 
-export type HardwareUpdateManyWithWhereWithoutJenisHardwareInput = {
+export type HardwareUpdateManyWithWhereWithoutKategoriHardwareInput = {
   where: Prisma.HardwareScalarWhereInput
-  data: Prisma.XOR<Prisma.HardwareUpdateManyMutationInput, Prisma.HardwareUncheckedUpdateManyWithoutJenisHardwareInput>
+  data: Prisma.XOR<Prisma.HardwareUpdateManyMutationInput, Prisma.HardwareUncheckedUpdateManyWithoutKategoriHardwareInput>
 }
 
 export type HardwareCreateWithoutSoftwareInput = {
@@ -1139,11 +1418,16 @@ export type HardwareCreateWithoutSoftwareInput = {
   pic: string
   biayaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri: string
+  sumber?: $Enums.SumberPengadaan
   penyedia?: string | null
-  creator?: Prisma.UserCreateNestedOneWithoutCreatedHardwareInput
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  creator: Prisma.UserCreateNestedOneWithoutCreatedHardwareInput
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedHardwareInput
+  delete?: Prisma.UserCreateNestedOneWithoutDeletedHardwareInput
   opd: Prisma.OpdCreateNestedOneWithoutHardwareInput
-  jenisHardware: Prisma.KategoriHardwareCreateNestedOneWithoutHardwareInput
+  kategoriHardware: Prisma.KategoriHardwareCreateNestedOneWithoutHardwareInput
 }
 
 export type HardwareUncheckedCreateWithoutSoftwareInput = {
@@ -1159,11 +1443,16 @@ export type HardwareUncheckedCreateWithoutSoftwareInput = {
   pic: string
   biayaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri: string
+  sumber?: $Enums.SumberPengadaan
   penyedia?: string | null
-  createdBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy: string
   updatedBy?: string | null
+  deletedBy?: string | null
   opdId: string
-  jenisId: string
+  kategoriId: string
 }
 
 export type HardwareCreateOrConnectWithoutSoftwareInput = {
@@ -1195,11 +1484,16 @@ export type HardwareUpdateWithoutSoftwareInput = {
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   biayaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
+  sumber?: Prisma.EnumSumberPengadaanFieldUpdateOperationsInput | $Enums.SumberPengadaan
   penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  creator?: Prisma.UserUpdateOneWithoutCreatedHardwareNestedInput
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  creator?: Prisma.UserUpdateOneRequiredWithoutCreatedHardwareNestedInput
   updater?: Prisma.UserUpdateOneWithoutUpdatedHardwareNestedInput
+  delete?: Prisma.UserUpdateOneWithoutDeletedHardwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutHardwareNestedInput
-  jenisHardware?: Prisma.KategoriHardwareUpdateOneRequiredWithoutHardwareNestedInput
+  kategoriHardware?: Prisma.KategoriHardwareUpdateOneRequiredWithoutHardwareNestedInput
 }
 
 export type HardwareUncheckedUpdateWithoutSoftwareInput = {
@@ -1215,11 +1509,16 @@ export type HardwareUncheckedUpdateWithoutSoftwareInput = {
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   biayaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
+  sumber?: Prisma.EnumSumberPengadaanFieldUpdateOperationsInput | $Enums.SumberPengadaan
   penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisId?: Prisma.StringFieldUpdateOperationsInput | string
+  kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type HardwareCreateManyCreatorInput = {
@@ -1235,10 +1534,15 @@ export type HardwareCreateManyCreatorInput = {
   pic: string
   biayaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri: string
+  sumber?: $Enums.SumberPengadaan
   penyedia?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
   updatedBy?: string | null
+  deletedBy?: string | null
   opdId: string
-  jenisId: string
+  kategoriId: string
 }
 
 export type HardwareCreateManyUpdaterInput = {
@@ -1254,10 +1558,39 @@ export type HardwareCreateManyUpdaterInput = {
   pic: string
   biayaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri: string
+  sumber?: $Enums.SumberPengadaan
   penyedia?: string | null
-  createdBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy: string
+  deletedBy?: string | null
   opdId: string
-  jenisId: string
+  kategoriId: string
+}
+
+export type HardwareCreateManyDeleteInput = {
+  id?: string
+  nama: string
+  merk: string
+  spesifikasi: string
+  lokasiFisik: string
+  tglPengadaan: Date | string
+  garansiMulai: Date | string
+  garansiSelesai: Date | string
+  status?: $Enums.StatusAset
+  pic: string
+  biayaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
+  nomorSeri: string
+  sumber?: $Enums.SumberPengadaan
+  penyedia?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy: string
+  updatedBy?: string | null
+  opdId: string
+  kategoriId: string
 }
 
 export type HardwareUpdateWithoutCreatorInput = {
@@ -1273,10 +1606,15 @@ export type HardwareUpdateWithoutCreatorInput = {
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   biayaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
+  sumber?: Prisma.EnumSumberPengadaanFieldUpdateOperationsInput | $Enums.SumberPengadaan
   penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updater?: Prisma.UserUpdateOneWithoutUpdatedHardwareNestedInput
+  delete?: Prisma.UserUpdateOneWithoutDeletedHardwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutHardwareNestedInput
-  jenisHardware?: Prisma.KategoriHardwareUpdateOneRequiredWithoutHardwareNestedInput
+  kategoriHardware?: Prisma.KategoriHardwareUpdateOneRequiredWithoutHardwareNestedInput
   software?: Prisma.SoftwareUpdateManyWithoutHardwareNestedInput
 }
 
@@ -1293,10 +1631,15 @@ export type HardwareUncheckedUpdateWithoutCreatorInput = {
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   biayaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
+  sumber?: Prisma.EnumSumberPengadaanFieldUpdateOperationsInput | $Enums.SumberPengadaan
   penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisId?: Prisma.StringFieldUpdateOperationsInput | string
+  kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
   software?: Prisma.SoftwareUncheckedUpdateManyWithoutHardwareNestedInput
 }
 
@@ -1313,10 +1656,15 @@ export type HardwareUncheckedUpdateManyWithoutCreatorInput = {
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   biayaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
+  sumber?: Prisma.EnumSumberPengadaanFieldUpdateOperationsInput | $Enums.SumberPengadaan
   penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisId?: Prisma.StringFieldUpdateOperationsInput | string
+  kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type HardwareUpdateWithoutUpdaterInput = {
@@ -1332,10 +1680,15 @@ export type HardwareUpdateWithoutUpdaterInput = {
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   biayaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
+  sumber?: Prisma.EnumSumberPengadaanFieldUpdateOperationsInput | $Enums.SumberPengadaan
   penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  creator?: Prisma.UserUpdateOneWithoutCreatedHardwareNestedInput
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  creator?: Prisma.UserUpdateOneRequiredWithoutCreatedHardwareNestedInput
+  delete?: Prisma.UserUpdateOneWithoutDeletedHardwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutHardwareNestedInput
-  jenisHardware?: Prisma.KategoriHardwareUpdateOneRequiredWithoutHardwareNestedInput
+  kategoriHardware?: Prisma.KategoriHardwareUpdateOneRequiredWithoutHardwareNestedInput
   software?: Prisma.SoftwareUpdateManyWithoutHardwareNestedInput
 }
 
@@ -1352,10 +1705,15 @@ export type HardwareUncheckedUpdateWithoutUpdaterInput = {
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   biayaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
+  sumber?: Prisma.EnumSumberPengadaanFieldUpdateOperationsInput | $Enums.SumberPengadaan
   penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisId?: Prisma.StringFieldUpdateOperationsInput | string
+  kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
   software?: Prisma.SoftwareUncheckedUpdateManyWithoutHardwareNestedInput
 }
 
@@ -1372,10 +1730,89 @@ export type HardwareUncheckedUpdateManyWithoutUpdaterInput = {
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   biayaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
+  sumber?: Prisma.EnumSumberPengadaanFieldUpdateOperationsInput | $Enums.SumberPengadaan
   penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
-  jenisId?: Prisma.StringFieldUpdateOperationsInput | string
+  kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type HardwareUpdateWithoutDeleteInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nama?: Prisma.StringFieldUpdateOperationsInput | string
+  merk?: Prisma.StringFieldUpdateOperationsInput | string
+  spesifikasi?: Prisma.StringFieldUpdateOperationsInput | string
+  lokasiFisik?: Prisma.StringFieldUpdateOperationsInput | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  garansiMulai?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  garansiSelesai?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
+  pic?: Prisma.StringFieldUpdateOperationsInput | string
+  biayaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
+  sumber?: Prisma.EnumSumberPengadaanFieldUpdateOperationsInput | $Enums.SumberPengadaan
+  penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  creator?: Prisma.UserUpdateOneRequiredWithoutCreatedHardwareNestedInput
+  updater?: Prisma.UserUpdateOneWithoutUpdatedHardwareNestedInput
+  opd?: Prisma.OpdUpdateOneRequiredWithoutHardwareNestedInput
+  kategoriHardware?: Prisma.KategoriHardwareUpdateOneRequiredWithoutHardwareNestedInput
+  software?: Prisma.SoftwareUpdateManyWithoutHardwareNestedInput
+}
+
+export type HardwareUncheckedUpdateWithoutDeleteInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nama?: Prisma.StringFieldUpdateOperationsInput | string
+  merk?: Prisma.StringFieldUpdateOperationsInput | string
+  spesifikasi?: Prisma.StringFieldUpdateOperationsInput | string
+  lokasiFisik?: Prisma.StringFieldUpdateOperationsInput | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  garansiMulai?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  garansiSelesai?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
+  pic?: Prisma.StringFieldUpdateOperationsInput | string
+  biayaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
+  sumber?: Prisma.EnumSumberPengadaanFieldUpdateOperationsInput | $Enums.SumberPengadaan
+  penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  opdId?: Prisma.StringFieldUpdateOperationsInput | string
+  kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
+  software?: Prisma.SoftwareUncheckedUpdateManyWithoutHardwareNestedInput
+}
+
+export type HardwareUncheckedUpdateManyWithoutDeleteInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nama?: Prisma.StringFieldUpdateOperationsInput | string
+  merk?: Prisma.StringFieldUpdateOperationsInput | string
+  spesifikasi?: Prisma.StringFieldUpdateOperationsInput | string
+  lokasiFisik?: Prisma.StringFieldUpdateOperationsInput | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  garansiMulai?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  garansiSelesai?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
+  pic?: Prisma.StringFieldUpdateOperationsInput | string
+  biayaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
+  sumber?: Prisma.EnumSumberPengadaanFieldUpdateOperationsInput | $Enums.SumberPengadaan
+  penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  opdId?: Prisma.StringFieldUpdateOperationsInput | string
+  kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type HardwareCreateManyOpdInput = {
@@ -1391,10 +1828,15 @@ export type HardwareCreateManyOpdInput = {
   pic: string
   biayaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri: string
+  sumber?: $Enums.SumberPengadaan
   penyedia?: string | null
-  createdBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy: string
   updatedBy?: string | null
-  jenisId: string
+  deletedBy?: string | null
+  kategoriId: string
 }
 
 export type HardwareUpdateWithoutOpdInput = {
@@ -1410,10 +1852,15 @@ export type HardwareUpdateWithoutOpdInput = {
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   biayaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
+  sumber?: Prisma.EnumSumberPengadaanFieldUpdateOperationsInput | $Enums.SumberPengadaan
   penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  creator?: Prisma.UserUpdateOneWithoutCreatedHardwareNestedInput
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  creator?: Prisma.UserUpdateOneRequiredWithoutCreatedHardwareNestedInput
   updater?: Prisma.UserUpdateOneWithoutUpdatedHardwareNestedInput
-  jenisHardware?: Prisma.KategoriHardwareUpdateOneRequiredWithoutHardwareNestedInput
+  delete?: Prisma.UserUpdateOneWithoutDeletedHardwareNestedInput
+  kategoriHardware?: Prisma.KategoriHardwareUpdateOneRequiredWithoutHardwareNestedInput
   software?: Prisma.SoftwareUpdateManyWithoutHardwareNestedInput
 }
 
@@ -1430,10 +1877,15 @@ export type HardwareUncheckedUpdateWithoutOpdInput = {
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   biayaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
+  sumber?: Prisma.EnumSumberPengadaanFieldUpdateOperationsInput | $Enums.SumberPengadaan
   penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jenisId?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
   software?: Prisma.SoftwareUncheckedUpdateManyWithoutHardwareNestedInput
 }
 
@@ -1450,13 +1902,18 @@ export type HardwareUncheckedUpdateManyWithoutOpdInput = {
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   biayaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
+  sumber?: Prisma.EnumSumberPengadaanFieldUpdateOperationsInput | $Enums.SumberPengadaan
   penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  jenisId?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type HardwareCreateManyJenisHardwareInput = {
+export type HardwareCreateManyKategoriHardwareInput = {
   id?: string
   nama: string
   merk: string
@@ -1469,13 +1926,18 @@ export type HardwareCreateManyJenisHardwareInput = {
   pic: string
   biayaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri: string
+  sumber?: $Enums.SumberPengadaan
   penyedia?: string | null
-  createdBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy: string
   updatedBy?: string | null
+  deletedBy?: string | null
   opdId: string
 }
 
-export type HardwareUpdateWithoutJenisHardwareInput = {
+export type HardwareUpdateWithoutKategoriHardwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   merk?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1488,14 +1950,19 @@ export type HardwareUpdateWithoutJenisHardwareInput = {
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   biayaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
+  sumber?: Prisma.EnumSumberPengadaanFieldUpdateOperationsInput | $Enums.SumberPengadaan
   penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  creator?: Prisma.UserUpdateOneWithoutCreatedHardwareNestedInput
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  creator?: Prisma.UserUpdateOneRequiredWithoutCreatedHardwareNestedInput
   updater?: Prisma.UserUpdateOneWithoutUpdatedHardwareNestedInput
+  delete?: Prisma.UserUpdateOneWithoutDeletedHardwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutHardwareNestedInput
   software?: Prisma.SoftwareUpdateManyWithoutHardwareNestedInput
 }
 
-export type HardwareUncheckedUpdateWithoutJenisHardwareInput = {
+export type HardwareUncheckedUpdateWithoutKategoriHardwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   merk?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1508,14 +1975,19 @@ export type HardwareUncheckedUpdateWithoutJenisHardwareInput = {
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   biayaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
+  sumber?: Prisma.EnumSumberPengadaanFieldUpdateOperationsInput | $Enums.SumberPengadaan
   penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
   software?: Prisma.SoftwareUncheckedUpdateManyWithoutHardwareNestedInput
 }
 
-export type HardwareUncheckedUpdateManyWithoutJenisHardwareInput = {
+export type HardwareUncheckedUpdateManyWithoutKategoriHardwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   merk?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1528,9 +2000,14 @@ export type HardwareUncheckedUpdateManyWithoutJenisHardwareInput = {
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   biayaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
+  sumber?: Prisma.EnumSumberPengadaanFieldUpdateOperationsInput | $Enums.SumberPengadaan
   penyedia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -1578,15 +2055,21 @@ export type HardwareSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   pic?: boolean
   biayaPerolehan?: boolean
   nomorSeri?: boolean
+  sumber?: boolean
   penyedia?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
   createdBy?: boolean
   updatedBy?: boolean
+  deletedBy?: boolean
   opdId?: boolean
-  jenisId?: boolean
-  creator?: boolean | Prisma.Hardware$creatorArgs<ExtArgs>
+  kategoriId?: boolean
+  creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updater?: boolean | Prisma.Hardware$updaterArgs<ExtArgs>
+  delete?: boolean | Prisma.Hardware$deleteArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
-  jenisHardware?: boolean | Prisma.KategoriHardwareDefaultArgs<ExtArgs>
+  kategoriHardware?: boolean | Prisma.KategoriHardwareDefaultArgs<ExtArgs>
   software?: boolean | Prisma.Hardware$softwareArgs<ExtArgs>
   _count?: boolean | Prisma.HardwareCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["hardware"]>
@@ -1604,15 +2087,21 @@ export type HardwareSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   pic?: boolean
   biayaPerolehan?: boolean
   nomorSeri?: boolean
+  sumber?: boolean
   penyedia?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
   createdBy?: boolean
   updatedBy?: boolean
+  deletedBy?: boolean
   opdId?: boolean
-  jenisId?: boolean
-  creator?: boolean | Prisma.Hardware$creatorArgs<ExtArgs>
+  kategoriId?: boolean
+  creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updater?: boolean | Prisma.Hardware$updaterArgs<ExtArgs>
+  delete?: boolean | Prisma.Hardware$deleteArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
-  jenisHardware?: boolean | Prisma.KategoriHardwareDefaultArgs<ExtArgs>
+  kategoriHardware?: boolean | Prisma.KategoriHardwareDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["hardware"]>
 
 export type HardwareSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1628,15 +2117,21 @@ export type HardwareSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   pic?: boolean
   biayaPerolehan?: boolean
   nomorSeri?: boolean
+  sumber?: boolean
   penyedia?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
   createdBy?: boolean
   updatedBy?: boolean
+  deletedBy?: boolean
   opdId?: boolean
-  jenisId?: boolean
-  creator?: boolean | Prisma.Hardware$creatorArgs<ExtArgs>
+  kategoriId?: boolean
+  creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updater?: boolean | Prisma.Hardware$updaterArgs<ExtArgs>
+  delete?: boolean | Prisma.Hardware$deleteArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
-  jenisHardware?: boolean | Prisma.KategoriHardwareDefaultArgs<ExtArgs>
+  kategoriHardware?: boolean | Prisma.KategoriHardwareDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["hardware"]>
 
 export type HardwareSelectScalar = {
@@ -1652,42 +2147,51 @@ export type HardwareSelectScalar = {
   pic?: boolean
   biayaPerolehan?: boolean
   nomorSeri?: boolean
+  sumber?: boolean
   penyedia?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
   createdBy?: boolean
   updatedBy?: boolean
+  deletedBy?: boolean
   opdId?: boolean
-  jenisId?: boolean
+  kategoriId?: boolean
 }
 
-export type HardwareOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nama" | "merk" | "spesifikasi" | "lokasiFisik" | "tglPengadaan" | "garansiMulai" | "garansiSelesai" | "status" | "pic" | "biayaPerolehan" | "nomorSeri" | "penyedia" | "createdBy" | "updatedBy" | "opdId" | "jenisId", ExtArgs["result"]["hardware"]>
+export type HardwareOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nama" | "merk" | "spesifikasi" | "lokasiFisik" | "tglPengadaan" | "garansiMulai" | "garansiSelesai" | "status" | "pic" | "biayaPerolehan" | "nomorSeri" | "sumber" | "penyedia" | "createdAt" | "updatedAt" | "deletedAt" | "createdBy" | "updatedBy" | "deletedBy" | "opdId" | "kategoriId", ExtArgs["result"]["hardware"]>
 export type HardwareInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  creator?: boolean | Prisma.Hardware$creatorArgs<ExtArgs>
+  creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updater?: boolean | Prisma.Hardware$updaterArgs<ExtArgs>
+  delete?: boolean | Prisma.Hardware$deleteArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
-  jenisHardware?: boolean | Prisma.KategoriHardwareDefaultArgs<ExtArgs>
+  kategoriHardware?: boolean | Prisma.KategoriHardwareDefaultArgs<ExtArgs>
   software?: boolean | Prisma.Hardware$softwareArgs<ExtArgs>
   _count?: boolean | Prisma.HardwareCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type HardwareIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  creator?: boolean | Prisma.Hardware$creatorArgs<ExtArgs>
+  creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updater?: boolean | Prisma.Hardware$updaterArgs<ExtArgs>
+  delete?: boolean | Prisma.Hardware$deleteArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
-  jenisHardware?: boolean | Prisma.KategoriHardwareDefaultArgs<ExtArgs>
+  kategoriHardware?: boolean | Prisma.KategoriHardwareDefaultArgs<ExtArgs>
 }
 export type HardwareIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  creator?: boolean | Prisma.Hardware$creatorArgs<ExtArgs>
+  creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updater?: boolean | Prisma.Hardware$updaterArgs<ExtArgs>
+  delete?: boolean | Prisma.Hardware$deleteArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
-  jenisHardware?: boolean | Prisma.KategoriHardwareDefaultArgs<ExtArgs>
+  kategoriHardware?: boolean | Prisma.KategoriHardwareDefaultArgs<ExtArgs>
 }
 
 export type $HardwarePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Hardware"
   objects: {
-    creator: Prisma.$UserPayload<ExtArgs> | null
+    creator: Prisma.$UserPayload<ExtArgs>
     updater: Prisma.$UserPayload<ExtArgs> | null
+    delete: Prisma.$UserPayload<ExtArgs> | null
     opd: Prisma.$OpdPayload<ExtArgs>
-    jenisHardware: Prisma.$KategoriHardwarePayload<ExtArgs>
+    kategoriHardware: Prisma.$KategoriHardwarePayload<ExtArgs>
     software: Prisma.$SoftwarePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1703,11 +2207,16 @@ export type $HardwarePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     pic: string
     biayaPerolehan: runtime.Decimal
     nomorSeri: string
+    sumber: $Enums.SumberPengadaan
     penyedia: string | null
-    createdBy: string | null
+    createdAt: Date
+    updatedAt: Date
+    deletedAt: Date | null
+    createdBy: string
     updatedBy: string | null
+    deletedBy: string | null
     opdId: string
-    jenisId: string
+    kategoriId: string
   }, ExtArgs["result"]["hardware"]>
   composites: {}
 }
@@ -2102,10 +2611,11 @@ readonly fields: HardwareFieldRefs;
  */
 export interface Prisma__HardwareClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  creator<T extends Prisma.Hardware$creatorArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Hardware$creatorArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  creator<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   updater<T extends Prisma.Hardware$updaterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Hardware$updaterArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  delete<T extends Prisma.Hardware$deleteArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Hardware$deleteArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   opd<T extends Prisma.OpdDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OpdDefaultArgs<ExtArgs>>): Prisma.Prisma__OpdClient<runtime.Types.Result.GetResult<Prisma.$OpdPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  jenisHardware<T extends Prisma.KategoriHardwareDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.KategoriHardwareDefaultArgs<ExtArgs>>): Prisma.Prisma__KategoriHardwareClient<runtime.Types.Result.GetResult<Prisma.$KategoriHardwarePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  kategoriHardware<T extends Prisma.KategoriHardwareDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.KategoriHardwareDefaultArgs<ExtArgs>>): Prisma.Prisma__KategoriHardwareClient<runtime.Types.Result.GetResult<Prisma.$KategoriHardwarePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   software<T extends Prisma.Hardware$softwareArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Hardware$softwareArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SoftwarePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2148,11 +2658,16 @@ export interface HardwareFieldRefs {
   readonly pic: Prisma.FieldRef<"Hardware", 'String'>
   readonly biayaPerolehan: Prisma.FieldRef<"Hardware", 'Decimal'>
   readonly nomorSeri: Prisma.FieldRef<"Hardware", 'String'>
+  readonly sumber: Prisma.FieldRef<"Hardware", 'SumberPengadaan'>
   readonly penyedia: Prisma.FieldRef<"Hardware", 'String'>
+  readonly createdAt: Prisma.FieldRef<"Hardware", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Hardware", 'DateTime'>
+  readonly deletedAt: Prisma.FieldRef<"Hardware", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"Hardware", 'String'>
   readonly updatedBy: Prisma.FieldRef<"Hardware", 'String'>
+  readonly deletedBy: Prisma.FieldRef<"Hardware", 'String'>
   readonly opdId: Prisma.FieldRef<"Hardware", 'String'>
-  readonly jenisId: Prisma.FieldRef<"Hardware", 'String'>
+  readonly kategoriId: Prisma.FieldRef<"Hardware", 'String'>
 }
     
 
@@ -2549,9 +3064,9 @@ export type HardwareDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
- * Hardware.creator
+ * Hardware.updater
  */
-export type Hardware$creatorArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Hardware$updaterArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the User
    */
@@ -2568,9 +3083,9 @@ export type Hardware$creatorArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 /**
- * Hardware.updater
+ * Hardware.delete
  */
-export type Hardware$updaterArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Hardware$deleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the User
    */

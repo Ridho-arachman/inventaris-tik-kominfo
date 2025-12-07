@@ -1210,11 +1210,16 @@ export const HardwareScalarFieldEnum = {
   pic: 'pic',
   biayaPerolehan: 'biayaPerolehan',
   nomorSeri: 'nomorSeri',
+  sumber: 'sumber',
   penyedia: 'penyedia',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
   createdBy: 'createdBy',
   updatedBy: 'updatedBy',
+  deletedBy: 'deletedBy',
   opdId: 'opdId',
-  jenisId: 'jenisId'
+  kategoriId: 'kategoriId'
 } as const
 
 export type HardwareScalarFieldEnum = (typeof HardwareScalarFieldEnum)[keyof typeof HardwareScalarFieldEnum]
@@ -1234,7 +1239,7 @@ export const SoftwareScalarFieldEnum = {
   id: 'id',
   nama: 'nama',
   jenisLisensi: 'jenisLisensi',
-  serialNumber: 'serialNumber',
+  nomorSeri: 'nomorSeri',
   tglBerakhirLisensi: 'tglBerakhirLisensi',
   versiTerpasang: 'versiTerpasang',
   vendor: 'vendor',
@@ -1244,6 +1249,8 @@ export const SoftwareScalarFieldEnum = {
   tahunPengadaan: 'tahunPengadaan',
   status: 'status',
   pic: 'pic',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   createdBy: 'createdBy',
   updatedBy: 'updatedBy',
   opdId: 'opdId',
@@ -1358,6 +1365,20 @@ export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
  * Reference to a field of type 'Decimal[]'
  */
 export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SumberPengadaan'
+ */
+export type EnumSumberPengadaanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SumberPengadaan'>
+    
+
+
+/**
+ * Reference to a field of type 'SumberPengadaan[]'
+ */
+export type ListEnumSumberPengadaanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SumberPengadaan[]'>
     
 
 

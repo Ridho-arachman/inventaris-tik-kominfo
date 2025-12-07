@@ -17,7 +17,7 @@ model User {
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 
-  idOpd           String?   @db.VarChar(100)
+  idOpd           String?   @unique  @db.VarChar(100)
   opd             Opd?      @relation(fields: [idOpd], references: [id],onDelete:Restrict,onUpdate: Cascade)
 
   sessions        Session[]
@@ -25,6 +25,7 @@ model User {
 
   createdHardware Hardware[] @relation("HardwareCreator")
   updatedHardware Hardware[] @relation("HardwareUpdater")
+  deletedHardware Hardware[] @relation("HardwareDeletor")
 
   createdSoftware Software[] @relation("SoftwareCreator")
   updatedSoftware Software[] @relation("SoftwareUpdater")
@@ -88,7 +89,7 @@ enum Role {
 model Opd {
   id        String   @id @default(cuid())
   kode      String   @unique @db.VarChar(50)
-  nama     String   @unique @db.VarChar(255)
+  nama      String   @unique @db.VarChar(255)
   
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -113,6 +114,14 @@ enum StatusAset {
   NON_AKTIF
 }
 
+enum SumberPengadaan {
+  PEMBELIAN
+  HIBAH
+  TRANSFER_OPD
+  PROYEK_PAKET
+}
+
+
 model Hardware {
   id              String           @id @default(cuid())
   nama            String           @db.VarChar(255)
@@ -124,15 +133,22 @@ model Hardware {
   garansiSelesai  DateTime
   status          StatusAset       @default(AKTIF)
   pic             String           @db.VarChar(255)
-  biayaPerolehan  Decimal
-  nomorSeri       String           @db.VarChar(50)
+  biayaPerolehan  Decimal          @db.Decimal(18,2)
+  nomorSeri       String           @unique  @db.VarChar(50)
+  sumber          SumberPengadaan  @default(PEMBELIAN)
   penyedia        String?          @db.VarChar(255)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  deletedAt       DateTime?
 
-  createdBy       String?          @db.VarChar(100)
-  creator         User?            @relation("HardwareCreator", fields: [createdBy], references: [id], onDelete: Restrict,onUpdate: Cascade)
+  createdBy       String          @db.VarChar(100)
+  creator         User            @relation("HardwareCreator", fields: [createdBy], references: [id], onDelete: Restrict,onUpdate: Cascade)
 
-  updatedBy       String?          @db.VarChar(100)
-  updater         User?            @relation("HardwareUpdater", fields: [updatedBy], references: [id], onDelete: Restrict,onUpdate: Cascade)
+  updatedBy       String          @db.VarChar(100)
+  updater         User            @relation("HardwareUpdater", fields: [updatedBy], references: [id], onDelete: Restrict,onUpdate: Cascade)
+
+  deletedBy       String?           @db.VarChar(100)
+  delete          User?            @relation("HardwareDeletor", fields: [deletedBy], references: [id], onDelete: Restrict,onUpdate: Cascade)
 
   opdId           String           @db.VarChar(100)
   opd             Opd              @relation(fields: [opdId], references: [id],onDelete: Restrict,onUpdate: Cascade)
@@ -173,7 +189,7 @@ model Software {
   id                    String               @id @default(cuid())
   nama                  String               @db.VarChar(255)
   jenisLisensi          JenisLisensi         @default(OPEN_SOURCE)
-  serialNumber          String               @db.VarChar(50)
+  nomorSeri             String               @db.VarChar(50)
   tglBerakhirLisensi    DateTime
   versiTerpasang        Int
   vendor                String?              @db.VarChar(255)
@@ -183,9 +199,11 @@ model Software {
   tahunPengadaan        DateTime
   status                StatusAset           @default(AKTIF)
   pic                   String               @db.VarChar(255)
+  createdAt             DateTime             @default(now())
+  updatedAt             DateTime             @updatedAt
 
-  createdBy             String?              @db.VarChar(100)
-  creator               User?                @relation("SoftwareCreator", fields: [createdBy], references: [id], onDelete: Restrict,onUpdate: Cascade)
+  createdBy             String               @db.VarChar(100)
+  creator               User                 @relation("SoftwareCreator", fields: [createdBy], references: [id], onDelete: Restrict,onUpdate: Cascade)
 
   updatedBy             String?              @db.VarChar(100)
   updater               User?                @relation("SoftwareUpdater", fields: [updatedBy], references: [id], onDelete: Restrict,onUpdate: Cascade)

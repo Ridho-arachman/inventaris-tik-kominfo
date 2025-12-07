@@ -211,6 +211,7 @@ export type UserWhereInput = {
   accounts?: Prisma.AccountListRelationFilter
   createdHardware?: Prisma.HardwareListRelationFilter
   updatedHardware?: Prisma.HardwareListRelationFilter
+  deletedHardware?: Prisma.HardwareListRelationFilter
   createdSoftware?: Prisma.SoftwareListRelationFilter
   updatedSoftware?: Prisma.SoftwareListRelationFilter
 }
@@ -229,6 +230,7 @@ export type UserOrderByWithRelationInput = {
   accounts?: Prisma.AccountOrderByRelationAggregateInput
   createdHardware?: Prisma.HardwareOrderByRelationAggregateInput
   updatedHardware?: Prisma.HardwareOrderByRelationAggregateInput
+  deletedHardware?: Prisma.HardwareOrderByRelationAggregateInput
   createdSoftware?: Prisma.SoftwareOrderByRelationAggregateInput
   updatedSoftware?: Prisma.SoftwareOrderByRelationAggregateInput
 }
@@ -236,6 +238,7 @@ export type UserOrderByWithRelationInput = {
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   email?: string
+  idOpd?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
@@ -244,15 +247,15 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   emailVerified?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  idOpd?: Prisma.StringNullableFilter<"User"> | string | null
   opd?: Prisma.XOR<Prisma.OpdNullableScalarRelationFilter, Prisma.OpdWhereInput> | null
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
   createdHardware?: Prisma.HardwareListRelationFilter
   updatedHardware?: Prisma.HardwareListRelationFilter
+  deletedHardware?: Prisma.HardwareListRelationFilter
   createdSoftware?: Prisma.SoftwareListRelationFilter
   updatedSoftware?: Prisma.SoftwareListRelationFilter
-}, "id" | "email">
+}, "id" | "email" | "idOpd">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -295,6 +298,7 @@ export type UserCreateInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareCreateNestedManyWithoutCreatorInput
   updatedHardware?: Prisma.HardwareCreateNestedManyWithoutUpdaterInput
+  deletedHardware?: Prisma.HardwareCreateNestedManyWithoutDeleteInput
   createdSoftware?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareCreateNestedManyWithoutUpdaterInput
 }
@@ -312,6 +316,7 @@ export type UserUncheckedCreateInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutUpdaterInput
+  deletedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutDeleteInput
   createdSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutUpdaterInput
 }
@@ -329,6 +334,7 @@ export type UserUpdateInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUpdateManyWithoutCreatorNestedInput
   updatedHardware?: Prisma.HardwareUpdateManyWithoutUpdaterNestedInput
+  deletedHardware?: Prisma.HardwareUpdateManyWithoutDeleteNestedInput
   createdSoftware?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUpdateManyWithoutUpdaterNestedInput
 }
@@ -346,6 +352,7 @@ export type UserUncheckedUpdateInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutUpdaterNestedInput
+  deletedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutDeleteNestedInput
   createdSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutUpdaterNestedInput
 }
@@ -537,12 +544,16 @@ export type UserCreateNestedOneWithoutUpdatedHardwareInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneWithoutCreatedHardwareNestedInput = {
+export type UserCreateNestedOneWithoutDeletedHardwareInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDeletedHardwareInput, Prisma.UserUncheckedCreateWithoutDeletedHardwareInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDeletedHardwareInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCreatedHardwareNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedHardwareInput, Prisma.UserUncheckedCreateWithoutCreatedHardwareInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedHardwareInput
   upsert?: Prisma.UserUpsertWithoutCreatedHardwareInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreatedHardwareInput, Prisma.UserUpdateWithoutCreatedHardwareInput>, Prisma.UserUncheckedUpdateWithoutCreatedHardwareInput>
 }
@@ -557,6 +568,16 @@ export type UserUpdateOneWithoutUpdatedHardwareNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUpdatedHardwareInput, Prisma.UserUpdateWithoutUpdatedHardwareInput>, Prisma.UserUncheckedUpdateWithoutUpdatedHardwareInput>
 }
 
+export type UserUpdateOneWithoutDeletedHardwareNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDeletedHardwareInput, Prisma.UserUncheckedCreateWithoutDeletedHardwareInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDeletedHardwareInput
+  upsert?: Prisma.UserUpsertWithoutDeletedHardwareInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDeletedHardwareInput, Prisma.UserUpdateWithoutDeletedHardwareInput>, Prisma.UserUncheckedUpdateWithoutDeletedHardwareInput>
+}
+
 export type UserCreateNestedOneWithoutCreatedSoftwareInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedSoftwareInput, Prisma.UserUncheckedCreateWithoutCreatedSoftwareInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedSoftwareInput
@@ -569,12 +590,10 @@ export type UserCreateNestedOneWithoutUpdatedSoftwareInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneWithoutCreatedSoftwareNestedInput = {
+export type UserUpdateOneRequiredWithoutCreatedSoftwareNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedSoftwareInput, Prisma.UserUncheckedCreateWithoutCreatedSoftwareInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedSoftwareInput
   upsert?: Prisma.UserUpsertWithoutCreatedSoftwareInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreatedSoftwareInput, Prisma.UserUpdateWithoutCreatedSoftwareInput>, Prisma.UserUncheckedUpdateWithoutCreatedSoftwareInput>
 }
@@ -601,6 +620,7 @@ export type UserCreateWithoutSessionsInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareCreateNestedManyWithoutCreatorInput
   updatedHardware?: Prisma.HardwareCreateNestedManyWithoutUpdaterInput
+  deletedHardware?: Prisma.HardwareCreateNestedManyWithoutDeleteInput
   createdSoftware?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareCreateNestedManyWithoutUpdaterInput
 }
@@ -617,6 +637,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutUpdaterInput
+  deletedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutDeleteInput
   createdSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutUpdaterInput
 }
@@ -649,6 +670,7 @@ export type UserUpdateWithoutSessionsInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUpdateManyWithoutCreatorNestedInput
   updatedHardware?: Prisma.HardwareUpdateManyWithoutUpdaterNestedInput
+  deletedHardware?: Prisma.HardwareUpdateManyWithoutDeleteNestedInput
   createdSoftware?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUpdateManyWithoutUpdaterNestedInput
 }
@@ -665,6 +687,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutUpdaterNestedInput
+  deletedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutDeleteNestedInput
   createdSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutUpdaterNestedInput
 }
@@ -681,6 +704,7 @@ export type UserCreateWithoutAccountsInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareCreateNestedManyWithoutCreatorInput
   updatedHardware?: Prisma.HardwareCreateNestedManyWithoutUpdaterInput
+  deletedHardware?: Prisma.HardwareCreateNestedManyWithoutDeleteInput
   createdSoftware?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareCreateNestedManyWithoutUpdaterInput
 }
@@ -697,6 +721,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutUpdaterInput
+  deletedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutDeleteInput
   createdSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutUpdaterInput
 }
@@ -729,6 +754,7 @@ export type UserUpdateWithoutAccountsInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUpdateManyWithoutCreatorNestedInput
   updatedHardware?: Prisma.HardwareUpdateManyWithoutUpdaterNestedInput
+  deletedHardware?: Prisma.HardwareUpdateManyWithoutDeleteNestedInput
   createdSoftware?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUpdateManyWithoutUpdaterNestedInput
 }
@@ -745,6 +771,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutUpdaterNestedInput
+  deletedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutDeleteNestedInput
   createdSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutUpdaterNestedInput
 }
@@ -761,6 +788,7 @@ export type UserCreateWithoutOpdInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareCreateNestedManyWithoutCreatorInput
   updatedHardware?: Prisma.HardwareCreateNestedManyWithoutUpdaterInput
+  deletedHardware?: Prisma.HardwareCreateNestedManyWithoutDeleteInput
   createdSoftware?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareCreateNestedManyWithoutUpdaterInput
 }
@@ -777,6 +805,7 @@ export type UserUncheckedCreateWithoutOpdInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutUpdaterInput
+  deletedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutDeleteInput
   createdSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutUpdaterInput
 }
@@ -833,6 +862,7 @@ export type UserCreateWithoutCreatedHardwareInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   updatedHardware?: Prisma.HardwareCreateNestedManyWithoutUpdaterInput
+  deletedHardware?: Prisma.HardwareCreateNestedManyWithoutDeleteInput
   createdSoftware?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareCreateNestedManyWithoutUpdaterInput
 }
@@ -849,6 +879,7 @@ export type UserUncheckedCreateWithoutCreatedHardwareInput = {
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   updatedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutUpdaterInput
+  deletedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutDeleteInput
   createdSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutUpdaterInput
 }
@@ -870,6 +901,7 @@ export type UserCreateWithoutUpdatedHardwareInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareCreateNestedManyWithoutCreatorInput
+  deletedHardware?: Prisma.HardwareCreateNestedManyWithoutDeleteInput
   createdSoftware?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareCreateNestedManyWithoutUpdaterInput
 }
@@ -886,6 +918,7 @@ export type UserUncheckedCreateWithoutUpdatedHardwareInput = {
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutCreatorInput
+  deletedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutDeleteInput
   createdSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutUpdaterInput
 }
@@ -893,6 +926,45 @@ export type UserUncheckedCreateWithoutUpdatedHardwareInput = {
 export type UserCreateOrConnectWithoutUpdatedHardwareInput = {
   where: Prisma.UserWhereUniqueInput
   create: Prisma.XOR<Prisma.UserCreateWithoutUpdatedHardwareInput, Prisma.UserUncheckedCreateWithoutUpdatedHardwareInput>
+}
+
+export type UserCreateWithoutDeletedHardwareInput = {
+  id?: string
+  email: string
+  name?: string | null
+  role?: $Enums.Role
+  emailVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  opd?: Prisma.OpdCreateNestedOneWithoutUsersInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  createdHardware?: Prisma.HardwareCreateNestedManyWithoutCreatorInput
+  updatedHardware?: Prisma.HardwareCreateNestedManyWithoutUpdaterInput
+  createdSoftware?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
+  updatedSoftware?: Prisma.SoftwareCreateNestedManyWithoutUpdaterInput
+}
+
+export type UserUncheckedCreateWithoutDeletedHardwareInput = {
+  id?: string
+  email: string
+  name?: string | null
+  role?: $Enums.Role
+  emailVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  idOpd?: string | null
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  createdHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutCreatorInput
+  updatedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutUpdaterInput
+  createdSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
+  updatedSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutUpdaterInput
+}
+
+export type UserCreateOrConnectWithoutDeletedHardwareInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutDeletedHardwareInput, Prisma.UserUncheckedCreateWithoutDeletedHardwareInput>
 }
 
 export type UserUpsertWithoutCreatedHardwareInput = {
@@ -918,6 +990,7 @@ export type UserUpdateWithoutCreatedHardwareInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   updatedHardware?: Prisma.HardwareUpdateManyWithoutUpdaterNestedInput
+  deletedHardware?: Prisma.HardwareUpdateManyWithoutDeleteNestedInput
   createdSoftware?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUpdateManyWithoutUpdaterNestedInput
 }
@@ -934,6 +1007,7 @@ export type UserUncheckedUpdateWithoutCreatedHardwareInput = {
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   updatedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutUpdaterNestedInput
+  deletedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutDeleteNestedInput
   createdSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutUpdaterNestedInput
 }
@@ -961,6 +1035,7 @@ export type UserUpdateWithoutUpdatedHardwareInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUpdateManyWithoutCreatorNestedInput
+  deletedHardware?: Prisma.HardwareUpdateManyWithoutDeleteNestedInput
   createdSoftware?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUpdateManyWithoutUpdaterNestedInput
 }
@@ -977,6 +1052,52 @@ export type UserUncheckedUpdateWithoutUpdatedHardwareInput = {
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUncheckedUpdateManyWithoutCreatorNestedInput
+  deletedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutDeleteNestedInput
+  createdSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
+  updatedSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutUpdaterNestedInput
+}
+
+export type UserUpsertWithoutDeletedHardwareInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutDeletedHardwareInput, Prisma.UserUncheckedUpdateWithoutDeletedHardwareInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutDeletedHardwareInput, Prisma.UserUncheckedCreateWithoutDeletedHardwareInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutDeletedHardwareInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutDeletedHardwareInput, Prisma.UserUncheckedUpdateWithoutDeletedHardwareInput>
+}
+
+export type UserUpdateWithoutDeletedHardwareInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  opd?: Prisma.OpdUpdateOneWithoutUsersNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  createdHardware?: Prisma.HardwareUpdateManyWithoutCreatorNestedInput
+  updatedHardware?: Prisma.HardwareUpdateManyWithoutUpdaterNestedInput
+  createdSoftware?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
+  updatedSoftware?: Prisma.SoftwareUpdateManyWithoutUpdaterNestedInput
+}
+
+export type UserUncheckedUpdateWithoutDeletedHardwareInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idOpd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  createdHardware?: Prisma.HardwareUncheckedUpdateManyWithoutCreatorNestedInput
+  updatedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutUpdaterNestedInput
   createdSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutUpdaterNestedInput
 }
@@ -994,6 +1115,7 @@ export type UserCreateWithoutCreatedSoftwareInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareCreateNestedManyWithoutCreatorInput
   updatedHardware?: Prisma.HardwareCreateNestedManyWithoutUpdaterInput
+  deletedHardware?: Prisma.HardwareCreateNestedManyWithoutDeleteInput
   updatedSoftware?: Prisma.SoftwareCreateNestedManyWithoutUpdaterInput
 }
 
@@ -1010,6 +1132,7 @@ export type UserUncheckedCreateWithoutCreatedSoftwareInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutUpdaterInput
+  deletedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutDeleteInput
   updatedSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutUpdaterInput
 }
 
@@ -1031,6 +1154,7 @@ export type UserCreateWithoutUpdatedSoftwareInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareCreateNestedManyWithoutCreatorInput
   updatedHardware?: Prisma.HardwareCreateNestedManyWithoutUpdaterInput
+  deletedHardware?: Prisma.HardwareCreateNestedManyWithoutDeleteInput
   createdSoftware?: Prisma.SoftwareCreateNestedManyWithoutCreatorInput
 }
 
@@ -1047,6 +1171,7 @@ export type UserUncheckedCreateWithoutUpdatedSoftwareInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   createdHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutCreatorInput
   updatedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutUpdaterInput
+  deletedHardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutDeleteInput
   createdSoftware?: Prisma.SoftwareUncheckedCreateNestedManyWithoutCreatorInput
 }
 
@@ -1079,6 +1204,7 @@ export type UserUpdateWithoutCreatedSoftwareInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUpdateManyWithoutCreatorNestedInput
   updatedHardware?: Prisma.HardwareUpdateManyWithoutUpdaterNestedInput
+  deletedHardware?: Prisma.HardwareUpdateManyWithoutDeleteNestedInput
   updatedSoftware?: Prisma.SoftwareUpdateManyWithoutUpdaterNestedInput
 }
 
@@ -1095,6 +1221,7 @@ export type UserUncheckedUpdateWithoutCreatedSoftwareInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutUpdaterNestedInput
+  deletedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutDeleteNestedInput
   updatedSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutUpdaterNestedInput
 }
 
@@ -1122,6 +1249,7 @@ export type UserUpdateWithoutUpdatedSoftwareInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUpdateManyWithoutCreatorNestedInput
   updatedHardware?: Prisma.HardwareUpdateManyWithoutUpdaterNestedInput
+  deletedHardware?: Prisma.HardwareUpdateManyWithoutDeleteNestedInput
   createdSoftware?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
 }
 
@@ -1138,6 +1266,7 @@ export type UserUncheckedUpdateWithoutUpdatedSoftwareInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutUpdaterNestedInput
+  deletedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutDeleteNestedInput
   createdSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
 }
 
@@ -1163,6 +1292,7 @@ export type UserUpdateWithoutOpdInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUpdateManyWithoutCreatorNestedInput
   updatedHardware?: Prisma.HardwareUpdateManyWithoutUpdaterNestedInput
+  deletedHardware?: Prisma.HardwareUpdateManyWithoutDeleteNestedInput
   createdSoftware?: Prisma.SoftwareUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUpdateManyWithoutUpdaterNestedInput
 }
@@ -1179,6 +1309,7 @@ export type UserUncheckedUpdateWithoutOpdInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   createdHardware?: Prisma.HardwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutUpdaterNestedInput
+  deletedHardware?: Prisma.HardwareUncheckedUpdateManyWithoutDeleteNestedInput
   createdSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutCreatorNestedInput
   updatedSoftware?: Prisma.SoftwareUncheckedUpdateManyWithoutUpdaterNestedInput
 }
@@ -1203,6 +1334,7 @@ export type UserCountOutputType = {
   accounts: number
   createdHardware: number
   updatedHardware: number
+  deletedHardware: number
   createdSoftware: number
   updatedSoftware: number
 }
@@ -1212,6 +1344,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs
   createdHardware?: boolean | UserCountOutputTypeCountCreatedHardwareArgs
   updatedHardware?: boolean | UserCountOutputTypeCountUpdatedHardwareArgs
+  deletedHardware?: boolean | UserCountOutputTypeCountDeletedHardwareArgs
   createdSoftware?: boolean | UserCountOutputTypeCountCreatedSoftwareArgs
   updatedSoftware?: boolean | UserCountOutputTypeCountUpdatedSoftwareArgs
 }
@@ -1257,6 +1390,13 @@ export type UserCountOutputTypeCountUpdatedHardwareArgs<ExtArgs extends runtime.
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountDeletedHardwareArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HardwareWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountCreatedSoftwareArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.SoftwareWhereInput
 }
@@ -1283,6 +1423,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   createdHardware?: boolean | Prisma.User$createdHardwareArgs<ExtArgs>
   updatedHardware?: boolean | Prisma.User$updatedHardwareArgs<ExtArgs>
+  deletedHardware?: boolean | Prisma.User$deletedHardwareArgs<ExtArgs>
   createdSoftware?: boolean | Prisma.User$createdSoftwareArgs<ExtArgs>
   updatedSoftware?: boolean | Prisma.User$updatedSoftwareArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1330,6 +1471,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   createdHardware?: boolean | Prisma.User$createdHardwareArgs<ExtArgs>
   updatedHardware?: boolean | Prisma.User$updatedHardwareArgs<ExtArgs>
+  deletedHardware?: boolean | Prisma.User$deletedHardwareArgs<ExtArgs>
   createdSoftware?: boolean | Prisma.User$createdSoftwareArgs<ExtArgs>
   updatedSoftware?: boolean | Prisma.User$updatedSoftwareArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1349,6 +1491,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     accounts: Prisma.$AccountPayload<ExtArgs>[]
     createdHardware: Prisma.$HardwarePayload<ExtArgs>[]
     updatedHardware: Prisma.$HardwarePayload<ExtArgs>[]
+    deletedHardware: Prisma.$HardwarePayload<ExtArgs>[]
     createdSoftware: Prisma.$SoftwarePayload<ExtArgs>[]
     updatedSoftware: Prisma.$SoftwarePayload<ExtArgs>[]
   }
@@ -1760,6 +1903,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdHardware<T extends Prisma.User$createdHardwareArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdHardwareArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HardwarePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedHardware<T extends Prisma.User$updatedHardwareArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedHardwareArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HardwarePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  deletedHardware<T extends Prisma.User$deletedHardwareArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$deletedHardwareArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HardwarePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdSoftware<T extends Prisma.User$createdSoftwareArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdSoftwareArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SoftwarePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedSoftware<T extends Prisma.User$updatedSoftwareArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedSoftwareArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SoftwarePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -2289,6 +2433,30 @@ export type User$createdHardwareArgs<ExtArgs extends runtime.Types.Extensions.In
  * User.updatedHardware
  */
 export type User$updatedHardwareArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Hardware
+   */
+  select?: Prisma.HardwareSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Hardware
+   */
+  omit?: Prisma.HardwareOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HardwareInclude<ExtArgs> | null
+  where?: Prisma.HardwareWhereInput
+  orderBy?: Prisma.HardwareOrderByWithRelationInput | Prisma.HardwareOrderByWithRelationInput[]
+  cursor?: Prisma.HardwareWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HardwareScalarFieldEnum | Prisma.HardwareScalarFieldEnum[]
+}
+
+/**
+ * User.deletedHardware
+ */
+export type User$deletedHardwareArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Hardware
    */

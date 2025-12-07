@@ -183,6 +183,13 @@ export type DecimalFilter<$PrismaModel = never> = {
   not?: Prisma.NestedDecimalFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
+export type EnumSumberPengadaanFilter<$PrismaModel = never> = {
+  equals?: $Enums.SumberPengadaan | Prisma.EnumSumberPengadaanFieldRefInput<$PrismaModel>
+  in?: $Enums.SumberPengadaan[] | Prisma.ListEnumSumberPengadaanFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SumberPengadaan[] | Prisma.ListEnumSumberPengadaanFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSumberPengadaanFilter<$PrismaModel> | $Enums.SumberPengadaan
+}
+
 export type EnumStatusAsetWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.StatusAset | Prisma.EnumStatusAsetFieldRefInput<$PrismaModel>
   in?: $Enums.StatusAset[] | Prisma.ListEnumStatusAsetFieldRefInput<$PrismaModel>
@@ -207,6 +214,16 @@ export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedDecimalFilter<$PrismaModel>
   _min?: Prisma.NestedDecimalFilter<$PrismaModel>
   _max?: Prisma.NestedDecimalFilter<$PrismaModel>
+}
+
+export type EnumSumberPengadaanWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SumberPengadaan | Prisma.EnumSumberPengadaanFieldRefInput<$PrismaModel>
+  in?: $Enums.SumberPengadaan[] | Prisma.ListEnumSumberPengadaanFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SumberPengadaan[] | Prisma.ListEnumSumberPengadaanFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSumberPengadaanWithAggregatesFilter<$PrismaModel> | $Enums.SumberPengadaan
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSumberPengadaanFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSumberPengadaanFilter<$PrismaModel>
 }
 
 export type EnumJenisLisensiFilter<$PrismaModel = never> = {
@@ -452,6 +469,13 @@ export type NestedDecimalFilter<$PrismaModel = never> = {
   not?: Prisma.NestedDecimalFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
+export type NestedEnumSumberPengadaanFilter<$PrismaModel = never> = {
+  equals?: $Enums.SumberPengadaan | Prisma.EnumSumberPengadaanFieldRefInput<$PrismaModel>
+  in?: $Enums.SumberPengadaan[] | Prisma.ListEnumSumberPengadaanFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SumberPengadaan[] | Prisma.ListEnumSumberPengadaanFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSumberPengadaanFilter<$PrismaModel> | $Enums.SumberPengadaan
+}
+
 export type NestedEnumStatusAsetWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.StatusAset | Prisma.EnumStatusAsetFieldRefInput<$PrismaModel>
   in?: $Enums.StatusAset[] | Prisma.ListEnumStatusAsetFieldRefInput<$PrismaModel>
@@ -476,6 +500,16 @@ export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedDecimalFilter<$PrismaModel>
   _min?: Prisma.NestedDecimalFilter<$PrismaModel>
   _max?: Prisma.NestedDecimalFilter<$PrismaModel>
+}
+
+export type NestedEnumSumberPengadaanWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SumberPengadaan | Prisma.EnumSumberPengadaanFieldRefInput<$PrismaModel>
+  in?: $Enums.SumberPengadaan[] | Prisma.ListEnumSumberPengadaanFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SumberPengadaan[] | Prisma.ListEnumSumberPengadaanFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSumberPengadaanWithAggregatesFilter<$PrismaModel> | $Enums.SumberPengadaan
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSumberPengadaanFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSumberPengadaanFilter<$PrismaModel>
 }
 
 export type NestedEnumJenisLisensiFilter<$PrismaModel = never> = {

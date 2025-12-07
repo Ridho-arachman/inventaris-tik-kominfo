@@ -30,7 +30,7 @@ export default function CategoryPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <Link href="/admin/manage-asset/hardware">
+          <Link href="/admin/manage-asset/opd-hardware">
             <Card className="hover:shadow-lg bg-white transition-all cursor-pointer p-5 border border-gray-200">
               <CardHeader className="flex flex-row items-center gap-4 p-0">
                 <HardDrive className="w-10 h-10 text-blue-600" />
@@ -57,7 +57,7 @@ export default function CategoryPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
         >
-          <Link href="/admin/manage-asset/software">
+          <Link href="/admin/manage-asset/opd-software">
             <Card className="hover:shadow-lg bg-white transition-all cursor-pointer p-5 border border-gray-200">
               <CardHeader className="flex flex-row items-center gap-4 p-0">
                 <Cpu className="w-10 h-10 text-purple-600" />

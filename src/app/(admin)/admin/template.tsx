@@ -15,6 +15,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
+import AppBreadcrumb from "@/components/AppBreadcrumb";
 
 export default function Template({ children }: { children: React.ReactNode }) {
   return (
@@ -28,19 +29,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
             className="mr-2 data-[orientation=vertical]:h-4"
           />
 
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem className="hidden md:block">
-                <BreadcrumbLink href="#">
-                  Building Your Application
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator className="hidden md:block" />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
+          <AppBreadcrumb />
         </header>
 
         <div className="flex flex-1 flex-col gap-4 p-4">{children}</div>

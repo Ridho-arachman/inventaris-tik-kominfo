@@ -1,4 +1,4 @@
-import { StatusAset } from "@/generated/enums";
+import { StatusAset, SumberPengadaan } from "@/generated/enums";
 import z from "zod";
 
 export const hardwareSchema = z.object({
@@ -25,11 +25,11 @@ export const hardwareSchema = z.object({
     .nonempty("Lokasi fisik wajib diisi")
     .max(255, "Lokasi fisik maksimal 255 karakter"),
 
-  tglPengadaan: z.coerce.date("Tanggal pengadaan tidak valid"),
+  tglPengadaan: z.date("Tanggal pengadaan tidak valid"),
 
-  garansiMulai: z.coerce.date("Tanggal mulai garansi tidak valid"),
+  garansiMulai: z.date("Tanggal mulai garansi tidak valid"),
 
-  garansiSelesai: z.coerce.date("Tanggal selesai garansi tidak valid"),
+  garansiSelesai: z.date("Tanggal selesai garansi tidak valid"),
 
   status: z.nativeEnum(StatusAset, "Status aset tidak valid"),
 
@@ -49,6 +49,8 @@ export const hardwareSchema = z.object({
     .nonempty("Nomor seri wajib diisi")
     .max(100, "Nomor seri maksimal 100 karakter"),
 
+  sumber: z.nativeEnum(SumberPengadaan, "Sumber pengadaan tidak valid"),
+
   penyedia: z
     .string("Penyedia harus berupa string")
     .trim()
@@ -62,9 +64,13 @@ export const hardwareSchema = z.object({
     .nonempty("OPD ID wajib diisi")
     .max(100, "OPD ID maksimal 100 karakter"),
 
-  jenisId: z
-    .string("Jenis hardware ID harus berupa string")
+  kategoriId: z
+    .string("Kategori hardware ID harus berupa string")
     .trim()
-    .nonempty("Jenis hardware ID wajib diisi")
-    .max(100, "Jenis hardware ID maksimal 100 karakter"),
+    .nonempty("Kategori hardware ID wajib diisi")
+    .max(100, "Kategori hardware ID maksimal 100 karakter"),
+});
+
+export const hardwareIdSchema = z.object({
+  id: z.string().trim().cuid("Id Tidak Valid"),
 });

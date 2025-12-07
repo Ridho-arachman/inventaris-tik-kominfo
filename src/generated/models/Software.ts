@@ -40,7 +40,7 @@ export type SoftwareMinAggregateOutputType = {
   id: string | null
   nama: string | null
   jenisLisensi: $Enums.JenisLisensi | null
-  serialNumber: string | null
+  nomorSeri: string | null
   tglBerakhirLisensi: Date | null
   versiTerpasang: number | null
   vendor: string | null
@@ -50,6 +50,8 @@ export type SoftwareMinAggregateOutputType = {
   tahunPengadaan: Date | null
   status: $Enums.StatusAset | null
   pic: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
   createdBy: string | null
   updatedBy: string | null
   opdId: string | null
@@ -61,7 +63,7 @@ export type SoftwareMaxAggregateOutputType = {
   id: string | null
   nama: string | null
   jenisLisensi: $Enums.JenisLisensi | null
-  serialNumber: string | null
+  nomorSeri: string | null
   tglBerakhirLisensi: Date | null
   versiTerpasang: number | null
   vendor: string | null
@@ -71,6 +73,8 @@ export type SoftwareMaxAggregateOutputType = {
   tahunPengadaan: Date | null
   status: $Enums.StatusAset | null
   pic: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
   createdBy: string | null
   updatedBy: string | null
   opdId: string | null
@@ -82,7 +86,7 @@ export type SoftwareCountAggregateOutputType = {
   id: number
   nama: number
   jenisLisensi: number
-  serialNumber: number
+  nomorSeri: number
   tglBerakhirLisensi: number
   versiTerpasang: number
   vendor: number
@@ -92,6 +96,8 @@ export type SoftwareCountAggregateOutputType = {
   tahunPengadaan: number
   status: number
   pic: number
+  createdAt: number
+  updatedAt: number
   createdBy: number
   updatedBy: number
   opdId: number
@@ -115,7 +121,7 @@ export type SoftwareMinAggregateInputType = {
   id?: true
   nama?: true
   jenisLisensi?: true
-  serialNumber?: true
+  nomorSeri?: true
   tglBerakhirLisensi?: true
   versiTerpasang?: true
   vendor?: true
@@ -125,6 +131,8 @@ export type SoftwareMinAggregateInputType = {
   tahunPengadaan?: true
   status?: true
   pic?: true
+  createdAt?: true
+  updatedAt?: true
   createdBy?: true
   updatedBy?: true
   opdId?: true
@@ -136,7 +144,7 @@ export type SoftwareMaxAggregateInputType = {
   id?: true
   nama?: true
   jenisLisensi?: true
-  serialNumber?: true
+  nomorSeri?: true
   tglBerakhirLisensi?: true
   versiTerpasang?: true
   vendor?: true
@@ -146,6 +154,8 @@ export type SoftwareMaxAggregateInputType = {
   tahunPengadaan?: true
   status?: true
   pic?: true
+  createdAt?: true
+  updatedAt?: true
   createdBy?: true
   updatedBy?: true
   opdId?: true
@@ -157,7 +167,7 @@ export type SoftwareCountAggregateInputType = {
   id?: true
   nama?: true
   jenisLisensi?: true
-  serialNumber?: true
+  nomorSeri?: true
   tglBerakhirLisensi?: true
   versiTerpasang?: true
   vendor?: true
@@ -167,6 +177,8 @@ export type SoftwareCountAggregateInputType = {
   tahunPengadaan?: true
   status?: true
   pic?: true
+  createdAt?: true
+  updatedAt?: true
   createdBy?: true
   updatedBy?: true
   opdId?: true
@@ -265,7 +277,7 @@ export type SoftwareGroupByOutputType = {
   id: string
   nama: string
   jenisLisensi: $Enums.JenisLisensi
-  serialNumber: string
+  nomorSeri: string
   tglBerakhirLisensi: Date
   versiTerpasang: number
   vendor: string | null
@@ -275,7 +287,9 @@ export type SoftwareGroupByOutputType = {
   tahunPengadaan: Date
   status: $Enums.StatusAset
   pic: string
-  createdBy: string | null
+  createdAt: Date
+  updatedAt: Date
+  createdBy: string
   updatedBy: string | null
   opdId: string
   kategoriId: string
@@ -309,7 +323,7 @@ export type SoftwareWhereInput = {
   id?: Prisma.StringFilter<"Software"> | string
   nama?: Prisma.StringFilter<"Software"> | string
   jenisLisensi?: Prisma.EnumJenisLisensiFilter<"Software"> | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringFilter<"Software"> | string
+  nomorSeri?: Prisma.StringFilter<"Software"> | string
   tglBerakhirLisensi?: Prisma.DateTimeFilter<"Software"> | Date | string
   versiTerpasang?: Prisma.IntFilter<"Software"> | number
   vendor?: Prisma.StringNullableFilter<"Software"> | string | null
@@ -319,15 +333,17 @@ export type SoftwareWhereInput = {
   tahunPengadaan?: Prisma.DateTimeFilter<"Software"> | Date | string
   status?: Prisma.EnumStatusAsetFilter<"Software"> | $Enums.StatusAset
   pic?: Prisma.StringFilter<"Software"> | string
-  createdBy?: Prisma.StringNullableFilter<"Software"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Software"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Software"> | Date | string
+  createdBy?: Prisma.StringFilter<"Software"> | string
   updatedBy?: Prisma.StringNullableFilter<"Software"> | string | null
   opdId?: Prisma.StringFilter<"Software"> | string
   kategoriId?: Prisma.StringFilter<"Software"> | string
   hardwareTerinstall?: Prisma.StringNullableFilter<"Software"> | string | null
-  creator?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  creator?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   updater?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   opd?: Prisma.XOR<Prisma.OpdScalarRelationFilter, Prisma.OpdWhereInput>
-  kategori?: Prisma.XOR<Prisma.KategoriSoftwareScalarRelationFilter, Prisma.KategoriSoftwareWhereInput>
+  kategoriSoftware?: Prisma.XOR<Prisma.KategoriSoftwareScalarRelationFilter, Prisma.KategoriSoftwareWhereInput>
   hardware?: Prisma.XOR<Prisma.HardwareNullableScalarRelationFilter, Prisma.HardwareWhereInput> | null
 }
 
@@ -335,7 +351,7 @@ export type SoftwareOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   nama?: Prisma.SortOrder
   jenisLisensi?: Prisma.SortOrder
-  serialNumber?: Prisma.SortOrder
+  nomorSeri?: Prisma.SortOrder
   tglBerakhirLisensi?: Prisma.SortOrder
   versiTerpasang?: Prisma.SortOrder
   vendor?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -345,7 +361,9 @@ export type SoftwareOrderByWithRelationInput = {
   tahunPengadaan?: Prisma.SortOrder
   status?: Prisma.SortOrder
   pic?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
   updatedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   opdId?: Prisma.SortOrder
   kategoriId?: Prisma.SortOrder
@@ -353,7 +371,7 @@ export type SoftwareOrderByWithRelationInput = {
   creator?: Prisma.UserOrderByWithRelationInput
   updater?: Prisma.UserOrderByWithRelationInput
   opd?: Prisma.OpdOrderByWithRelationInput
-  kategori?: Prisma.KategoriSoftwareOrderByWithRelationInput
+  kategoriSoftware?: Prisma.KategoriSoftwareOrderByWithRelationInput
   hardware?: Prisma.HardwareOrderByWithRelationInput
 }
 
@@ -364,7 +382,7 @@ export type SoftwareWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.SoftwareWhereInput | Prisma.SoftwareWhereInput[]
   nama?: Prisma.StringFilter<"Software"> | string
   jenisLisensi?: Prisma.EnumJenisLisensiFilter<"Software"> | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringFilter<"Software"> | string
+  nomorSeri?: Prisma.StringFilter<"Software"> | string
   tglBerakhirLisensi?: Prisma.DateTimeFilter<"Software"> | Date | string
   versiTerpasang?: Prisma.IntFilter<"Software"> | number
   vendor?: Prisma.StringNullableFilter<"Software"> | string | null
@@ -374,15 +392,17 @@ export type SoftwareWhereUniqueInput = Prisma.AtLeast<{
   tahunPengadaan?: Prisma.DateTimeFilter<"Software"> | Date | string
   status?: Prisma.EnumStatusAsetFilter<"Software"> | $Enums.StatusAset
   pic?: Prisma.StringFilter<"Software"> | string
-  createdBy?: Prisma.StringNullableFilter<"Software"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Software"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Software"> | Date | string
+  createdBy?: Prisma.StringFilter<"Software"> | string
   updatedBy?: Prisma.StringNullableFilter<"Software"> | string | null
   opdId?: Prisma.StringFilter<"Software"> | string
   kategoriId?: Prisma.StringFilter<"Software"> | string
   hardwareTerinstall?: Prisma.StringNullableFilter<"Software"> | string | null
-  creator?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  creator?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   updater?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   opd?: Prisma.XOR<Prisma.OpdScalarRelationFilter, Prisma.OpdWhereInput>
-  kategori?: Prisma.XOR<Prisma.KategoriSoftwareScalarRelationFilter, Prisma.KategoriSoftwareWhereInput>
+  kategoriSoftware?: Prisma.XOR<Prisma.KategoriSoftwareScalarRelationFilter, Prisma.KategoriSoftwareWhereInput>
   hardware?: Prisma.XOR<Prisma.HardwareNullableScalarRelationFilter, Prisma.HardwareWhereInput> | null
 }, "id">
 
@@ -390,7 +410,7 @@ export type SoftwareOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   nama?: Prisma.SortOrder
   jenisLisensi?: Prisma.SortOrder
-  serialNumber?: Prisma.SortOrder
+  nomorSeri?: Prisma.SortOrder
   tglBerakhirLisensi?: Prisma.SortOrder
   versiTerpasang?: Prisma.SortOrder
   vendor?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -400,7 +420,9 @@ export type SoftwareOrderByWithAggregationInput = {
   tahunPengadaan?: Prisma.SortOrder
   status?: Prisma.SortOrder
   pic?: Prisma.SortOrder
-  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
   updatedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   opdId?: Prisma.SortOrder
   kategoriId?: Prisma.SortOrder
@@ -419,7 +441,7 @@ export type SoftwareScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Software"> | string
   nama?: Prisma.StringWithAggregatesFilter<"Software"> | string
   jenisLisensi?: Prisma.EnumJenisLisensiWithAggregatesFilter<"Software"> | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringWithAggregatesFilter<"Software"> | string
+  nomorSeri?: Prisma.StringWithAggregatesFilter<"Software"> | string
   tglBerakhirLisensi?: Prisma.DateTimeWithAggregatesFilter<"Software"> | Date | string
   versiTerpasang?: Prisma.IntWithAggregatesFilter<"Software"> | number
   vendor?: Prisma.StringNullableWithAggregatesFilter<"Software"> | string | null
@@ -429,7 +451,9 @@ export type SoftwareScalarWhereWithAggregatesInput = {
   tahunPengadaan?: Prisma.DateTimeWithAggregatesFilter<"Software"> | Date | string
   status?: Prisma.EnumStatusAsetWithAggregatesFilter<"Software"> | $Enums.StatusAset
   pic?: Prisma.StringWithAggregatesFilter<"Software"> | string
-  createdBy?: Prisma.StringNullableWithAggregatesFilter<"Software"> | string | null
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Software"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Software"> | Date | string
+  createdBy?: Prisma.StringWithAggregatesFilter<"Software"> | string
   updatedBy?: Prisma.StringNullableWithAggregatesFilter<"Software"> | string | null
   opdId?: Prisma.StringWithAggregatesFilter<"Software"> | string
   kategoriId?: Prisma.StringWithAggregatesFilter<"Software"> | string
@@ -440,7 +464,7 @@ export type SoftwareCreateInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  serialNumber: string
+  nomorSeri: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
   vendor?: string | null
@@ -450,10 +474,12 @@ export type SoftwareCreateInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
-  creator?: Prisma.UserCreateNestedOneWithoutCreatedSoftwareInput
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  creator: Prisma.UserCreateNestedOneWithoutCreatedSoftwareInput
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedSoftwareInput
   opd: Prisma.OpdCreateNestedOneWithoutSoftwareInput
-  kategori: Prisma.KategoriSoftwareCreateNestedOneWithoutSoftwareInput
+  kategoriSoftware: Prisma.KategoriSoftwareCreateNestedOneWithoutSoftwareInput
   hardware?: Prisma.HardwareCreateNestedOneWithoutSoftwareInput
 }
 
@@ -461,7 +487,7 @@ export type SoftwareUncheckedCreateInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  serialNumber: string
+  nomorSeri: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
   vendor?: string | null
@@ -471,7 +497,9 @@ export type SoftwareUncheckedCreateInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
-  createdBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy: string
   updatedBy?: string | null
   opdId: string
   kategoriId: string
@@ -482,7 +510,7 @@ export type SoftwareUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -492,10 +520,12 @@ export type SoftwareUpdateInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
-  creator?: Prisma.UserUpdateOneWithoutCreatedSoftwareNestedInput
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  creator?: Prisma.UserUpdateOneRequiredWithoutCreatedSoftwareNestedInput
   updater?: Prisma.UserUpdateOneWithoutUpdatedSoftwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutSoftwareNestedInput
-  kategori?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutSoftwareNestedInput
+  kategoriSoftware?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutSoftwareNestedInput
   hardware?: Prisma.HardwareUpdateOneWithoutSoftwareNestedInput
 }
 
@@ -503,7 +533,7 @@ export type SoftwareUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -513,7 +543,9 @@ export type SoftwareUncheckedUpdateInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -524,7 +556,7 @@ export type SoftwareCreateManyInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  serialNumber: string
+  nomorSeri: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
   vendor?: string | null
@@ -534,7 +566,9 @@ export type SoftwareCreateManyInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
-  createdBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy: string
   updatedBy?: string | null
   opdId: string
   kategoriId: string
@@ -545,7 +579,7 @@ export type SoftwareUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -555,13 +589,15 @@ export type SoftwareUpdateManyMutationInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SoftwareUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -571,7 +607,9 @@ export type SoftwareUncheckedUpdateManyInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -592,7 +630,7 @@ export type SoftwareCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   nama?: Prisma.SortOrder
   jenisLisensi?: Prisma.SortOrder
-  serialNumber?: Prisma.SortOrder
+  nomorSeri?: Prisma.SortOrder
   tglBerakhirLisensi?: Prisma.SortOrder
   versiTerpasang?: Prisma.SortOrder
   vendor?: Prisma.SortOrder
@@ -602,6 +640,8 @@ export type SoftwareCountOrderByAggregateInput = {
   tahunPengadaan?: Prisma.SortOrder
   status?: Prisma.SortOrder
   pic?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   updatedBy?: Prisma.SortOrder
   opdId?: Prisma.SortOrder
@@ -618,7 +658,7 @@ export type SoftwareMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   nama?: Prisma.SortOrder
   jenisLisensi?: Prisma.SortOrder
-  serialNumber?: Prisma.SortOrder
+  nomorSeri?: Prisma.SortOrder
   tglBerakhirLisensi?: Prisma.SortOrder
   versiTerpasang?: Prisma.SortOrder
   vendor?: Prisma.SortOrder
@@ -628,6 +668,8 @@ export type SoftwareMaxOrderByAggregateInput = {
   tahunPengadaan?: Prisma.SortOrder
   status?: Prisma.SortOrder
   pic?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   updatedBy?: Prisma.SortOrder
   opdId?: Prisma.SortOrder
@@ -639,7 +681,7 @@ export type SoftwareMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   nama?: Prisma.SortOrder
   jenisLisensi?: Prisma.SortOrder
-  serialNumber?: Prisma.SortOrder
+  nomorSeri?: Prisma.SortOrder
   tglBerakhirLisensi?: Prisma.SortOrder
   versiTerpasang?: Prisma.SortOrder
   vendor?: Prisma.SortOrder
@@ -649,6 +691,8 @@ export type SoftwareMinOrderByAggregateInput = {
   tahunPengadaan?: Prisma.SortOrder
   status?: Prisma.SortOrder
   pic?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   updatedBy?: Prisma.SortOrder
   opdId?: Prisma.SortOrder
@@ -829,45 +873,45 @@ export type SoftwareUncheckedUpdateManyWithoutHardwareNestedInput = {
   deleteMany?: Prisma.SoftwareScalarWhereInput | Prisma.SoftwareScalarWhereInput[]
 }
 
-export type SoftwareCreateNestedManyWithoutKategoriInput = {
-  create?: Prisma.XOR<Prisma.SoftwareCreateWithoutKategoriInput, Prisma.SoftwareUncheckedCreateWithoutKategoriInput> | Prisma.SoftwareCreateWithoutKategoriInput[] | Prisma.SoftwareUncheckedCreateWithoutKategoriInput[]
-  connectOrCreate?: Prisma.SoftwareCreateOrConnectWithoutKategoriInput | Prisma.SoftwareCreateOrConnectWithoutKategoriInput[]
-  createMany?: Prisma.SoftwareCreateManyKategoriInputEnvelope
+export type SoftwareCreateNestedManyWithoutKategoriSoftwareInput = {
+  create?: Prisma.XOR<Prisma.SoftwareCreateWithoutKategoriSoftwareInput, Prisma.SoftwareUncheckedCreateWithoutKategoriSoftwareInput> | Prisma.SoftwareCreateWithoutKategoriSoftwareInput[] | Prisma.SoftwareUncheckedCreateWithoutKategoriSoftwareInput[]
+  connectOrCreate?: Prisma.SoftwareCreateOrConnectWithoutKategoriSoftwareInput | Prisma.SoftwareCreateOrConnectWithoutKategoriSoftwareInput[]
+  createMany?: Prisma.SoftwareCreateManyKategoriSoftwareInputEnvelope
   connect?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
 }
 
-export type SoftwareUncheckedCreateNestedManyWithoutKategoriInput = {
-  create?: Prisma.XOR<Prisma.SoftwareCreateWithoutKategoriInput, Prisma.SoftwareUncheckedCreateWithoutKategoriInput> | Prisma.SoftwareCreateWithoutKategoriInput[] | Prisma.SoftwareUncheckedCreateWithoutKategoriInput[]
-  connectOrCreate?: Prisma.SoftwareCreateOrConnectWithoutKategoriInput | Prisma.SoftwareCreateOrConnectWithoutKategoriInput[]
-  createMany?: Prisma.SoftwareCreateManyKategoriInputEnvelope
+export type SoftwareUncheckedCreateNestedManyWithoutKategoriSoftwareInput = {
+  create?: Prisma.XOR<Prisma.SoftwareCreateWithoutKategoriSoftwareInput, Prisma.SoftwareUncheckedCreateWithoutKategoriSoftwareInput> | Prisma.SoftwareCreateWithoutKategoriSoftwareInput[] | Prisma.SoftwareUncheckedCreateWithoutKategoriSoftwareInput[]
+  connectOrCreate?: Prisma.SoftwareCreateOrConnectWithoutKategoriSoftwareInput | Prisma.SoftwareCreateOrConnectWithoutKategoriSoftwareInput[]
+  createMany?: Prisma.SoftwareCreateManyKategoriSoftwareInputEnvelope
   connect?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
 }
 
-export type SoftwareUpdateManyWithoutKategoriNestedInput = {
-  create?: Prisma.XOR<Prisma.SoftwareCreateWithoutKategoriInput, Prisma.SoftwareUncheckedCreateWithoutKategoriInput> | Prisma.SoftwareCreateWithoutKategoriInput[] | Prisma.SoftwareUncheckedCreateWithoutKategoriInput[]
-  connectOrCreate?: Prisma.SoftwareCreateOrConnectWithoutKategoriInput | Prisma.SoftwareCreateOrConnectWithoutKategoriInput[]
-  upsert?: Prisma.SoftwareUpsertWithWhereUniqueWithoutKategoriInput | Prisma.SoftwareUpsertWithWhereUniqueWithoutKategoriInput[]
-  createMany?: Prisma.SoftwareCreateManyKategoriInputEnvelope
+export type SoftwareUpdateManyWithoutKategoriSoftwareNestedInput = {
+  create?: Prisma.XOR<Prisma.SoftwareCreateWithoutKategoriSoftwareInput, Prisma.SoftwareUncheckedCreateWithoutKategoriSoftwareInput> | Prisma.SoftwareCreateWithoutKategoriSoftwareInput[] | Prisma.SoftwareUncheckedCreateWithoutKategoriSoftwareInput[]
+  connectOrCreate?: Prisma.SoftwareCreateOrConnectWithoutKategoriSoftwareInput | Prisma.SoftwareCreateOrConnectWithoutKategoriSoftwareInput[]
+  upsert?: Prisma.SoftwareUpsertWithWhereUniqueWithoutKategoriSoftwareInput | Prisma.SoftwareUpsertWithWhereUniqueWithoutKategoriSoftwareInput[]
+  createMany?: Prisma.SoftwareCreateManyKategoriSoftwareInputEnvelope
   set?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
   disconnect?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
   delete?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
   connect?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
-  update?: Prisma.SoftwareUpdateWithWhereUniqueWithoutKategoriInput | Prisma.SoftwareUpdateWithWhereUniqueWithoutKategoriInput[]
-  updateMany?: Prisma.SoftwareUpdateManyWithWhereWithoutKategoriInput | Prisma.SoftwareUpdateManyWithWhereWithoutKategoriInput[]
+  update?: Prisma.SoftwareUpdateWithWhereUniqueWithoutKategoriSoftwareInput | Prisma.SoftwareUpdateWithWhereUniqueWithoutKategoriSoftwareInput[]
+  updateMany?: Prisma.SoftwareUpdateManyWithWhereWithoutKategoriSoftwareInput | Prisma.SoftwareUpdateManyWithWhereWithoutKategoriSoftwareInput[]
   deleteMany?: Prisma.SoftwareScalarWhereInput | Prisma.SoftwareScalarWhereInput[]
 }
 
-export type SoftwareUncheckedUpdateManyWithoutKategoriNestedInput = {
-  create?: Prisma.XOR<Prisma.SoftwareCreateWithoutKategoriInput, Prisma.SoftwareUncheckedCreateWithoutKategoriInput> | Prisma.SoftwareCreateWithoutKategoriInput[] | Prisma.SoftwareUncheckedCreateWithoutKategoriInput[]
-  connectOrCreate?: Prisma.SoftwareCreateOrConnectWithoutKategoriInput | Prisma.SoftwareCreateOrConnectWithoutKategoriInput[]
-  upsert?: Prisma.SoftwareUpsertWithWhereUniqueWithoutKategoriInput | Prisma.SoftwareUpsertWithWhereUniqueWithoutKategoriInput[]
-  createMany?: Prisma.SoftwareCreateManyKategoriInputEnvelope
+export type SoftwareUncheckedUpdateManyWithoutKategoriSoftwareNestedInput = {
+  create?: Prisma.XOR<Prisma.SoftwareCreateWithoutKategoriSoftwareInput, Prisma.SoftwareUncheckedCreateWithoutKategoriSoftwareInput> | Prisma.SoftwareCreateWithoutKategoriSoftwareInput[] | Prisma.SoftwareUncheckedCreateWithoutKategoriSoftwareInput[]
+  connectOrCreate?: Prisma.SoftwareCreateOrConnectWithoutKategoriSoftwareInput | Prisma.SoftwareCreateOrConnectWithoutKategoriSoftwareInput[]
+  upsert?: Prisma.SoftwareUpsertWithWhereUniqueWithoutKategoriSoftwareInput | Prisma.SoftwareUpsertWithWhereUniqueWithoutKategoriSoftwareInput[]
+  createMany?: Prisma.SoftwareCreateManyKategoriSoftwareInputEnvelope
   set?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
   disconnect?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
   delete?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
   connect?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
-  update?: Prisma.SoftwareUpdateWithWhereUniqueWithoutKategoriInput | Prisma.SoftwareUpdateWithWhereUniqueWithoutKategoriInput[]
-  updateMany?: Prisma.SoftwareUpdateManyWithWhereWithoutKategoriInput | Prisma.SoftwareUpdateManyWithWhereWithoutKategoriInput[]
+  update?: Prisma.SoftwareUpdateWithWhereUniqueWithoutKategoriSoftwareInput | Prisma.SoftwareUpdateWithWhereUniqueWithoutKategoriSoftwareInput[]
+  updateMany?: Prisma.SoftwareUpdateManyWithWhereWithoutKategoriSoftwareInput | Prisma.SoftwareUpdateManyWithWhereWithoutKategoriSoftwareInput[]
   deleteMany?: Prisma.SoftwareScalarWhereInput | Prisma.SoftwareScalarWhereInput[]
 }
 
@@ -891,7 +935,7 @@ export type SoftwareCreateWithoutCreatorInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  serialNumber: string
+  nomorSeri: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
   vendor?: string | null
@@ -901,9 +945,11 @@ export type SoftwareCreateWithoutCreatorInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedSoftwareInput
   opd: Prisma.OpdCreateNestedOneWithoutSoftwareInput
-  kategori: Prisma.KategoriSoftwareCreateNestedOneWithoutSoftwareInput
+  kategoriSoftware: Prisma.KategoriSoftwareCreateNestedOneWithoutSoftwareInput
   hardware?: Prisma.HardwareCreateNestedOneWithoutSoftwareInput
 }
 
@@ -911,7 +957,7 @@ export type SoftwareUncheckedCreateWithoutCreatorInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  serialNumber: string
+  nomorSeri: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
   vendor?: string | null
@@ -921,6 +967,8 @@ export type SoftwareUncheckedCreateWithoutCreatorInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
   updatedBy?: string | null
   opdId: string
   kategoriId: string
@@ -941,7 +989,7 @@ export type SoftwareCreateWithoutUpdaterInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  serialNumber: string
+  nomorSeri: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
   vendor?: string | null
@@ -951,9 +999,11 @@ export type SoftwareCreateWithoutUpdaterInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
-  creator?: Prisma.UserCreateNestedOneWithoutCreatedSoftwareInput
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  creator: Prisma.UserCreateNestedOneWithoutCreatedSoftwareInput
   opd: Prisma.OpdCreateNestedOneWithoutSoftwareInput
-  kategori: Prisma.KategoriSoftwareCreateNestedOneWithoutSoftwareInput
+  kategoriSoftware: Prisma.KategoriSoftwareCreateNestedOneWithoutSoftwareInput
   hardware?: Prisma.HardwareCreateNestedOneWithoutSoftwareInput
 }
 
@@ -961,7 +1011,7 @@ export type SoftwareUncheckedCreateWithoutUpdaterInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  serialNumber: string
+  nomorSeri: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
   vendor?: string | null
@@ -971,7 +1021,9 @@ export type SoftwareUncheckedCreateWithoutUpdaterInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
-  createdBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy: string
   opdId: string
   kategoriId: string
   hardwareTerinstall?: string | null
@@ -1010,7 +1062,7 @@ export type SoftwareScalarWhereInput = {
   id?: Prisma.StringFilter<"Software"> | string
   nama?: Prisma.StringFilter<"Software"> | string
   jenisLisensi?: Prisma.EnumJenisLisensiFilter<"Software"> | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringFilter<"Software"> | string
+  nomorSeri?: Prisma.StringFilter<"Software"> | string
   tglBerakhirLisensi?: Prisma.DateTimeFilter<"Software"> | Date | string
   versiTerpasang?: Prisma.IntFilter<"Software"> | number
   vendor?: Prisma.StringNullableFilter<"Software"> | string | null
@@ -1020,7 +1072,9 @@ export type SoftwareScalarWhereInput = {
   tahunPengadaan?: Prisma.DateTimeFilter<"Software"> | Date | string
   status?: Prisma.EnumStatusAsetFilter<"Software"> | $Enums.StatusAset
   pic?: Prisma.StringFilter<"Software"> | string
-  createdBy?: Prisma.StringNullableFilter<"Software"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Software"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Software"> | Date | string
+  createdBy?: Prisma.StringFilter<"Software"> | string
   updatedBy?: Prisma.StringNullableFilter<"Software"> | string | null
   opdId?: Prisma.StringFilter<"Software"> | string
   kategoriId?: Prisma.StringFilter<"Software"> | string
@@ -1047,7 +1101,7 @@ export type SoftwareCreateWithoutOpdInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  serialNumber: string
+  nomorSeri: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
   vendor?: string | null
@@ -1057,9 +1111,11 @@ export type SoftwareCreateWithoutOpdInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
-  creator?: Prisma.UserCreateNestedOneWithoutCreatedSoftwareInput
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  creator: Prisma.UserCreateNestedOneWithoutCreatedSoftwareInput
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedSoftwareInput
-  kategori: Prisma.KategoriSoftwareCreateNestedOneWithoutSoftwareInput
+  kategoriSoftware: Prisma.KategoriSoftwareCreateNestedOneWithoutSoftwareInput
   hardware?: Prisma.HardwareCreateNestedOneWithoutSoftwareInput
 }
 
@@ -1067,7 +1123,7 @@ export type SoftwareUncheckedCreateWithoutOpdInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  serialNumber: string
+  nomorSeri: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
   vendor?: string | null
@@ -1077,7 +1133,9 @@ export type SoftwareUncheckedCreateWithoutOpdInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
-  createdBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy: string
   updatedBy?: string | null
   kategoriId: string
   hardwareTerinstall?: string | null
@@ -1113,7 +1171,7 @@ export type SoftwareCreateWithoutHardwareInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  serialNumber: string
+  nomorSeri: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
   vendor?: string | null
@@ -1123,17 +1181,19 @@ export type SoftwareCreateWithoutHardwareInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
-  creator?: Prisma.UserCreateNestedOneWithoutCreatedSoftwareInput
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  creator: Prisma.UserCreateNestedOneWithoutCreatedSoftwareInput
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedSoftwareInput
   opd: Prisma.OpdCreateNestedOneWithoutSoftwareInput
-  kategori: Prisma.KategoriSoftwareCreateNestedOneWithoutSoftwareInput
+  kategoriSoftware: Prisma.KategoriSoftwareCreateNestedOneWithoutSoftwareInput
 }
 
 export type SoftwareUncheckedCreateWithoutHardwareInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  serialNumber: string
+  nomorSeri: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
   vendor?: string | null
@@ -1143,7 +1203,9 @@ export type SoftwareUncheckedCreateWithoutHardwareInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
-  createdBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy: string
   updatedBy?: string | null
   opdId: string
   kategoriId: string
@@ -1175,11 +1237,11 @@ export type SoftwareUpdateManyWithWhereWithoutHardwareInput = {
   data: Prisma.XOR<Prisma.SoftwareUpdateManyMutationInput, Prisma.SoftwareUncheckedUpdateManyWithoutHardwareInput>
 }
 
-export type SoftwareCreateWithoutKategoriInput = {
+export type SoftwareCreateWithoutKategoriSoftwareInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  serialNumber: string
+  nomorSeri: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
   vendor?: string | null
@@ -1189,17 +1251,19 @@ export type SoftwareCreateWithoutKategoriInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
-  creator?: Prisma.UserCreateNestedOneWithoutCreatedSoftwareInput
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  creator: Prisma.UserCreateNestedOneWithoutCreatedSoftwareInput
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedSoftwareInput
   opd: Prisma.OpdCreateNestedOneWithoutSoftwareInput
   hardware?: Prisma.HardwareCreateNestedOneWithoutSoftwareInput
 }
 
-export type SoftwareUncheckedCreateWithoutKategoriInput = {
+export type SoftwareUncheckedCreateWithoutKategoriSoftwareInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  serialNumber: string
+  nomorSeri: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
   vendor?: string | null
@@ -1209,43 +1273,45 @@ export type SoftwareUncheckedCreateWithoutKategoriInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
-  createdBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy: string
   updatedBy?: string | null
   opdId: string
   hardwareTerinstall?: string | null
 }
 
-export type SoftwareCreateOrConnectWithoutKategoriInput = {
+export type SoftwareCreateOrConnectWithoutKategoriSoftwareInput = {
   where: Prisma.SoftwareWhereUniqueInput
-  create: Prisma.XOR<Prisma.SoftwareCreateWithoutKategoriInput, Prisma.SoftwareUncheckedCreateWithoutKategoriInput>
+  create: Prisma.XOR<Prisma.SoftwareCreateWithoutKategoriSoftwareInput, Prisma.SoftwareUncheckedCreateWithoutKategoriSoftwareInput>
 }
 
-export type SoftwareCreateManyKategoriInputEnvelope = {
-  data: Prisma.SoftwareCreateManyKategoriInput | Prisma.SoftwareCreateManyKategoriInput[]
+export type SoftwareCreateManyKategoriSoftwareInputEnvelope = {
+  data: Prisma.SoftwareCreateManyKategoriSoftwareInput | Prisma.SoftwareCreateManyKategoriSoftwareInput[]
   skipDuplicates?: boolean
 }
 
-export type SoftwareUpsertWithWhereUniqueWithoutKategoriInput = {
+export type SoftwareUpsertWithWhereUniqueWithoutKategoriSoftwareInput = {
   where: Prisma.SoftwareWhereUniqueInput
-  update: Prisma.XOR<Prisma.SoftwareUpdateWithoutKategoriInput, Prisma.SoftwareUncheckedUpdateWithoutKategoriInput>
-  create: Prisma.XOR<Prisma.SoftwareCreateWithoutKategoriInput, Prisma.SoftwareUncheckedCreateWithoutKategoriInput>
+  update: Prisma.XOR<Prisma.SoftwareUpdateWithoutKategoriSoftwareInput, Prisma.SoftwareUncheckedUpdateWithoutKategoriSoftwareInput>
+  create: Prisma.XOR<Prisma.SoftwareCreateWithoutKategoriSoftwareInput, Prisma.SoftwareUncheckedCreateWithoutKategoriSoftwareInput>
 }
 
-export type SoftwareUpdateWithWhereUniqueWithoutKategoriInput = {
+export type SoftwareUpdateWithWhereUniqueWithoutKategoriSoftwareInput = {
   where: Prisma.SoftwareWhereUniqueInput
-  data: Prisma.XOR<Prisma.SoftwareUpdateWithoutKategoriInput, Prisma.SoftwareUncheckedUpdateWithoutKategoriInput>
+  data: Prisma.XOR<Prisma.SoftwareUpdateWithoutKategoriSoftwareInput, Prisma.SoftwareUncheckedUpdateWithoutKategoriSoftwareInput>
 }
 
-export type SoftwareUpdateManyWithWhereWithoutKategoriInput = {
+export type SoftwareUpdateManyWithWhereWithoutKategoriSoftwareInput = {
   where: Prisma.SoftwareScalarWhereInput
-  data: Prisma.XOR<Prisma.SoftwareUpdateManyMutationInput, Prisma.SoftwareUncheckedUpdateManyWithoutKategoriInput>
+  data: Prisma.XOR<Prisma.SoftwareUpdateManyMutationInput, Prisma.SoftwareUncheckedUpdateManyWithoutKategoriSoftwareInput>
 }
 
 export type SoftwareCreateManyCreatorInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  serialNumber: string
+  nomorSeri: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
   vendor?: string | null
@@ -1255,6 +1321,8 @@ export type SoftwareCreateManyCreatorInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
   updatedBy?: string | null
   opdId: string
   kategoriId: string
@@ -1265,7 +1333,7 @@ export type SoftwareCreateManyUpdaterInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  serialNumber: string
+  nomorSeri: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
   vendor?: string | null
@@ -1275,7 +1343,9 @@ export type SoftwareCreateManyUpdaterInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
-  createdBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy: string
   opdId: string
   kategoriId: string
   hardwareTerinstall?: string | null
@@ -1285,7 +1355,7 @@ export type SoftwareUpdateWithoutCreatorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1295,9 +1365,11 @@ export type SoftwareUpdateWithoutCreatorInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updater?: Prisma.UserUpdateOneWithoutUpdatedSoftwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutSoftwareNestedInput
-  kategori?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutSoftwareNestedInput
+  kategoriSoftware?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutSoftwareNestedInput
   hardware?: Prisma.HardwareUpdateOneWithoutSoftwareNestedInput
 }
 
@@ -1305,7 +1377,7 @@ export type SoftwareUncheckedUpdateWithoutCreatorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1315,6 +1387,8 @@ export type SoftwareUncheckedUpdateWithoutCreatorInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1325,7 +1399,7 @@ export type SoftwareUncheckedUpdateManyWithoutCreatorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1335,6 +1409,8 @@ export type SoftwareUncheckedUpdateManyWithoutCreatorInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1345,7 +1421,7 @@ export type SoftwareUpdateWithoutUpdaterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1355,9 +1431,11 @@ export type SoftwareUpdateWithoutUpdaterInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
-  creator?: Prisma.UserUpdateOneWithoutCreatedSoftwareNestedInput
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  creator?: Prisma.UserUpdateOneRequiredWithoutCreatedSoftwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutSoftwareNestedInput
-  kategori?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutSoftwareNestedInput
+  kategoriSoftware?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutSoftwareNestedInput
   hardware?: Prisma.HardwareUpdateOneWithoutSoftwareNestedInput
 }
 
@@ -1365,7 +1443,7 @@ export type SoftwareUncheckedUpdateWithoutUpdaterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1375,7 +1453,9 @@ export type SoftwareUncheckedUpdateWithoutUpdaterInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
   hardwareTerinstall?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1385,7 +1465,7 @@ export type SoftwareUncheckedUpdateManyWithoutUpdaterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1395,7 +1475,9 @@ export type SoftwareUncheckedUpdateManyWithoutUpdaterInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
   hardwareTerinstall?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1405,7 +1487,7 @@ export type SoftwareCreateManyOpdInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  serialNumber: string
+  nomorSeri: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
   vendor?: string | null
@@ -1415,7 +1497,9 @@ export type SoftwareCreateManyOpdInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
-  createdBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy: string
   updatedBy?: string | null
   kategoriId: string
   hardwareTerinstall?: string | null
@@ -1425,7 +1509,7 @@ export type SoftwareUpdateWithoutOpdInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1435,9 +1519,11 @@ export type SoftwareUpdateWithoutOpdInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
-  creator?: Prisma.UserUpdateOneWithoutCreatedSoftwareNestedInput
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  creator?: Prisma.UserUpdateOneRequiredWithoutCreatedSoftwareNestedInput
   updater?: Prisma.UserUpdateOneWithoutUpdatedSoftwareNestedInput
-  kategori?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutSoftwareNestedInput
+  kategoriSoftware?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutSoftwareNestedInput
   hardware?: Prisma.HardwareUpdateOneWithoutSoftwareNestedInput
 }
 
@@ -1445,7 +1531,7 @@ export type SoftwareUncheckedUpdateWithoutOpdInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1455,7 +1541,9 @@ export type SoftwareUncheckedUpdateWithoutOpdInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
   hardwareTerinstall?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1465,7 +1553,7 @@ export type SoftwareUncheckedUpdateManyWithoutOpdInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1475,7 +1563,9 @@ export type SoftwareUncheckedUpdateManyWithoutOpdInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
   hardwareTerinstall?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1485,7 +1575,7 @@ export type SoftwareCreateManyHardwareInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  serialNumber: string
+  nomorSeri: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
   vendor?: string | null
@@ -1495,7 +1585,9 @@ export type SoftwareCreateManyHardwareInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
-  createdBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy: string
   updatedBy?: string | null
   opdId: string
   kategoriId: string
@@ -1505,7 +1597,7 @@ export type SoftwareUpdateWithoutHardwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1515,17 +1607,19 @@ export type SoftwareUpdateWithoutHardwareInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
-  creator?: Prisma.UserUpdateOneWithoutCreatedSoftwareNestedInput
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  creator?: Prisma.UserUpdateOneRequiredWithoutCreatedSoftwareNestedInput
   updater?: Prisma.UserUpdateOneWithoutUpdatedSoftwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutSoftwareNestedInput
-  kategori?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutSoftwareNestedInput
+  kategoriSoftware?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutSoftwareNestedInput
 }
 
 export type SoftwareUncheckedUpdateWithoutHardwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1535,7 +1629,9 @@ export type SoftwareUncheckedUpdateWithoutHardwareInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1545,7 +1641,7 @@ export type SoftwareUncheckedUpdateManyWithoutHardwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1555,17 +1651,19 @@ export type SoftwareUncheckedUpdateManyWithoutHardwareInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type SoftwareCreateManyKategoriInput = {
+export type SoftwareCreateManyKategoriSoftwareInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  serialNumber: string
+  nomorSeri: string
   tglBerakhirLisensi: Date | string
   versiTerpasang: number
   vendor?: string | null
@@ -1575,17 +1673,19 @@ export type SoftwareCreateManyKategoriInput = {
   tahunPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
-  createdBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy: string
   updatedBy?: string | null
   opdId: string
   hardwareTerinstall?: string | null
 }
 
-export type SoftwareUpdateWithoutKategoriInput = {
+export type SoftwareUpdateWithoutKategoriSoftwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1595,17 +1695,19 @@ export type SoftwareUpdateWithoutKategoriInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
-  creator?: Prisma.UserUpdateOneWithoutCreatedSoftwareNestedInput
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  creator?: Prisma.UserUpdateOneRequiredWithoutCreatedSoftwareNestedInput
   updater?: Prisma.UserUpdateOneWithoutUpdatedSoftwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutSoftwareNestedInput
   hardware?: Prisma.HardwareUpdateOneWithoutSoftwareNestedInput
 }
 
-export type SoftwareUncheckedUpdateWithoutKategoriInput = {
+export type SoftwareUncheckedUpdateWithoutKategoriSoftwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1615,17 +1717,19 @@ export type SoftwareUncheckedUpdateWithoutKategoriInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
   hardwareTerinstall?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
-export type SoftwareUncheckedUpdateManyWithoutKategoriInput = {
+export type SoftwareUncheckedUpdateManyWithoutKategoriSoftwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  serialNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
   tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1635,7 +1739,9 @@ export type SoftwareUncheckedUpdateManyWithoutKategoriInput = {
   tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
-  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
   hardwareTerinstall?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1647,7 +1753,7 @@ export type SoftwareSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   id?: boolean
   nama?: boolean
   jenisLisensi?: boolean
-  serialNumber?: boolean
+  nomorSeri?: boolean
   tglBerakhirLisensi?: boolean
   versiTerpasang?: boolean
   vendor?: boolean
@@ -1657,15 +1763,17 @@ export type SoftwareSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   tahunPengadaan?: boolean
   status?: boolean
   pic?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   createdBy?: boolean
   updatedBy?: boolean
   opdId?: boolean
   kategoriId?: boolean
   hardwareTerinstall?: boolean
-  creator?: boolean | Prisma.Software$creatorArgs<ExtArgs>
+  creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updater?: boolean | Prisma.Software$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
-  kategori?: boolean | Prisma.KategoriSoftwareDefaultArgs<ExtArgs>
+  kategoriSoftware?: boolean | Prisma.KategoriSoftwareDefaultArgs<ExtArgs>
   hardware?: boolean | Prisma.Software$hardwareArgs<ExtArgs>
 }, ExtArgs["result"]["software"]>
 
@@ -1673,7 +1781,7 @@ export type SoftwareSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   nama?: boolean
   jenisLisensi?: boolean
-  serialNumber?: boolean
+  nomorSeri?: boolean
   tglBerakhirLisensi?: boolean
   versiTerpasang?: boolean
   vendor?: boolean
@@ -1683,15 +1791,17 @@ export type SoftwareSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   tahunPengadaan?: boolean
   status?: boolean
   pic?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   createdBy?: boolean
   updatedBy?: boolean
   opdId?: boolean
   kategoriId?: boolean
   hardwareTerinstall?: boolean
-  creator?: boolean | Prisma.Software$creatorArgs<ExtArgs>
+  creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updater?: boolean | Prisma.Software$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
-  kategori?: boolean | Prisma.KategoriSoftwareDefaultArgs<ExtArgs>
+  kategoriSoftware?: boolean | Prisma.KategoriSoftwareDefaultArgs<ExtArgs>
   hardware?: boolean | Prisma.Software$hardwareArgs<ExtArgs>
 }, ExtArgs["result"]["software"]>
 
@@ -1699,7 +1809,7 @@ export type SoftwareSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   nama?: boolean
   jenisLisensi?: boolean
-  serialNumber?: boolean
+  nomorSeri?: boolean
   tglBerakhirLisensi?: boolean
   versiTerpasang?: boolean
   vendor?: boolean
@@ -1709,15 +1819,17 @@ export type SoftwareSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   tahunPengadaan?: boolean
   status?: boolean
   pic?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   createdBy?: boolean
   updatedBy?: boolean
   opdId?: boolean
   kategoriId?: boolean
   hardwareTerinstall?: boolean
-  creator?: boolean | Prisma.Software$creatorArgs<ExtArgs>
+  creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updater?: boolean | Prisma.Software$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
-  kategori?: boolean | Prisma.KategoriSoftwareDefaultArgs<ExtArgs>
+  kategoriSoftware?: boolean | Prisma.KategoriSoftwareDefaultArgs<ExtArgs>
   hardware?: boolean | Prisma.Software$hardwareArgs<ExtArgs>
 }, ExtArgs["result"]["software"]>
 
@@ -1725,7 +1837,7 @@ export type SoftwareSelectScalar = {
   id?: boolean
   nama?: boolean
   jenisLisensi?: boolean
-  serialNumber?: boolean
+  nomorSeri?: boolean
   tglBerakhirLisensi?: boolean
   versiTerpasang?: boolean
   vendor?: boolean
@@ -1735,6 +1847,8 @@ export type SoftwareSelectScalar = {
   tahunPengadaan?: boolean
   status?: boolean
   pic?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   createdBy?: boolean
   updatedBy?: boolean
   opdId?: boolean
@@ -1742,43 +1856,43 @@ export type SoftwareSelectScalar = {
   hardwareTerinstall?: boolean
 }
 
-export type SoftwareOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nama" | "jenisLisensi" | "serialNumber" | "tglBerakhirLisensi" | "versiTerpasang" | "vendor" | "inHouse" | "kritikalitas" | "hargaPerolehan" | "tahunPengadaan" | "status" | "pic" | "createdBy" | "updatedBy" | "opdId" | "kategoriId" | "hardwareTerinstall", ExtArgs["result"]["software"]>
+export type SoftwareOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nama" | "jenisLisensi" | "nomorSeri" | "tglBerakhirLisensi" | "versiTerpasang" | "vendor" | "inHouse" | "kritikalitas" | "hargaPerolehan" | "tahunPengadaan" | "status" | "pic" | "createdAt" | "updatedAt" | "createdBy" | "updatedBy" | "opdId" | "kategoriId" | "hardwareTerinstall", ExtArgs["result"]["software"]>
 export type SoftwareInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  creator?: boolean | Prisma.Software$creatorArgs<ExtArgs>
+  creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updater?: boolean | Prisma.Software$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
-  kategori?: boolean | Prisma.KategoriSoftwareDefaultArgs<ExtArgs>
+  kategoriSoftware?: boolean | Prisma.KategoriSoftwareDefaultArgs<ExtArgs>
   hardware?: boolean | Prisma.Software$hardwareArgs<ExtArgs>
 }
 export type SoftwareIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  creator?: boolean | Prisma.Software$creatorArgs<ExtArgs>
+  creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updater?: boolean | Prisma.Software$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
-  kategori?: boolean | Prisma.KategoriSoftwareDefaultArgs<ExtArgs>
+  kategoriSoftware?: boolean | Prisma.KategoriSoftwareDefaultArgs<ExtArgs>
   hardware?: boolean | Prisma.Software$hardwareArgs<ExtArgs>
 }
 export type SoftwareIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  creator?: boolean | Prisma.Software$creatorArgs<ExtArgs>
+  creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updater?: boolean | Prisma.Software$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
-  kategori?: boolean | Prisma.KategoriSoftwareDefaultArgs<ExtArgs>
+  kategoriSoftware?: boolean | Prisma.KategoriSoftwareDefaultArgs<ExtArgs>
   hardware?: boolean | Prisma.Software$hardwareArgs<ExtArgs>
 }
 
 export type $SoftwarePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Software"
   objects: {
-    creator: Prisma.$UserPayload<ExtArgs> | null
+    creator: Prisma.$UserPayload<ExtArgs>
     updater: Prisma.$UserPayload<ExtArgs> | null
     opd: Prisma.$OpdPayload<ExtArgs>
-    kategori: Prisma.$KategoriSoftwarePayload<ExtArgs>
+    kategoriSoftware: Prisma.$KategoriSoftwarePayload<ExtArgs>
     hardware: Prisma.$HardwarePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     nama: string
     jenisLisensi: $Enums.JenisLisensi
-    serialNumber: string
+    nomorSeri: string
     tglBerakhirLisensi: Date
     versiTerpasang: number
     vendor: string | null
@@ -1788,7 +1902,9 @@ export type $SoftwarePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     tahunPengadaan: Date
     status: $Enums.StatusAset
     pic: string
-    createdBy: string | null
+    createdAt: Date
+    updatedAt: Date
+    createdBy: string
     updatedBy: string | null
     opdId: string
     kategoriId: string
@@ -2187,10 +2303,10 @@ readonly fields: SoftwareFieldRefs;
  */
 export interface Prisma__SoftwareClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  creator<T extends Prisma.Software$creatorArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Software$creatorArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  creator<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   updater<T extends Prisma.Software$updaterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Software$updaterArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   opd<T extends Prisma.OpdDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OpdDefaultArgs<ExtArgs>>): Prisma.Prisma__OpdClient<runtime.Types.Result.GetResult<Prisma.$OpdPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  kategori<T extends Prisma.KategoriSoftwareDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.KategoriSoftwareDefaultArgs<ExtArgs>>): Prisma.Prisma__KategoriSoftwareClient<runtime.Types.Result.GetResult<Prisma.$KategoriSoftwarePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  kategoriSoftware<T extends Prisma.KategoriSoftwareDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.KategoriSoftwareDefaultArgs<ExtArgs>>): Prisma.Prisma__KategoriSoftwareClient<runtime.Types.Result.GetResult<Prisma.$KategoriSoftwarePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   hardware<T extends Prisma.Software$hardwareArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Software$hardwareArgs<ExtArgs>>): Prisma.Prisma__HardwareClient<runtime.Types.Result.GetResult<Prisma.$HardwarePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2224,7 +2340,7 @@ export interface SoftwareFieldRefs {
   readonly id: Prisma.FieldRef<"Software", 'String'>
   readonly nama: Prisma.FieldRef<"Software", 'String'>
   readonly jenisLisensi: Prisma.FieldRef<"Software", 'JenisLisensi'>
-  readonly serialNumber: Prisma.FieldRef<"Software", 'String'>
+  readonly nomorSeri: Prisma.FieldRef<"Software", 'String'>
   readonly tglBerakhirLisensi: Prisma.FieldRef<"Software", 'DateTime'>
   readonly versiTerpasang: Prisma.FieldRef<"Software", 'Int'>
   readonly vendor: Prisma.FieldRef<"Software", 'String'>
@@ -2234,6 +2350,8 @@ export interface SoftwareFieldRefs {
   readonly tahunPengadaan: Prisma.FieldRef<"Software", 'DateTime'>
   readonly status: Prisma.FieldRef<"Software", 'StatusAset'>
   readonly pic: Prisma.FieldRef<"Software", 'String'>
+  readonly createdAt: Prisma.FieldRef<"Software", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Software", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"Software", 'String'>
   readonly updatedBy: Prisma.FieldRef<"Software", 'String'>
   readonly opdId: Prisma.FieldRef<"Software", 'String'>
@@ -2632,25 +2750,6 @@ export type SoftwareDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Software to delete.
    */
   limit?: number
-}
-
-/**
- * Software.creator
- */
-export type Software$creatorArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
 }
 
 /**

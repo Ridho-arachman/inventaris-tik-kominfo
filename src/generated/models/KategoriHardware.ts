@@ -221,7 +221,7 @@ export type KategoriHardwareCreateInput = {
   nama: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  hardware?: Prisma.HardwareCreateNestedManyWithoutJenisHardwareInput
+  hardware?: Prisma.HardwareCreateNestedManyWithoutKategoriHardwareInput
 }
 
 export type KategoriHardwareUncheckedCreateInput = {
@@ -229,7 +229,7 @@ export type KategoriHardwareUncheckedCreateInput = {
   nama: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  hardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutJenisHardwareInput
+  hardware?: Prisma.HardwareUncheckedCreateNestedManyWithoutKategoriHardwareInput
 }
 
 export type KategoriHardwareUpdateInput = {
@@ -237,7 +237,7 @@ export type KategoriHardwareUpdateInput = {
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  hardware?: Prisma.HardwareUpdateManyWithoutJenisHardwareNestedInput
+  hardware?: Prisma.HardwareUpdateManyWithoutKategoriHardwareNestedInput
 }
 
 export type KategoriHardwareUncheckedUpdateInput = {
@@ -245,7 +245,7 @@ export type KategoriHardwareUncheckedUpdateInput = {
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  hardware?: Prisma.HardwareUncheckedUpdateManyWithoutJenisHardwareNestedInput
+  hardware?: Prisma.HardwareUncheckedUpdateManyWithoutKategoriHardwareNestedInput
 }
 
 export type KategoriHardwareCreateManyInput = {
