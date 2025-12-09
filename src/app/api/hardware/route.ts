@@ -95,7 +95,13 @@ export const GET = async (req: NextRequest) => {
 
     const where: Prisma.HardwareWhereInput = { deletedAt: null };
 
-    if (nama) where.nama = { contains: nama, mode: "insensitive" };
+    if (nama) {
+      where.OR = [
+        { nama: { contains: nama, mode: "insensitive" } },
+        { nomorSeri: { contains: nama, mode: "insensitive" } },
+      ];
+    }
+
     if (opdId) where.opdId = opdId === "ALL" ? {} : { contains: opdId };
     if (merk) where.merk = { contains: merk, mode: "insensitive" };
     if (status) where.status = status.toUpperCase() as StatusAset;

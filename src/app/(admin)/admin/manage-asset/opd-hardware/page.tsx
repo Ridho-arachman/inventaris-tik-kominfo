@@ -167,55 +167,58 @@ export default function HardwareListPage() {
   };
 
   return (
-    <div className="min-h-screen px-6 py-10">
+    <div className="min-h-screen px-4 py-6 sm:px-6 lg:px-8">
       {/* BACK */}
       <Button
         variant="ghost"
         onClick={() => router.back()}
-        className="inline-flex items-center gap-2 mb-6 text-sm font-medium text-gray-600 hover:text-gray-900"
+        className="inline-flex items-center gap-2 mb-4 text-sm font-medium text-gray-600 hover:text-gray-900"
       >
         <ArrowLeft className="w-4 h-4" />
         Kembali
       </Button>
 
       {/* HEADER */}
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl font-bold flex items-center gap-2">
-          <Cpu className="w-7 h-7" /> Daftar Hardware
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
+        <h1 className="text-2xl sm:text-3xl font-bold flex items-center gap-2">
+          <Cpu className="w-6 h-6 sm:w-7 sm:h-7" /> Daftar Hardware
         </h1>
 
         <Link href="/admin/manage-asset/opd-hardware/add">
-          <Button className="flex items-center gap-2 cursor-pointer">
+          <Button className="w-full sm:w-auto flex items-center gap-2">
             <Plus className="w-4 h-4" /> Tambah Hardware
           </Button>
         </Link>
       </div>
 
-      {/* SUMMARY */}
-      <div className="flex gap-6 mb-6">
-        <div className="bg-gray-100 text-gray-800 px-4 py-2 rounded-md">
-          Total: {summary.total}
+      {/* SUMMARY — responsive flex-wrap */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        <div className="bg-gray-100 text-gray-800 px-4 py-3 rounded-md text-center">
+          <div className="text-sm">Total</div>
+          <div className="text-xl font-bold">{summary.total}</div>
         </div>
-        <div className="bg-green-100 text-green-900 px-4 py-2 rounded-md">
-          Aktif: {summary.aktif}
+        <div className="bg-green-100 text-green-900 px-4 py-3 rounded-md text-center">
+          <div className="text-sm">Aktif</div>
+          <div className="text-xl font-bold">{summary.aktif}</div>
         </div>
-        <div className="bg-red-100 text-red-900 px-4 py-2 rounded-md">
-          Non-Aktif: {summary.nonAktif}
+        <div className="bg-red-100 text-red-900 px-4 py-3 rounded-md text-center">
+          <div className="text-sm">Non-Aktif</div>
+          <div className="text-xl font-bold">{summary.nonAktif}</div>
         </div>
       </div>
 
-      {/* SEARCH + FILTER (your UI; we keep filters but they update URL automatically) */}
-      <div className="flex justify-between items-center mb-6">
+      {/* SEARCH + FILTER */}
+      <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 mb-6">
         <Input
           placeholder="Cari hardware berdasarkan nama..."
-          className="max-w-sm"
+          className="flex-1"
           value={searchNama}
           onChange={(e) => setSearchNama(e.target.value)}
         />
 
         <Button
           variant="outline"
-          className="flex items-center gap-2"
+          className="w-full sm:w-auto flex items-center justify-center gap-2"
           onClick={() => setOpenFilter(true)}
         >
           <SlidersHorizontal className="w-4 h-4" />
@@ -223,111 +226,213 @@ export default function HardwareListPage() {
         </Button>
       </div>
 
-      {/* TABLE */}
-      <Card className="rounded-xl shadow-md p-4">
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-sm">
-            <thead>
-              <tr className="bg-gray-100 text-left">
-                <th className="p-3">Nama</th>
-                <th className="p-3">Merk</th>
-                <th className="p-3">Kategori</th>
-                <th className="p-3">OPD</th>
-                <th className="p-3">Tanggal Pengadaan</th>
-                <th className="p-3">PIC</th>
-                <th className="p-3">Status</th>
-                <th className="p-3 text-center">Aksi</th>
-              </tr>
-            </thead>
+      {/* TABLE / CARD LIST — RESPONSIVE SWITCH */}
+      <Card className="rounded-xl shadow-md overflow-hidden">
+        {isLoading && (
+          <div className="p-6">
+            <div className="animate-pulse space-y-4">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="h-24 bg-gray-100 rounded-lg"></div>
+              ))}
+            </div>
+          </div>
+        )}
 
-            <tbody>
-              {isLoading && (
-                <tr>
-                  <td colSpan={8} className="py-6 text-center text-gray-500">
-                    <div className="animate-pulse flex flex-col items-center gap-3">
-                      <div className="w-32 h-4 bg-gray-200 rounded"></div>
-                      <div className="w-52 h-4 bg-gray-200 rounded"></div>
-                    </div>
-                  </td>
-                </tr>
-              )}
+        {error && !isLoading && (
+          <div className="p-6 text-center">
+            <div className="text-red-500 font-medium mb-2">
+              Terjadi kesalahan saat memuat data
+            </div>
+            <Button onClick={() => mutate()} variant="outline">
+              Coba Lagi
+            </Button>
+          </div>
+        )}
 
-              {/* ERROR STATE */}
-              {error && !isLoading && (
-                <tr>
-                  <td colSpan={8} className="py-6 text-center">
-                    <div className="text-red-500 font-medium mb-2">
-                      Terjadi kesalahan saat memuat data
-                    </div>
-                    <Button onClick={() => mutate()} variant="outline">
-                      Coba Lagi
-                    </Button>
-                  </td>
-                </tr>
-              )}
+        {!isLoading && !error && hardware.length === 0 && (
+          <div className="p-6 text-center text-gray-500">
+            Tidak ada data ditemukan.
+          </div>
+        )}
 
-              {!isLoading && !error && hardware.length > 0 ? (
-                hardware.map((hw: Hardware) => (
-                  <motion.tr
+        {!isLoading && !error && hardware.length > 0 && (
+          <>
+            {/* Desktop Table */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full border-collapse text-sm">
+                <thead>
+                  <tr className="bg-gray-100 text-left">
+                    <th className="p-3">Nama</th>
+                    <th className="p-3">Nomor Seri</th>
+                    <th className="p-3">Kategori</th>
+                    <th className="p-3">OPD</th>
+                    <th className="p-3">Tanggal Pengadaan</th>
+                    <th className="p-3">PIC</th>
+                    <th className="p-3">Status</th>
+                    <th className="p-3 text-center">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {hardware.map((hw) => (
+                    <motion.tr
+                      key={hw.id}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="border-b hover:bg-gray-50"
+                    >
+                      <td className="p-3 font-medium max-w-[180px] truncate">
+                        {hw.nama}
+                      </td>
+                      <td className="p-3 max-w-[150px] truncate">
+                        {hw.nomorSeri || "—"}
+                      </td>
+                      <td className="p-3 max-w-[150px] truncate">
+                        {hw.kategoriHardware?.nama || "—"}
+                      </td>
+                      <td className="p-3 max-w-[150px] truncate">
+                        {hw.opd?.nama || "—"}
+                      </td>
+                      <td className="p-3 max-w-[150px] truncate">
+                        {hw.tglPengadaan
+                          ? new Date(hw.tglPengadaan).toLocaleDateString(
+                              "id-ID"
+                            )
+                          : "—"}
+                      </td>
+                      <td className="p-3 max-w-[150px] truncate">
+                        {hw.pic || "—"}
+                      </td>
+                      <td className="p-3 max-w-[150px] truncate">
+                        <span
+                          className={`px-2 py-1 text-xs rounded-full ${
+                            hw.status === "AKTIF"
+                              ? "bg-green-100 text-green-800"
+                              : "bg-red-100 text-red-800"
+                          }`}
+                        >
+                          {hw.status}
+                        </span>
+                      </td>
+                      <td className="p-3 flex flex-wrap gap-2 justify-center">
+                        <Link
+                          href={`/admin/manage-asset/opd-hardware/${hw.id}`}
+                        >
+                          <Button variant="secondary" size="sm">
+                            <Eye className="w-3.5 h-3.5 mr-1" /> View
+                          </Button>
+                        </Link>
+                        <Link
+                          href={`/admin/manage-asset/opd-hardware/${hw.id}/edit`}
+                        >
+                          <Button variant="outline" size="sm">
+                            <Pencil className="w-3.5 h-3.5 mr-1" /> Edit
+                          </Button>
+                        </Link>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button variant="destructive" size="sm">
+                              <Trash className="w-3.5 h-3.5 mr-1" /> Hapus
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>
+                                Hapus Hardware?
+                              </AlertDialogTitle>
+                              <AlertDialogDescription>
+                                Tindakan ini tidak dapat dibatalkan. Data
+                                hardware akan dipindahkan ke arsip (soft
+                                delete).
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Batal</AlertDialogCancel>
+                              <AlertDialogAction
+                                onClick={() => handleDelete(hw.id)}
+                                className="bg-red-600 hover:bg-red-700"
+                              >
+                                Ya, Hapus
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </td>
+                    </motion.tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile Card Layout */}
+            <div className="md:hidden">
+              <div className="divide-y divide-gray-200">
+                {hardware.map((hw) => (
+                  <motion.div
                     key={hw.id}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="border-b hover:bg-gray-50"
+                    className="p-4 border-b"
                   >
-                    <td className="p-3">{hw.nama}</td>
-                    <td className="p-3">{hw.merk}</td>
-                    <td className="p-3">{hw.kategoriHardware?.nama}</td>
-                    <td className="p-3">{hw.opd?.nama}</td>
-                    <td className="p-3">
-                      {hw.tglPengadaan
-                        ? new Date(hw.tglPengadaan).toLocaleDateString("id-ID")
-                        : "-"}
-                    </td>
-                    <td className="p-3">{hw.pic}</td>
+                    <div className="font-semibold text-lg">{hw.nama}</div>
+                    <div className="text-sm text-gray-600 mt-1">
+                      {hw.nomorSeri ? `SN: ${hw.nomorSeri}` : "—"}
+                    </div>
 
-                    <td className="p-3">
-                      <span
-                        className={`text-xs px-2 py-1 rounded-md ${
-                          hw.status === "AKTIF"
-                            ? "bg-green-200 text-green-900"
-                            : "bg-red-200 text-red-900"
-                        }`}
-                      >
-                        {hw.status}
-                      </span>
-                    </td>
-
-                    <td className="p-3 flex gap-3 justify-center">
-                      <Link href={`/admin/manage-asset/opd-hardware/${hw.id}`}>
-                        <Button
-                          variant="secondary"
-                          className="h-8 px-3 gap-1 cursor-pointer"
+                    <div className="mt-2 space-y-1 text-sm">
+                      <div>
+                        <span className="font-medium">Kategori:</span>{" "}
+                        {hw.kategoriHardware?.nama || "—"}
+                      </div>
+                      <div>
+                        <span className="font-medium">OPD:</span>{" "}
+                        {hw.opd?.nama || "—"}
+                      </div>
+                      <div>
+                        <span className="font-medium">PIC:</span>{" "}
+                        {hw.pic || "—"}
+                      </div>
+                      <div>
+                        <span className="font-medium">Tanggal:</span>{" "}
+                        {hw.tglPengadaan
+                          ? new Date(hw.tglPengadaan).toLocaleDateString(
+                              "id-ID"
+                            )
+                          : "—"}
+                      </div>
+                      <div>
+                        <span className="font-medium">Status:</span>{" "}
+                        <span
+                          className={`px-2 py-0.5 text-xs rounded-full ${
+                            hw.status === "AKTIF"
+                              ? "bg-green-100 text-green-800"
+                              : "bg-red-100 text-red-800"
+                          }`}
                         >
-                          <Eye className="w-4 h-4" /> View
+                          {hw.status}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Aksi — stacked buttons on mobile */}
+                    <div className="mt-4 flex flex-col sm:flex-row gap-2">
+                      <Link href={`/admin/manage-asset/opd-hardware/${hw.id}`}>
+                        <Button variant="secondary" className="w-full">
+                          <Eye className="w-4 h-4 mr-1" /> Detail
                         </Button>
                       </Link>
-
                       <Link
                         href={`/admin/manage-asset/opd-hardware/${hw.id}/edit`}
                       >
-                        <Button
-                          variant="outline"
-                          className="h-8 px-3 gap-1 cursor-pointer"
-                        >
-                          <Pencil className="w-4 h-4" /> Edit
+                        <Button variant="outline" className="w-full">
+                          <Pencil className="w-4 h-4 mr-1" /> Edit
                         </Button>
                       </Link>
-
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
-                          <Button
-                            variant="destructive"
-                            className="h-8 px-3 gap-1 cursor-pointer"
-                          >
-                            <Trash className="w-4 h-4" /> Hapus
+                          <Button variant="destructive" className="w-full">
+                            <Trash className="w-4 h-4 mr-1" /> Hapus
                           </Button>
                         </AlertDialogTrigger>
-
                         <AlertDialogContent>
                           <AlertDialogHeader>
                             <AlertDialogTitle>Hapus Hardware?</AlertDialogTitle>
@@ -336,10 +441,8 @@ export default function HardwareListPage() {
                               akan dipindahkan ke arsip (soft delete).
                             </AlertDialogDescription>
                           </AlertDialogHeader>
-
                           <AlertDialogFooter>
                             <AlertDialogCancel>Batal</AlertDialogCancel>
-
                             <AlertDialogAction
                               onClick={() => handleDelete(hw.id)}
                               className="bg-red-600 hover:bg-red-700"
@@ -349,45 +452,39 @@ export default function HardwareListPage() {
                           </AlertDialogFooter>
                         </AlertDialogContent>
                       </AlertDialog>
-                    </td>
-                  </motion.tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={8} className="text-center py-6 text-gray-500">
-                    Tidak ada data ditemukan.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
       </Card>
 
-      {/* PAGINATION */}
-      <div className="flex justify-between mt-6">
+      {/* PAGINATION — responsive stack on mobile */}
+      <div className="flex flex-col sm:flex-row justify-between items-center mt-6 gap-4">
         <Button
           disabled={page <= 1}
           onClick={goPrev}
-          className="cursor-pointer"
+          className="w-full sm:w-auto"
         >
-          Prev
+          Sebelumnya
         </Button>
 
         <div className="text-sm text-gray-600">
-          Page {pagination?.page ?? 1} / {pagination?.totalPages ?? 1}
+          Halaman {pagination?.page ?? 1} dari {pagination?.totalPages ?? 1}
         </div>
 
         <Button
           disabled={page >= (pagination?.totalPages ?? 1)}
           onClick={goNext}
-          className="cursor-pointer"
+          className="w-full sm:w-auto"
         >
-          Next
+          Selanjutnya
         </Button>
       </div>
 
-      {/* FILTER MODAL (your UI) */}
+      {/* FILTER MODAL — responsive inner spacing */}
       <Dialog open={openFilter} onOpenChange={setOpenFilter}>
         <DialogContent>
           <DialogHeader>

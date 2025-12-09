@@ -315,7 +315,11 @@ export default function EditHardwareForm() {
                 <Field>
                   <FieldLabel>Status</FieldLabel>
 
-                  <Select value={field.value} onValueChange={field.onChange}>
+                  <Select
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Pilih status" />
                     </SelectTrigger>
@@ -382,7 +386,11 @@ export default function EditHardwareForm() {
                 <Field>
                   <FieldLabel>Sumber Pengadaan</FieldLabel>
 
-                  <Select value={field.value} onValueChange={field.onChange}>
+                  <Select
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Pilih sumber" />
                     </SelectTrigger>
