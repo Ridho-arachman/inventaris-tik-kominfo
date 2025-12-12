@@ -1246,11 +1246,13 @@ export const SoftwareScalarFieldEnum = {
   inHouse: 'inHouse',
   kritikalitas: 'kritikalitas',
   hargaPerolehan: 'hargaPerolehan',
-  tahunPengadaan: 'tahunPengadaan',
+  tglPengadaan: 'tglPengadaan',
   status: 'status',
   pic: 'pic',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  deletedBy: 'deletedBy',
   createdBy: 'createdBy',
   updatedBy: 'updatedBy',
   opdId: 'opdId',
@@ -1397,20 +1399,6 @@ export type ListEnumJenisLisensiFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-/**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-/**
  * Reference to a field of type 'KritikalitasStatus'
  */
 export type EnumKritikalitasStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KritikalitasStatus'>
@@ -1425,16 +1413,16 @@ export type ListEnumKritikalitasStatusFieldRefInput<$PrismaModel> = FieldRefInpu
 
 
 /**
- * Reference to a field of type 'Float'
+ * Reference to a field of type 'Int'
  */
-export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
     
 
 
 /**
- * Reference to a field of type 'Float[]'
+ * Reference to a field of type 'Int[]'
  */
-export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 /**

@@ -29,6 +29,7 @@ model User {
 
   createdSoftware Software[] @relation("SoftwareCreator")
   updatedSoftware Software[] @relation("SoftwareUpdater")
+  deletorSoftware Software[] @relation("SoftwareDeletor")
 
   @@map("user")
 }
@@ -129,11 +130,11 @@ model Hardware {
   spesifikasi     String
   lokasiFisik     String           @db.VarChar(255)
   tglPengadaan    DateTime
-  garansiMulai    DateTime
-  garansiSelesai  DateTime
+  garansiMulai    DateTime?
+  garansiSelesai  DateTime?
   status          StatusAset       @default(AKTIF)
   pic             String           @db.VarChar(255)
-  biayaPerolehan  Decimal          @db.Decimal(18,2)
+  biayaPerolehan  Decimal?         @db.Decimal(18,2)
   nomorSeri       String           @unique  @db.VarChar(50)
   sumber          SumberPengadaan  @default(PEMBELIAN)
   penyedia        String?          @db.VarChar(255)
@@ -189,18 +190,22 @@ model Software {
   id                    String               @id @default(cuid())
   nama                  String               @db.VarChar(255)
   jenisLisensi          JenisLisensi         @default(OPEN_SOURCE)
-  nomorSeri             String               @db.VarChar(50)
-  tglBerakhirLisensi    DateTime
-  versiTerpasang        Int
+  nomorSeri             String?              @unique  @db.VarChar(50)
+  tglBerakhirLisensi    DateTime?
+  versiTerpasang        String               @db.VarChar(100)
   vendor                String?              @db.VarChar(255)
   inHouse               Boolean              @default(false)
-  kritikalitas          KritikalitasStatus
+  kritikalitas          KritikalitasStatus   @default(SEDANG)
   hargaPerolehan        Decimal
-  tahunPengadaan        DateTime
+  tglPengadaan          DateTime
   status                StatusAset           @default(AKTIF)
   pic                   String               @db.VarChar(255)
   createdAt             DateTime             @default(now())
   updatedAt             DateTime             @updatedAt
+  deletedAt             DateTime?
+
+  deletedBy             String?           @db.VarChar(100)
+  delete                User?            @relation("SoftwareDeletor", fields: [deletedBy], references: [id], onDelete: Restrict,onUpdate: Cascade)
 
   createdBy             String               @db.VarChar(100)
   creator               User                 @relation("SoftwareCreator", fields: [createdBy], references: [id], onDelete: Restrict,onUpdate: Cascade)

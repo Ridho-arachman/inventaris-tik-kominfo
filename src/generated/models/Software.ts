@@ -27,12 +27,10 @@ export type AggregateSoftware = {
 }
 
 export type SoftwareAvgAggregateOutputType = {
-  versiTerpasang: number | null
   hargaPerolehan: runtime.Decimal | null
 }
 
 export type SoftwareSumAggregateOutputType = {
-  versiTerpasang: number | null
   hargaPerolehan: runtime.Decimal | null
 }
 
@@ -42,16 +40,18 @@ export type SoftwareMinAggregateOutputType = {
   jenisLisensi: $Enums.JenisLisensi | null
   nomorSeri: string | null
   tglBerakhirLisensi: Date | null
-  versiTerpasang: number | null
+  versiTerpasang: string | null
   vendor: string | null
   inHouse: boolean | null
   kritikalitas: $Enums.KritikalitasStatus | null
   hargaPerolehan: runtime.Decimal | null
-  tahunPengadaan: Date | null
+  tglPengadaan: Date | null
   status: $Enums.StatusAset | null
   pic: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  deletedAt: Date | null
+  deletedBy: string | null
   createdBy: string | null
   updatedBy: string | null
   opdId: string | null
@@ -65,16 +65,18 @@ export type SoftwareMaxAggregateOutputType = {
   jenisLisensi: $Enums.JenisLisensi | null
   nomorSeri: string | null
   tglBerakhirLisensi: Date | null
-  versiTerpasang: number | null
+  versiTerpasang: string | null
   vendor: string | null
   inHouse: boolean | null
   kritikalitas: $Enums.KritikalitasStatus | null
   hargaPerolehan: runtime.Decimal | null
-  tahunPengadaan: Date | null
+  tglPengadaan: Date | null
   status: $Enums.StatusAset | null
   pic: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  deletedAt: Date | null
+  deletedBy: string | null
   createdBy: string | null
   updatedBy: string | null
   opdId: string | null
@@ -93,11 +95,13 @@ export type SoftwareCountAggregateOutputType = {
   inHouse: number
   kritikalitas: number
   hargaPerolehan: number
-  tahunPengadaan: number
+  tglPengadaan: number
   status: number
   pic: number
   createdAt: number
   updatedAt: number
+  deletedAt: number
+  deletedBy: number
   createdBy: number
   updatedBy: number
   opdId: number
@@ -108,12 +112,10 @@ export type SoftwareCountAggregateOutputType = {
 
 
 export type SoftwareAvgAggregateInputType = {
-  versiTerpasang?: true
   hargaPerolehan?: true
 }
 
 export type SoftwareSumAggregateInputType = {
-  versiTerpasang?: true
   hargaPerolehan?: true
 }
 
@@ -128,11 +130,13 @@ export type SoftwareMinAggregateInputType = {
   inHouse?: true
   kritikalitas?: true
   hargaPerolehan?: true
-  tahunPengadaan?: true
+  tglPengadaan?: true
   status?: true
   pic?: true
   createdAt?: true
   updatedAt?: true
+  deletedAt?: true
+  deletedBy?: true
   createdBy?: true
   updatedBy?: true
   opdId?: true
@@ -151,11 +155,13 @@ export type SoftwareMaxAggregateInputType = {
   inHouse?: true
   kritikalitas?: true
   hargaPerolehan?: true
-  tahunPengadaan?: true
+  tglPengadaan?: true
   status?: true
   pic?: true
   createdAt?: true
   updatedAt?: true
+  deletedAt?: true
+  deletedBy?: true
   createdBy?: true
   updatedBy?: true
   opdId?: true
@@ -174,11 +180,13 @@ export type SoftwareCountAggregateInputType = {
   inHouse?: true
   kritikalitas?: true
   hargaPerolehan?: true
-  tahunPengadaan?: true
+  tglPengadaan?: true
   status?: true
   pic?: true
   createdAt?: true
   updatedAt?: true
+  deletedAt?: true
+  deletedBy?: true
   createdBy?: true
   updatedBy?: true
   opdId?: true
@@ -277,18 +285,20 @@ export type SoftwareGroupByOutputType = {
   id: string
   nama: string
   jenisLisensi: $Enums.JenisLisensi
-  nomorSeri: string
-  tglBerakhirLisensi: Date
-  versiTerpasang: number
+  nomorSeri: string | null
+  tglBerakhirLisensi: Date | null
+  versiTerpasang: string
   vendor: string | null
   inHouse: boolean
   kritikalitas: $Enums.KritikalitasStatus
   hargaPerolehan: runtime.Decimal
-  tahunPengadaan: Date
+  tglPengadaan: Date
   status: $Enums.StatusAset
   pic: string
   createdAt: Date
   updatedAt: Date
+  deletedAt: Date | null
+  deletedBy: string | null
   createdBy: string
   updatedBy: string | null
   opdId: string
@@ -323,23 +333,26 @@ export type SoftwareWhereInput = {
   id?: Prisma.StringFilter<"Software"> | string
   nama?: Prisma.StringFilter<"Software"> | string
   jenisLisensi?: Prisma.EnumJenisLisensiFilter<"Software"> | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringFilter<"Software"> | string
-  tglBerakhirLisensi?: Prisma.DateTimeFilter<"Software"> | Date | string
-  versiTerpasang?: Prisma.IntFilter<"Software"> | number
+  nomorSeri?: Prisma.StringNullableFilter<"Software"> | string | null
+  tglBerakhirLisensi?: Prisma.DateTimeNullableFilter<"Software"> | Date | string | null
+  versiTerpasang?: Prisma.StringFilter<"Software"> | string
   vendor?: Prisma.StringNullableFilter<"Software"> | string | null
   inHouse?: Prisma.BoolFilter<"Software"> | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusFilter<"Software"> | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalFilter<"Software"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeFilter<"Software"> | Date | string
+  tglPengadaan?: Prisma.DateTimeFilter<"Software"> | Date | string
   status?: Prisma.EnumStatusAsetFilter<"Software"> | $Enums.StatusAset
   pic?: Prisma.StringFilter<"Software"> | string
   createdAt?: Prisma.DateTimeFilter<"Software"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Software"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Software"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Software"> | string | null
   createdBy?: Prisma.StringFilter<"Software"> | string
   updatedBy?: Prisma.StringNullableFilter<"Software"> | string | null
   opdId?: Prisma.StringFilter<"Software"> | string
   kategoriId?: Prisma.StringFilter<"Software"> | string
   hardwareTerinstall?: Prisma.StringNullableFilter<"Software"> | string | null
+  delete?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   creator?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   updater?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   opd?: Prisma.XOR<Prisma.OpdScalarRelationFilter, Prisma.OpdWhereInput>
@@ -351,23 +364,26 @@ export type SoftwareOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   nama?: Prisma.SortOrder
   jenisLisensi?: Prisma.SortOrder
-  nomorSeri?: Prisma.SortOrder
-  tglBerakhirLisensi?: Prisma.SortOrder
+  nomorSeri?: Prisma.SortOrderInput | Prisma.SortOrder
+  tglBerakhirLisensi?: Prisma.SortOrderInput | Prisma.SortOrder
   versiTerpasang?: Prisma.SortOrder
   vendor?: Prisma.SortOrderInput | Prisma.SortOrder
   inHouse?: Prisma.SortOrder
   kritikalitas?: Prisma.SortOrder
   hargaPerolehan?: Prisma.SortOrder
-  tahunPengadaan?: Prisma.SortOrder
+  tglPengadaan?: Prisma.SortOrder
   status?: Prisma.SortOrder
   pic?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   updatedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   opdId?: Prisma.SortOrder
   kategoriId?: Prisma.SortOrder
   hardwareTerinstall?: Prisma.SortOrderInput | Prisma.SortOrder
+  delete?: Prisma.UserOrderByWithRelationInput
   creator?: Prisma.UserOrderByWithRelationInput
   updater?: Prisma.UserOrderByWithRelationInput
   opd?: Prisma.OpdOrderByWithRelationInput
@@ -377,51 +393,56 @@ export type SoftwareOrderByWithRelationInput = {
 
 export type SoftwareWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  nomorSeri?: string
   AND?: Prisma.SoftwareWhereInput | Prisma.SoftwareWhereInput[]
   OR?: Prisma.SoftwareWhereInput[]
   NOT?: Prisma.SoftwareWhereInput | Prisma.SoftwareWhereInput[]
   nama?: Prisma.StringFilter<"Software"> | string
   jenisLisensi?: Prisma.EnumJenisLisensiFilter<"Software"> | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringFilter<"Software"> | string
-  tglBerakhirLisensi?: Prisma.DateTimeFilter<"Software"> | Date | string
-  versiTerpasang?: Prisma.IntFilter<"Software"> | number
+  tglBerakhirLisensi?: Prisma.DateTimeNullableFilter<"Software"> | Date | string | null
+  versiTerpasang?: Prisma.StringFilter<"Software"> | string
   vendor?: Prisma.StringNullableFilter<"Software"> | string | null
   inHouse?: Prisma.BoolFilter<"Software"> | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusFilter<"Software"> | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalFilter<"Software"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeFilter<"Software"> | Date | string
+  tglPengadaan?: Prisma.DateTimeFilter<"Software"> | Date | string
   status?: Prisma.EnumStatusAsetFilter<"Software"> | $Enums.StatusAset
   pic?: Prisma.StringFilter<"Software"> | string
   createdAt?: Prisma.DateTimeFilter<"Software"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Software"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Software"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Software"> | string | null
   createdBy?: Prisma.StringFilter<"Software"> | string
   updatedBy?: Prisma.StringNullableFilter<"Software"> | string | null
   opdId?: Prisma.StringFilter<"Software"> | string
   kategoriId?: Prisma.StringFilter<"Software"> | string
   hardwareTerinstall?: Prisma.StringNullableFilter<"Software"> | string | null
+  delete?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   creator?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   updater?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   opd?: Prisma.XOR<Prisma.OpdScalarRelationFilter, Prisma.OpdWhereInput>
   kategoriSoftware?: Prisma.XOR<Prisma.KategoriSoftwareScalarRelationFilter, Prisma.KategoriSoftwareWhereInput>
   hardware?: Prisma.XOR<Prisma.HardwareNullableScalarRelationFilter, Prisma.HardwareWhereInput> | null
-}, "id">
+}, "id" | "nomorSeri">
 
 export type SoftwareOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   nama?: Prisma.SortOrder
   jenisLisensi?: Prisma.SortOrder
-  nomorSeri?: Prisma.SortOrder
-  tglBerakhirLisensi?: Prisma.SortOrder
+  nomorSeri?: Prisma.SortOrderInput | Prisma.SortOrder
+  tglBerakhirLisensi?: Prisma.SortOrderInput | Prisma.SortOrder
   versiTerpasang?: Prisma.SortOrder
   vendor?: Prisma.SortOrderInput | Prisma.SortOrder
   inHouse?: Prisma.SortOrder
   kritikalitas?: Prisma.SortOrder
   hargaPerolehan?: Prisma.SortOrder
-  tahunPengadaan?: Prisma.SortOrder
+  tglPengadaan?: Prisma.SortOrder
   status?: Prisma.SortOrder
   pic?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   updatedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   opdId?: Prisma.SortOrder
@@ -441,18 +462,20 @@ export type SoftwareScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Software"> | string
   nama?: Prisma.StringWithAggregatesFilter<"Software"> | string
   jenisLisensi?: Prisma.EnumJenisLisensiWithAggregatesFilter<"Software"> | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringWithAggregatesFilter<"Software"> | string
-  tglBerakhirLisensi?: Prisma.DateTimeWithAggregatesFilter<"Software"> | Date | string
-  versiTerpasang?: Prisma.IntWithAggregatesFilter<"Software"> | number
+  nomorSeri?: Prisma.StringNullableWithAggregatesFilter<"Software"> | string | null
+  tglBerakhirLisensi?: Prisma.DateTimeNullableWithAggregatesFilter<"Software"> | Date | string | null
+  versiTerpasang?: Prisma.StringWithAggregatesFilter<"Software"> | string
   vendor?: Prisma.StringNullableWithAggregatesFilter<"Software"> | string | null
   inHouse?: Prisma.BoolWithAggregatesFilter<"Software"> | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusWithAggregatesFilter<"Software"> | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalWithAggregatesFilter<"Software"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeWithAggregatesFilter<"Software"> | Date | string
+  tglPengadaan?: Prisma.DateTimeWithAggregatesFilter<"Software"> | Date | string
   status?: Prisma.EnumStatusAsetWithAggregatesFilter<"Software"> | $Enums.StatusAset
   pic?: Prisma.StringWithAggregatesFilter<"Software"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Software"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Software"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Software"> | Date | string | null
+  deletedBy?: Prisma.StringNullableWithAggregatesFilter<"Software"> | string | null
   createdBy?: Prisma.StringWithAggregatesFilter<"Software"> | string
   updatedBy?: Prisma.StringNullableWithAggregatesFilter<"Software"> | string | null
   opdId?: Prisma.StringWithAggregatesFilter<"Software"> | string
@@ -464,18 +487,20 @@ export type SoftwareCreateInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  nomorSeri: string
-  tglBerakhirLisensi: Date | string
-  versiTerpasang: number
+  nomorSeri?: string | null
+  tglBerakhirLisensi?: Date | string | null
+  versiTerpasang: string
   vendor?: string | null
   inHouse?: boolean
-  kritikalitas: $Enums.KritikalitasStatus
+  kritikalitas?: $Enums.KritikalitasStatus
   hargaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan: Date | string
+  tglPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  delete?: Prisma.UserCreateNestedOneWithoutDeletorSoftwareInput
   creator: Prisma.UserCreateNestedOneWithoutCreatedSoftwareInput
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedSoftwareInput
   opd: Prisma.OpdCreateNestedOneWithoutSoftwareInput
@@ -487,18 +512,20 @@ export type SoftwareUncheckedCreateInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  nomorSeri: string
-  tglBerakhirLisensi: Date | string
-  versiTerpasang: number
+  nomorSeri?: string | null
+  tglBerakhirLisensi?: Date | string | null
+  versiTerpasang: string
   vendor?: string | null
   inHouse?: boolean
-  kritikalitas: $Enums.KritikalitasStatus
+  kritikalitas?: $Enums.KritikalitasStatus
   hargaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan: Date | string
+  tglPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   createdBy: string
   updatedBy?: string | null
   opdId: string
@@ -510,18 +537,20 @@ export type SoftwareUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
-  tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
+  nomorSeri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tglBerakhirLisensi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  versiTerpasang?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inHouse?: Prisma.BoolFieldUpdateOperationsInput | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusFieldUpdateOperationsInput | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  delete?: Prisma.UserUpdateOneWithoutDeletorSoftwareNestedInput
   creator?: Prisma.UserUpdateOneRequiredWithoutCreatedSoftwareNestedInput
   updater?: Prisma.UserUpdateOneWithoutUpdatedSoftwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutSoftwareNestedInput
@@ -533,18 +562,20 @@ export type SoftwareUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
-  tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
+  nomorSeri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tglBerakhirLisensi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  versiTerpasang?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inHouse?: Prisma.BoolFieldUpdateOperationsInput | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusFieldUpdateOperationsInput | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -556,18 +587,20 @@ export type SoftwareCreateManyInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  nomorSeri: string
-  tglBerakhirLisensi: Date | string
-  versiTerpasang: number
+  nomorSeri?: string | null
+  tglBerakhirLisensi?: Date | string | null
+  versiTerpasang: string
   vendor?: string | null
   inHouse?: boolean
-  kritikalitas: $Enums.KritikalitasStatus
+  kritikalitas?: $Enums.KritikalitasStatus
   hargaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan: Date | string
+  tglPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   createdBy: string
   updatedBy?: string | null
   opdId: string
@@ -579,36 +612,39 @@ export type SoftwareUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
-  tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
+  nomorSeri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tglBerakhirLisensi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  versiTerpasang?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inHouse?: Prisma.BoolFieldUpdateOperationsInput | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusFieldUpdateOperationsInput | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type SoftwareUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
-  tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
+  nomorSeri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tglBerakhirLisensi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  versiTerpasang?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inHouse?: Prisma.BoolFieldUpdateOperationsInput | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusFieldUpdateOperationsInput | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -637,11 +673,13 @@ export type SoftwareCountOrderByAggregateInput = {
   inHouse?: Prisma.SortOrder
   kritikalitas?: Prisma.SortOrder
   hargaPerolehan?: Prisma.SortOrder
-  tahunPengadaan?: Prisma.SortOrder
+  tglPengadaan?: Prisma.SortOrder
   status?: Prisma.SortOrder
   pic?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   updatedBy?: Prisma.SortOrder
   opdId?: Prisma.SortOrder
@@ -650,7 +688,6 @@ export type SoftwareCountOrderByAggregateInput = {
 }
 
 export type SoftwareAvgOrderByAggregateInput = {
-  versiTerpasang?: Prisma.SortOrder
   hargaPerolehan?: Prisma.SortOrder
 }
 
@@ -665,11 +702,13 @@ export type SoftwareMaxOrderByAggregateInput = {
   inHouse?: Prisma.SortOrder
   kritikalitas?: Prisma.SortOrder
   hargaPerolehan?: Prisma.SortOrder
-  tahunPengadaan?: Prisma.SortOrder
+  tglPengadaan?: Prisma.SortOrder
   status?: Prisma.SortOrder
   pic?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   updatedBy?: Prisma.SortOrder
   opdId?: Prisma.SortOrder
@@ -688,11 +727,13 @@ export type SoftwareMinOrderByAggregateInput = {
   inHouse?: Prisma.SortOrder
   kritikalitas?: Prisma.SortOrder
   hargaPerolehan?: Prisma.SortOrder
-  tahunPengadaan?: Prisma.SortOrder
+  tglPengadaan?: Prisma.SortOrder
   status?: Prisma.SortOrder
   pic?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+  deletedBy?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   updatedBy?: Prisma.SortOrder
   opdId?: Prisma.SortOrder
@@ -701,7 +742,6 @@ export type SoftwareMinOrderByAggregateInput = {
 }
 
 export type SoftwareSumOrderByAggregateInput = {
-  versiTerpasang?: Prisma.SortOrder
   hargaPerolehan?: Prisma.SortOrder
 }
 
@@ -719,6 +759,13 @@ export type SoftwareCreateNestedManyWithoutUpdaterInput = {
   connect?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
 }
 
+export type SoftwareCreateNestedManyWithoutDeleteInput = {
+  create?: Prisma.XOR<Prisma.SoftwareCreateWithoutDeleteInput, Prisma.SoftwareUncheckedCreateWithoutDeleteInput> | Prisma.SoftwareCreateWithoutDeleteInput[] | Prisma.SoftwareUncheckedCreateWithoutDeleteInput[]
+  connectOrCreate?: Prisma.SoftwareCreateOrConnectWithoutDeleteInput | Prisma.SoftwareCreateOrConnectWithoutDeleteInput[]
+  createMany?: Prisma.SoftwareCreateManyDeleteInputEnvelope
+  connect?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
+}
+
 export type SoftwareUncheckedCreateNestedManyWithoutCreatorInput = {
   create?: Prisma.XOR<Prisma.SoftwareCreateWithoutCreatorInput, Prisma.SoftwareUncheckedCreateWithoutCreatorInput> | Prisma.SoftwareCreateWithoutCreatorInput[] | Prisma.SoftwareUncheckedCreateWithoutCreatorInput[]
   connectOrCreate?: Prisma.SoftwareCreateOrConnectWithoutCreatorInput | Prisma.SoftwareCreateOrConnectWithoutCreatorInput[]
@@ -730,6 +777,13 @@ export type SoftwareUncheckedCreateNestedManyWithoutUpdaterInput = {
   create?: Prisma.XOR<Prisma.SoftwareCreateWithoutUpdaterInput, Prisma.SoftwareUncheckedCreateWithoutUpdaterInput> | Prisma.SoftwareCreateWithoutUpdaterInput[] | Prisma.SoftwareUncheckedCreateWithoutUpdaterInput[]
   connectOrCreate?: Prisma.SoftwareCreateOrConnectWithoutUpdaterInput | Prisma.SoftwareCreateOrConnectWithoutUpdaterInput[]
   createMany?: Prisma.SoftwareCreateManyUpdaterInputEnvelope
+  connect?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
+}
+
+export type SoftwareUncheckedCreateNestedManyWithoutDeleteInput = {
+  create?: Prisma.XOR<Prisma.SoftwareCreateWithoutDeleteInput, Prisma.SoftwareUncheckedCreateWithoutDeleteInput> | Prisma.SoftwareCreateWithoutDeleteInput[] | Prisma.SoftwareUncheckedCreateWithoutDeleteInput[]
+  connectOrCreate?: Prisma.SoftwareCreateOrConnectWithoutDeleteInput | Prisma.SoftwareCreateOrConnectWithoutDeleteInput[]
+  createMany?: Prisma.SoftwareCreateManyDeleteInputEnvelope
   connect?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
 }
 
@@ -761,6 +815,20 @@ export type SoftwareUpdateManyWithoutUpdaterNestedInput = {
   deleteMany?: Prisma.SoftwareScalarWhereInput | Prisma.SoftwareScalarWhereInput[]
 }
 
+export type SoftwareUpdateManyWithoutDeleteNestedInput = {
+  create?: Prisma.XOR<Prisma.SoftwareCreateWithoutDeleteInput, Prisma.SoftwareUncheckedCreateWithoutDeleteInput> | Prisma.SoftwareCreateWithoutDeleteInput[] | Prisma.SoftwareUncheckedCreateWithoutDeleteInput[]
+  connectOrCreate?: Prisma.SoftwareCreateOrConnectWithoutDeleteInput | Prisma.SoftwareCreateOrConnectWithoutDeleteInput[]
+  upsert?: Prisma.SoftwareUpsertWithWhereUniqueWithoutDeleteInput | Prisma.SoftwareUpsertWithWhereUniqueWithoutDeleteInput[]
+  createMany?: Prisma.SoftwareCreateManyDeleteInputEnvelope
+  set?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
+  disconnect?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
+  delete?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
+  connect?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
+  update?: Prisma.SoftwareUpdateWithWhereUniqueWithoutDeleteInput | Prisma.SoftwareUpdateWithWhereUniqueWithoutDeleteInput[]
+  updateMany?: Prisma.SoftwareUpdateManyWithWhereWithoutDeleteInput | Prisma.SoftwareUpdateManyWithWhereWithoutDeleteInput[]
+  deleteMany?: Prisma.SoftwareScalarWhereInput | Prisma.SoftwareScalarWhereInput[]
+}
+
 export type SoftwareUncheckedUpdateManyWithoutCreatorNestedInput = {
   create?: Prisma.XOR<Prisma.SoftwareCreateWithoutCreatorInput, Prisma.SoftwareUncheckedCreateWithoutCreatorInput> | Prisma.SoftwareCreateWithoutCreatorInput[] | Prisma.SoftwareUncheckedCreateWithoutCreatorInput[]
   connectOrCreate?: Prisma.SoftwareCreateOrConnectWithoutCreatorInput | Prisma.SoftwareCreateOrConnectWithoutCreatorInput[]
@@ -786,6 +854,20 @@ export type SoftwareUncheckedUpdateManyWithoutUpdaterNestedInput = {
   connect?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
   update?: Prisma.SoftwareUpdateWithWhereUniqueWithoutUpdaterInput | Prisma.SoftwareUpdateWithWhereUniqueWithoutUpdaterInput[]
   updateMany?: Prisma.SoftwareUpdateManyWithWhereWithoutUpdaterInput | Prisma.SoftwareUpdateManyWithWhereWithoutUpdaterInput[]
+  deleteMany?: Prisma.SoftwareScalarWhereInput | Prisma.SoftwareScalarWhereInput[]
+}
+
+export type SoftwareUncheckedUpdateManyWithoutDeleteNestedInput = {
+  create?: Prisma.XOR<Prisma.SoftwareCreateWithoutDeleteInput, Prisma.SoftwareUncheckedCreateWithoutDeleteInput> | Prisma.SoftwareCreateWithoutDeleteInput[] | Prisma.SoftwareUncheckedCreateWithoutDeleteInput[]
+  connectOrCreate?: Prisma.SoftwareCreateOrConnectWithoutDeleteInput | Prisma.SoftwareCreateOrConnectWithoutDeleteInput[]
+  upsert?: Prisma.SoftwareUpsertWithWhereUniqueWithoutDeleteInput | Prisma.SoftwareUpsertWithWhereUniqueWithoutDeleteInput[]
+  createMany?: Prisma.SoftwareCreateManyDeleteInputEnvelope
+  set?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
+  disconnect?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
+  delete?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
+  connect?: Prisma.SoftwareWhereUniqueInput | Prisma.SoftwareWhereUniqueInput[]
+  update?: Prisma.SoftwareUpdateWithWhereUniqueWithoutDeleteInput | Prisma.SoftwareUpdateWithWhereUniqueWithoutDeleteInput[]
+  updateMany?: Prisma.SoftwareUpdateManyWithWhereWithoutDeleteInput | Prisma.SoftwareUpdateManyWithWhereWithoutDeleteInput[]
   deleteMany?: Prisma.SoftwareScalarWhereInput | Prisma.SoftwareScalarWhereInput[]
 }
 
@@ -919,34 +1001,36 @@ export type EnumJenisLisensiFieldUpdateOperationsInput = {
   set?: $Enums.JenisLisensi
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type EnumKritikalitasStatusFieldUpdateOperationsInput = {
   set?: $Enums.KritikalitasStatus
+}
+
+export type DecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type SoftwareCreateWithoutCreatorInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  nomorSeri: string
-  tglBerakhirLisensi: Date | string
-  versiTerpasang: number
+  nomorSeri?: string | null
+  tglBerakhirLisensi?: Date | string | null
+  versiTerpasang: string
   vendor?: string | null
   inHouse?: boolean
-  kritikalitas: $Enums.KritikalitasStatus
+  kritikalitas?: $Enums.KritikalitasStatus
   hargaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan: Date | string
+  tglPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  delete?: Prisma.UserCreateNestedOneWithoutDeletorSoftwareInput
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedSoftwareInput
   opd: Prisma.OpdCreateNestedOneWithoutSoftwareInput
   kategoriSoftware: Prisma.KategoriSoftwareCreateNestedOneWithoutSoftwareInput
@@ -957,18 +1041,20 @@ export type SoftwareUncheckedCreateWithoutCreatorInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  nomorSeri: string
-  tglBerakhirLisensi: Date | string
-  versiTerpasang: number
+  nomorSeri?: string | null
+  tglBerakhirLisensi?: Date | string | null
+  versiTerpasang: string
   vendor?: string | null
   inHouse?: boolean
-  kritikalitas: $Enums.KritikalitasStatus
+  kritikalitas?: $Enums.KritikalitasStatus
   hargaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan: Date | string
+  tglPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   updatedBy?: string | null
   opdId: string
   kategoriId: string
@@ -989,18 +1075,20 @@ export type SoftwareCreateWithoutUpdaterInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  nomorSeri: string
-  tglBerakhirLisensi: Date | string
-  versiTerpasang: number
+  nomorSeri?: string | null
+  tglBerakhirLisensi?: Date | string | null
+  versiTerpasang: string
   vendor?: string | null
   inHouse?: boolean
-  kritikalitas: $Enums.KritikalitasStatus
+  kritikalitas?: $Enums.KritikalitasStatus
   hargaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan: Date | string
+  tglPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  delete?: Prisma.UserCreateNestedOneWithoutDeletorSoftwareInput
   creator: Prisma.UserCreateNestedOneWithoutCreatedSoftwareInput
   opd: Prisma.OpdCreateNestedOneWithoutSoftwareInput
   kategoriSoftware: Prisma.KategoriSoftwareCreateNestedOneWithoutSoftwareInput
@@ -1011,18 +1099,20 @@ export type SoftwareUncheckedCreateWithoutUpdaterInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  nomorSeri: string
-  tglBerakhirLisensi: Date | string
-  versiTerpasang: number
+  nomorSeri?: string | null
+  tglBerakhirLisensi?: Date | string | null
+  versiTerpasang: string
   vendor?: string | null
   inHouse?: boolean
-  kritikalitas: $Enums.KritikalitasStatus
+  kritikalitas?: $Enums.KritikalitasStatus
   hargaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan: Date | string
+  tglPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   createdBy: string
   opdId: string
   kategoriId: string
@@ -1036,6 +1126,64 @@ export type SoftwareCreateOrConnectWithoutUpdaterInput = {
 
 export type SoftwareCreateManyUpdaterInputEnvelope = {
   data: Prisma.SoftwareCreateManyUpdaterInput | Prisma.SoftwareCreateManyUpdaterInput[]
+  skipDuplicates?: boolean
+}
+
+export type SoftwareCreateWithoutDeleteInput = {
+  id?: string
+  nama: string
+  jenisLisensi?: $Enums.JenisLisensi
+  nomorSeri?: string | null
+  tglBerakhirLisensi?: Date | string | null
+  versiTerpasang: string
+  vendor?: string | null
+  inHouse?: boolean
+  kritikalitas?: $Enums.KritikalitasStatus
+  hargaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tglPengadaan: Date | string
+  status?: $Enums.StatusAset
+  pic: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  creator: Prisma.UserCreateNestedOneWithoutCreatedSoftwareInput
+  updater?: Prisma.UserCreateNestedOneWithoutUpdatedSoftwareInput
+  opd: Prisma.OpdCreateNestedOneWithoutSoftwareInput
+  kategoriSoftware: Prisma.KategoriSoftwareCreateNestedOneWithoutSoftwareInput
+  hardware?: Prisma.HardwareCreateNestedOneWithoutSoftwareInput
+}
+
+export type SoftwareUncheckedCreateWithoutDeleteInput = {
+  id?: string
+  nama: string
+  jenisLisensi?: $Enums.JenisLisensi
+  nomorSeri?: string | null
+  tglBerakhirLisensi?: Date | string | null
+  versiTerpasang: string
+  vendor?: string | null
+  inHouse?: boolean
+  kritikalitas?: $Enums.KritikalitasStatus
+  hargaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tglPengadaan: Date | string
+  status?: $Enums.StatusAset
+  pic: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy: string
+  updatedBy?: string | null
+  opdId: string
+  kategoriId: string
+  hardwareTerinstall?: string | null
+}
+
+export type SoftwareCreateOrConnectWithoutDeleteInput = {
+  where: Prisma.SoftwareWhereUniqueInput
+  create: Prisma.XOR<Prisma.SoftwareCreateWithoutDeleteInput, Prisma.SoftwareUncheckedCreateWithoutDeleteInput>
+}
+
+export type SoftwareCreateManyDeleteInputEnvelope = {
+  data: Prisma.SoftwareCreateManyDeleteInput | Prisma.SoftwareCreateManyDeleteInput[]
   skipDuplicates?: boolean
 }
 
@@ -1062,18 +1210,20 @@ export type SoftwareScalarWhereInput = {
   id?: Prisma.StringFilter<"Software"> | string
   nama?: Prisma.StringFilter<"Software"> | string
   jenisLisensi?: Prisma.EnumJenisLisensiFilter<"Software"> | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringFilter<"Software"> | string
-  tglBerakhirLisensi?: Prisma.DateTimeFilter<"Software"> | Date | string
-  versiTerpasang?: Prisma.IntFilter<"Software"> | number
+  nomorSeri?: Prisma.StringNullableFilter<"Software"> | string | null
+  tglBerakhirLisensi?: Prisma.DateTimeNullableFilter<"Software"> | Date | string | null
+  versiTerpasang?: Prisma.StringFilter<"Software"> | string
   vendor?: Prisma.StringNullableFilter<"Software"> | string | null
   inHouse?: Prisma.BoolFilter<"Software"> | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusFilter<"Software"> | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalFilter<"Software"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeFilter<"Software"> | Date | string
+  tglPengadaan?: Prisma.DateTimeFilter<"Software"> | Date | string
   status?: Prisma.EnumStatusAsetFilter<"Software"> | $Enums.StatusAset
   pic?: Prisma.StringFilter<"Software"> | string
   createdAt?: Prisma.DateTimeFilter<"Software"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Software"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Software"> | Date | string | null
+  deletedBy?: Prisma.StringNullableFilter<"Software"> | string | null
   createdBy?: Prisma.StringFilter<"Software"> | string
   updatedBy?: Prisma.StringNullableFilter<"Software"> | string | null
   opdId?: Prisma.StringFilter<"Software"> | string
@@ -1097,22 +1247,40 @@ export type SoftwareUpdateManyWithWhereWithoutUpdaterInput = {
   data: Prisma.XOR<Prisma.SoftwareUpdateManyMutationInput, Prisma.SoftwareUncheckedUpdateManyWithoutUpdaterInput>
 }
 
+export type SoftwareUpsertWithWhereUniqueWithoutDeleteInput = {
+  where: Prisma.SoftwareWhereUniqueInput
+  update: Prisma.XOR<Prisma.SoftwareUpdateWithoutDeleteInput, Prisma.SoftwareUncheckedUpdateWithoutDeleteInput>
+  create: Prisma.XOR<Prisma.SoftwareCreateWithoutDeleteInput, Prisma.SoftwareUncheckedCreateWithoutDeleteInput>
+}
+
+export type SoftwareUpdateWithWhereUniqueWithoutDeleteInput = {
+  where: Prisma.SoftwareWhereUniqueInput
+  data: Prisma.XOR<Prisma.SoftwareUpdateWithoutDeleteInput, Prisma.SoftwareUncheckedUpdateWithoutDeleteInput>
+}
+
+export type SoftwareUpdateManyWithWhereWithoutDeleteInput = {
+  where: Prisma.SoftwareScalarWhereInput
+  data: Prisma.XOR<Prisma.SoftwareUpdateManyMutationInput, Prisma.SoftwareUncheckedUpdateManyWithoutDeleteInput>
+}
+
 export type SoftwareCreateWithoutOpdInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  nomorSeri: string
-  tglBerakhirLisensi: Date | string
-  versiTerpasang: number
+  nomorSeri?: string | null
+  tglBerakhirLisensi?: Date | string | null
+  versiTerpasang: string
   vendor?: string | null
   inHouse?: boolean
-  kritikalitas: $Enums.KritikalitasStatus
+  kritikalitas?: $Enums.KritikalitasStatus
   hargaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan: Date | string
+  tglPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  delete?: Prisma.UserCreateNestedOneWithoutDeletorSoftwareInput
   creator: Prisma.UserCreateNestedOneWithoutCreatedSoftwareInput
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedSoftwareInput
   kategoriSoftware: Prisma.KategoriSoftwareCreateNestedOneWithoutSoftwareInput
@@ -1123,18 +1291,20 @@ export type SoftwareUncheckedCreateWithoutOpdInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  nomorSeri: string
-  tglBerakhirLisensi: Date | string
-  versiTerpasang: number
+  nomorSeri?: string | null
+  tglBerakhirLisensi?: Date | string | null
+  versiTerpasang: string
   vendor?: string | null
   inHouse?: boolean
-  kritikalitas: $Enums.KritikalitasStatus
+  kritikalitas?: $Enums.KritikalitasStatus
   hargaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan: Date | string
+  tglPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   createdBy: string
   updatedBy?: string | null
   kategoriId: string
@@ -1171,18 +1341,20 @@ export type SoftwareCreateWithoutHardwareInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  nomorSeri: string
-  tglBerakhirLisensi: Date | string
-  versiTerpasang: number
+  nomorSeri?: string | null
+  tglBerakhirLisensi?: Date | string | null
+  versiTerpasang: string
   vendor?: string | null
   inHouse?: boolean
-  kritikalitas: $Enums.KritikalitasStatus
+  kritikalitas?: $Enums.KritikalitasStatus
   hargaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan: Date | string
+  tglPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  delete?: Prisma.UserCreateNestedOneWithoutDeletorSoftwareInput
   creator: Prisma.UserCreateNestedOneWithoutCreatedSoftwareInput
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedSoftwareInput
   opd: Prisma.OpdCreateNestedOneWithoutSoftwareInput
@@ -1193,18 +1365,20 @@ export type SoftwareUncheckedCreateWithoutHardwareInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  nomorSeri: string
-  tglBerakhirLisensi: Date | string
-  versiTerpasang: number
+  nomorSeri?: string | null
+  tglBerakhirLisensi?: Date | string | null
+  versiTerpasang: string
   vendor?: string | null
   inHouse?: boolean
-  kritikalitas: $Enums.KritikalitasStatus
+  kritikalitas?: $Enums.KritikalitasStatus
   hargaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan: Date | string
+  tglPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   createdBy: string
   updatedBy?: string | null
   opdId: string
@@ -1241,18 +1415,20 @@ export type SoftwareCreateWithoutKategoriSoftwareInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  nomorSeri: string
-  tglBerakhirLisensi: Date | string
-  versiTerpasang: number
+  nomorSeri?: string | null
+  tglBerakhirLisensi?: Date | string | null
+  versiTerpasang: string
   vendor?: string | null
   inHouse?: boolean
-  kritikalitas: $Enums.KritikalitasStatus
+  kritikalitas?: $Enums.KritikalitasStatus
   hargaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan: Date | string
+  tglPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  delete?: Prisma.UserCreateNestedOneWithoutDeletorSoftwareInput
   creator: Prisma.UserCreateNestedOneWithoutCreatedSoftwareInput
   updater?: Prisma.UserCreateNestedOneWithoutUpdatedSoftwareInput
   opd: Prisma.OpdCreateNestedOneWithoutSoftwareInput
@@ -1263,18 +1439,20 @@ export type SoftwareUncheckedCreateWithoutKategoriSoftwareInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  nomorSeri: string
-  tglBerakhirLisensi: Date | string
-  versiTerpasang: number
+  nomorSeri?: string | null
+  tglBerakhirLisensi?: Date | string | null
+  versiTerpasang: string
   vendor?: string | null
   inHouse?: boolean
-  kritikalitas: $Enums.KritikalitasStatus
+  kritikalitas?: $Enums.KritikalitasStatus
   hargaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan: Date | string
+  tglPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   createdBy: string
   updatedBy?: string | null
   opdId: string
@@ -1311,18 +1489,20 @@ export type SoftwareCreateManyCreatorInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  nomorSeri: string
-  tglBerakhirLisensi: Date | string
-  versiTerpasang: number
+  nomorSeri?: string | null
+  tglBerakhirLisensi?: Date | string | null
+  versiTerpasang: string
   vendor?: string | null
   inHouse?: boolean
-  kritikalitas: $Enums.KritikalitasStatus
+  kritikalitas?: $Enums.KritikalitasStatus
   hargaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan: Date | string
+  tglPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   updatedBy?: string | null
   opdId: string
   kategoriId: string
@@ -1333,19 +1513,45 @@ export type SoftwareCreateManyUpdaterInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  nomorSeri: string
-  tglBerakhirLisensi: Date | string
-  versiTerpasang: number
+  nomorSeri?: string | null
+  tglBerakhirLisensi?: Date | string | null
+  versiTerpasang: string
   vendor?: string | null
   inHouse?: boolean
-  kritikalitas: $Enums.KritikalitasStatus
+  kritikalitas?: $Enums.KritikalitasStatus
   hargaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan: Date | string
+  tglPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   createdBy: string
+  opdId: string
+  kategoriId: string
+  hardwareTerinstall?: string | null
+}
+
+export type SoftwareCreateManyDeleteInput = {
+  id?: string
+  nama: string
+  jenisLisensi?: $Enums.JenisLisensi
+  nomorSeri?: string | null
+  tglBerakhirLisensi?: Date | string | null
+  versiTerpasang: string
+  vendor?: string | null
+  inHouse?: boolean
+  kritikalitas?: $Enums.KritikalitasStatus
+  hargaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tglPengadaan: Date | string
+  status?: $Enums.StatusAset
+  pic: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  createdBy: string
+  updatedBy?: string | null
   opdId: string
   kategoriId: string
   hardwareTerinstall?: string | null
@@ -1355,18 +1561,20 @@ export type SoftwareUpdateWithoutCreatorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
-  tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
+  nomorSeri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tglBerakhirLisensi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  versiTerpasang?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inHouse?: Prisma.BoolFieldUpdateOperationsInput | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusFieldUpdateOperationsInput | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  delete?: Prisma.UserUpdateOneWithoutDeletorSoftwareNestedInput
   updater?: Prisma.UserUpdateOneWithoutUpdatedSoftwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutSoftwareNestedInput
   kategoriSoftware?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutSoftwareNestedInput
@@ -1377,18 +1585,20 @@ export type SoftwareUncheckedUpdateWithoutCreatorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
-  tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
+  nomorSeri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tglBerakhirLisensi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  versiTerpasang?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inHouse?: Prisma.BoolFieldUpdateOperationsInput | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusFieldUpdateOperationsInput | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1399,18 +1609,20 @@ export type SoftwareUncheckedUpdateManyWithoutCreatorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
-  tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
+  nomorSeri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tglBerakhirLisensi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  versiTerpasang?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inHouse?: Prisma.BoolFieldUpdateOperationsInput | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusFieldUpdateOperationsInput | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1421,18 +1633,20 @@ export type SoftwareUpdateWithoutUpdaterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
-  tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
+  nomorSeri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tglBerakhirLisensi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  versiTerpasang?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inHouse?: Prisma.BoolFieldUpdateOperationsInput | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusFieldUpdateOperationsInput | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  delete?: Prisma.UserUpdateOneWithoutDeletorSoftwareNestedInput
   creator?: Prisma.UserUpdateOneRequiredWithoutCreatedSoftwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutSoftwareNestedInput
   kategoriSoftware?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutSoftwareNestedInput
@@ -1443,18 +1657,20 @@ export type SoftwareUncheckedUpdateWithoutUpdaterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
-  tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
+  nomorSeri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tglBerakhirLisensi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  versiTerpasang?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inHouse?: Prisma.BoolFieldUpdateOperationsInput | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusFieldUpdateOperationsInput | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1465,19 +1681,93 @@ export type SoftwareUncheckedUpdateManyWithoutUpdaterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
-  tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
+  nomorSeri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tglBerakhirLisensi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  versiTerpasang?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inHouse?: Prisma.BoolFieldUpdateOperationsInput | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusFieldUpdateOperationsInput | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  opdId?: Prisma.StringFieldUpdateOperationsInput | string
+  kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
+  hardwareTerinstall?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type SoftwareUpdateWithoutDeleteInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nama?: Prisma.StringFieldUpdateOperationsInput | string
+  jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
+  nomorSeri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tglBerakhirLisensi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  versiTerpasang?: Prisma.StringFieldUpdateOperationsInput | string
+  vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inHouse?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  kritikalitas?: Prisma.EnumKritikalitasStatusFieldUpdateOperationsInput | $Enums.KritikalitasStatus
+  hargaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
+  pic?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  creator?: Prisma.UserUpdateOneRequiredWithoutCreatedSoftwareNestedInput
+  updater?: Prisma.UserUpdateOneWithoutUpdatedSoftwareNestedInput
+  opd?: Prisma.OpdUpdateOneRequiredWithoutSoftwareNestedInput
+  kategoriSoftware?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutSoftwareNestedInput
+  hardware?: Prisma.HardwareUpdateOneWithoutSoftwareNestedInput
+}
+
+export type SoftwareUncheckedUpdateWithoutDeleteInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nama?: Prisma.StringFieldUpdateOperationsInput | string
+  jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
+  nomorSeri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tglBerakhirLisensi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  versiTerpasang?: Prisma.StringFieldUpdateOperationsInput | string
+  vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inHouse?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  kritikalitas?: Prisma.EnumKritikalitasStatusFieldUpdateOperationsInput | $Enums.KritikalitasStatus
+  hargaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
+  pic?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  opdId?: Prisma.StringFieldUpdateOperationsInput | string
+  kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
+  hardwareTerinstall?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type SoftwareUncheckedUpdateManyWithoutDeleteInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nama?: Prisma.StringFieldUpdateOperationsInput | string
+  jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
+  nomorSeri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tglBerakhirLisensi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  versiTerpasang?: Prisma.StringFieldUpdateOperationsInput | string
+  vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inHouse?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  kritikalitas?: Prisma.EnumKritikalitasStatusFieldUpdateOperationsInput | $Enums.KritikalitasStatus
+  hargaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
+  pic?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
   hardwareTerinstall?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1487,18 +1777,20 @@ export type SoftwareCreateManyOpdInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  nomorSeri: string
-  tglBerakhirLisensi: Date | string
-  versiTerpasang: number
+  nomorSeri?: string | null
+  tglBerakhirLisensi?: Date | string | null
+  versiTerpasang: string
   vendor?: string | null
   inHouse?: boolean
-  kritikalitas: $Enums.KritikalitasStatus
+  kritikalitas?: $Enums.KritikalitasStatus
   hargaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan: Date | string
+  tglPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   createdBy: string
   updatedBy?: string | null
   kategoriId: string
@@ -1509,18 +1801,20 @@ export type SoftwareUpdateWithoutOpdInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
-  tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
+  nomorSeri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tglBerakhirLisensi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  versiTerpasang?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inHouse?: Prisma.BoolFieldUpdateOperationsInput | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusFieldUpdateOperationsInput | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  delete?: Prisma.UserUpdateOneWithoutDeletorSoftwareNestedInput
   creator?: Prisma.UserUpdateOneRequiredWithoutCreatedSoftwareNestedInput
   updater?: Prisma.UserUpdateOneWithoutUpdatedSoftwareNestedInput
   kategoriSoftware?: Prisma.KategoriSoftwareUpdateOneRequiredWithoutSoftwareNestedInput
@@ -1531,18 +1825,20 @@ export type SoftwareUncheckedUpdateWithoutOpdInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
-  tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
+  nomorSeri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tglBerakhirLisensi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  versiTerpasang?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inHouse?: Prisma.BoolFieldUpdateOperationsInput | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusFieldUpdateOperationsInput | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1553,18 +1849,20 @@ export type SoftwareUncheckedUpdateManyWithoutOpdInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
-  tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
+  nomorSeri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tglBerakhirLisensi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  versiTerpasang?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inHouse?: Prisma.BoolFieldUpdateOperationsInput | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusFieldUpdateOperationsInput | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   kategoriId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1575,18 +1873,20 @@ export type SoftwareCreateManyHardwareInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  nomorSeri: string
-  tglBerakhirLisensi: Date | string
-  versiTerpasang: number
+  nomorSeri?: string | null
+  tglBerakhirLisensi?: Date | string | null
+  versiTerpasang: string
   vendor?: string | null
   inHouse?: boolean
-  kritikalitas: $Enums.KritikalitasStatus
+  kritikalitas?: $Enums.KritikalitasStatus
   hargaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan: Date | string
+  tglPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   createdBy: string
   updatedBy?: string | null
   opdId: string
@@ -1597,18 +1897,20 @@ export type SoftwareUpdateWithoutHardwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
-  tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
+  nomorSeri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tglBerakhirLisensi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  versiTerpasang?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inHouse?: Prisma.BoolFieldUpdateOperationsInput | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusFieldUpdateOperationsInput | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  delete?: Prisma.UserUpdateOneWithoutDeletorSoftwareNestedInput
   creator?: Prisma.UserUpdateOneRequiredWithoutCreatedSoftwareNestedInput
   updater?: Prisma.UserUpdateOneWithoutUpdatedSoftwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutSoftwareNestedInput
@@ -1619,18 +1921,20 @@ export type SoftwareUncheckedUpdateWithoutHardwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
-  tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
+  nomorSeri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tglBerakhirLisensi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  versiTerpasang?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inHouse?: Prisma.BoolFieldUpdateOperationsInput | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusFieldUpdateOperationsInput | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1641,18 +1945,20 @@ export type SoftwareUncheckedUpdateManyWithoutHardwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
-  tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
+  nomorSeri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tglBerakhirLisensi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  versiTerpasang?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inHouse?: Prisma.BoolFieldUpdateOperationsInput | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusFieldUpdateOperationsInput | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1663,18 +1969,20 @@ export type SoftwareCreateManyKategoriSoftwareInput = {
   id?: string
   nama: string
   jenisLisensi?: $Enums.JenisLisensi
-  nomorSeri: string
-  tglBerakhirLisensi: Date | string
-  versiTerpasang: number
+  nomorSeri?: string | null
+  tglBerakhirLisensi?: Date | string | null
+  versiTerpasang: string
   vendor?: string | null
   inHouse?: boolean
-  kritikalitas: $Enums.KritikalitasStatus
+  kritikalitas?: $Enums.KritikalitasStatus
   hargaPerolehan: runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan: Date | string
+  tglPengadaan: Date | string
   status?: $Enums.StatusAset
   pic: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  deletedBy?: string | null
   createdBy: string
   updatedBy?: string | null
   opdId: string
@@ -1685,18 +1993,20 @@ export type SoftwareUpdateWithoutKategoriSoftwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
-  tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
+  nomorSeri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tglBerakhirLisensi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  versiTerpasang?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inHouse?: Prisma.BoolFieldUpdateOperationsInput | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusFieldUpdateOperationsInput | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  delete?: Prisma.UserUpdateOneWithoutDeletorSoftwareNestedInput
   creator?: Prisma.UserUpdateOneRequiredWithoutCreatedSoftwareNestedInput
   updater?: Prisma.UserUpdateOneWithoutUpdatedSoftwareNestedInput
   opd?: Prisma.OpdUpdateOneRequiredWithoutSoftwareNestedInput
@@ -1707,18 +2017,20 @@ export type SoftwareUncheckedUpdateWithoutKategoriSoftwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
-  tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
+  nomorSeri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tglBerakhirLisensi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  versiTerpasang?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inHouse?: Prisma.BoolFieldUpdateOperationsInput | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusFieldUpdateOperationsInput | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1729,18 +2041,20 @@ export type SoftwareUncheckedUpdateManyWithoutKategoriSoftwareInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama?: Prisma.StringFieldUpdateOperationsInput | string
   jenisLisensi?: Prisma.EnumJenisLisensiFieldUpdateOperationsInput | $Enums.JenisLisensi
-  nomorSeri?: Prisma.StringFieldUpdateOperationsInput | string
-  tglBerakhirLisensi?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  versiTerpasang?: Prisma.IntFieldUpdateOperationsInput | number
+  nomorSeri?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tglBerakhirLisensi?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  versiTerpasang?: Prisma.StringFieldUpdateOperationsInput | string
   vendor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   inHouse?: Prisma.BoolFieldUpdateOperationsInput | boolean
   kritikalitas?: Prisma.EnumKritikalitasStatusFieldUpdateOperationsInput | $Enums.KritikalitasStatus
   hargaPerolehan?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tahunPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tglPengadaan?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusAsetFieldUpdateOperationsInput | $Enums.StatusAset
   pic?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opdId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1760,16 +2074,19 @@ export type SoftwareSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   inHouse?: boolean
   kritikalitas?: boolean
   hargaPerolehan?: boolean
-  tahunPengadaan?: boolean
+  tglPengadaan?: boolean
   status?: boolean
   pic?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   createdBy?: boolean
   updatedBy?: boolean
   opdId?: boolean
   kategoriId?: boolean
   hardwareTerinstall?: boolean
+  delete?: boolean | Prisma.Software$deleteArgs<ExtArgs>
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updater?: boolean | Prisma.Software$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
@@ -1788,16 +2105,19 @@ export type SoftwareSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   inHouse?: boolean
   kritikalitas?: boolean
   hargaPerolehan?: boolean
-  tahunPengadaan?: boolean
+  tglPengadaan?: boolean
   status?: boolean
   pic?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   createdBy?: boolean
   updatedBy?: boolean
   opdId?: boolean
   kategoriId?: boolean
   hardwareTerinstall?: boolean
+  delete?: boolean | Prisma.Software$deleteArgs<ExtArgs>
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updater?: boolean | Prisma.Software$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
@@ -1816,16 +2136,19 @@ export type SoftwareSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   inHouse?: boolean
   kritikalitas?: boolean
   hargaPerolehan?: boolean
-  tahunPengadaan?: boolean
+  tglPengadaan?: boolean
   status?: boolean
   pic?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   createdBy?: boolean
   updatedBy?: boolean
   opdId?: boolean
   kategoriId?: boolean
   hardwareTerinstall?: boolean
+  delete?: boolean | Prisma.Software$deleteArgs<ExtArgs>
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updater?: boolean | Prisma.Software$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
@@ -1844,11 +2167,13 @@ export type SoftwareSelectScalar = {
   inHouse?: boolean
   kritikalitas?: boolean
   hargaPerolehan?: boolean
-  tahunPengadaan?: boolean
+  tglPengadaan?: boolean
   status?: boolean
   pic?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  deletedAt?: boolean
+  deletedBy?: boolean
   createdBy?: boolean
   updatedBy?: boolean
   opdId?: boolean
@@ -1856,8 +2181,9 @@ export type SoftwareSelectScalar = {
   hardwareTerinstall?: boolean
 }
 
-export type SoftwareOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nama" | "jenisLisensi" | "nomorSeri" | "tglBerakhirLisensi" | "versiTerpasang" | "vendor" | "inHouse" | "kritikalitas" | "hargaPerolehan" | "tahunPengadaan" | "status" | "pic" | "createdAt" | "updatedAt" | "createdBy" | "updatedBy" | "opdId" | "kategoriId" | "hardwareTerinstall", ExtArgs["result"]["software"]>
+export type SoftwareOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nama" | "jenisLisensi" | "nomorSeri" | "tglBerakhirLisensi" | "versiTerpasang" | "vendor" | "inHouse" | "kritikalitas" | "hargaPerolehan" | "tglPengadaan" | "status" | "pic" | "createdAt" | "updatedAt" | "deletedAt" | "deletedBy" | "createdBy" | "updatedBy" | "opdId" | "kategoriId" | "hardwareTerinstall", ExtArgs["result"]["software"]>
 export type SoftwareInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  delete?: boolean | Prisma.Software$deleteArgs<ExtArgs>
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updater?: boolean | Prisma.Software$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
@@ -1865,6 +2191,7 @@ export type SoftwareInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   hardware?: boolean | Prisma.Software$hardwareArgs<ExtArgs>
 }
 export type SoftwareIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  delete?: boolean | Prisma.Software$deleteArgs<ExtArgs>
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updater?: boolean | Prisma.Software$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
@@ -1872,6 +2199,7 @@ export type SoftwareIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   hardware?: boolean | Prisma.Software$hardwareArgs<ExtArgs>
 }
 export type SoftwareIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  delete?: boolean | Prisma.Software$deleteArgs<ExtArgs>
   creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updater?: boolean | Prisma.Software$updaterArgs<ExtArgs>
   opd?: boolean | Prisma.OpdDefaultArgs<ExtArgs>
@@ -1882,6 +2210,7 @@ export type SoftwareIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type $SoftwarePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Software"
   objects: {
+    delete: Prisma.$UserPayload<ExtArgs> | null
     creator: Prisma.$UserPayload<ExtArgs>
     updater: Prisma.$UserPayload<ExtArgs> | null
     opd: Prisma.$OpdPayload<ExtArgs>
@@ -1892,18 +2221,20 @@ export type $SoftwarePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     id: string
     nama: string
     jenisLisensi: $Enums.JenisLisensi
-    nomorSeri: string
-    tglBerakhirLisensi: Date
-    versiTerpasang: number
+    nomorSeri: string | null
+    tglBerakhirLisensi: Date | null
+    versiTerpasang: string
     vendor: string | null
     inHouse: boolean
     kritikalitas: $Enums.KritikalitasStatus
     hargaPerolehan: runtime.Decimal
-    tahunPengadaan: Date
+    tglPengadaan: Date
     status: $Enums.StatusAset
     pic: string
     createdAt: Date
     updatedAt: Date
+    deletedAt: Date | null
+    deletedBy: string | null
     createdBy: string
     updatedBy: string | null
     opdId: string
@@ -2303,6 +2634,7 @@ readonly fields: SoftwareFieldRefs;
  */
 export interface Prisma__SoftwareClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  delete<T extends Prisma.Software$deleteArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Software$deleteArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   creator<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   updater<T extends Prisma.Software$updaterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Software$updaterArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   opd<T extends Prisma.OpdDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OpdDefaultArgs<ExtArgs>>): Prisma.Prisma__OpdClient<runtime.Types.Result.GetResult<Prisma.$OpdPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -2342,16 +2674,18 @@ export interface SoftwareFieldRefs {
   readonly jenisLisensi: Prisma.FieldRef<"Software", 'JenisLisensi'>
   readonly nomorSeri: Prisma.FieldRef<"Software", 'String'>
   readonly tglBerakhirLisensi: Prisma.FieldRef<"Software", 'DateTime'>
-  readonly versiTerpasang: Prisma.FieldRef<"Software", 'Int'>
+  readonly versiTerpasang: Prisma.FieldRef<"Software", 'String'>
   readonly vendor: Prisma.FieldRef<"Software", 'String'>
   readonly inHouse: Prisma.FieldRef<"Software", 'Boolean'>
   readonly kritikalitas: Prisma.FieldRef<"Software", 'KritikalitasStatus'>
   readonly hargaPerolehan: Prisma.FieldRef<"Software", 'Decimal'>
-  readonly tahunPengadaan: Prisma.FieldRef<"Software", 'DateTime'>
+  readonly tglPengadaan: Prisma.FieldRef<"Software", 'DateTime'>
   readonly status: Prisma.FieldRef<"Software", 'StatusAset'>
   readonly pic: Prisma.FieldRef<"Software", 'String'>
   readonly createdAt: Prisma.FieldRef<"Software", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Software", 'DateTime'>
+  readonly deletedAt: Prisma.FieldRef<"Software", 'DateTime'>
+  readonly deletedBy: Prisma.FieldRef<"Software", 'String'>
   readonly createdBy: Prisma.FieldRef<"Software", 'String'>
   readonly updatedBy: Prisma.FieldRef<"Software", 'String'>
   readonly opdId: Prisma.FieldRef<"Software", 'String'>
@@ -2750,6 +3084,25 @@ export type SoftwareDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Software to delete.
    */
   limit?: number
+}
+
+/**
+ * Software.delete
+ */
+export type Software$deleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**
