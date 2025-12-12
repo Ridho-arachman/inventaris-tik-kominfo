@@ -1,7 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useDebounce } from "use-debounce";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -14,15 +15,24 @@ import {
 } from "@/components/ui/dialog";
 import { motion } from "framer-motion";
 import {
-  ArrowLeft,
-  SlidersHorizontal,
-  Plus,
-  Package,
-  Eye,
   Pencil,
   Trash,
+  Plus,
+  Cpu,
+  Eye,
+  ArrowLeft,
+  SlidersHorizontal,
 } from "lucide-react";
 import Link from "next/link";
+import { useDelete, useGet } from "@/hooks/useApi";
+import {
+  Hardware,
+  KategoriHardware,
+  KategoriSoftware,
+  Opd,
+  Software,
+} from "@/generated/client";
+// import { Select } from "react-day-picker";
 import {
   Select,
   SelectContent,
@@ -30,6 +40,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { AxiosError } from "axios";
+import { ApiError } from "@/types/ApiError";
+import { notifier } from "@/components/ToastNotifier";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -41,441 +54,141 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Badge } from "@/components/ui/badge";
 
-import { notifier } from "@/components/ToastNotifier";
+type SoftwareRes = Software & {
+  hardware: Hardware;
+  kategoriSoftware: KategoriSoftware;
+  opd: Opd;
+};
 
-// ✅ Dummy data (tidak berubah)
-const DUMMY_SOFTWARE = [
-  {
-    id: "sw-001",
-    nama: "Microsoft Windows 11 Pro",
-    jenisLisensi: "PERPETUAL" as const,
-    nomorSeri: "XXXXX-XXXXX-XXXXX-XXXXX-XXXXX",
-    tglBerakhirLisensi: "2030-12-31",
-    versiTerpasang: 22621,
-    vendor: "Microsoft",
-    inHouse: false,
-    kritikalitas: "TINGGI" as const,
-    hargaPerolehan: "2500000",
-    tahunPengadaan: "2023-08-15",
-    status: "AKTIF" as const,
-    pic: "Ahmad Fauzi",
-    opd: { id: "opd-01", nama: "Dinas Kominfo" },
-    kategoriSoftware: { id: "kat-01", nama: "Sistem Operasi" },
-    hardware: { id: "hw-101", nama: "Laptop Dell Latitude 5420" },
-    createdAt: "2023-08-15T07:00:00Z",
-    updatedAt: "2024-01-20T09:15:00Z",
-  },
-  {
-    id: "sw-002",
-    nama: "Microsoft Office 365",
-    jenisLisensi: "LANGGANAN" as const,
-    nomorSeri: "O365-2025-ABCD-1234",
-    tglBerakhirLisensi: "2025-12-31",
-    versiTerpasang: 2412,
-    vendor: "Microsoft",
-    inHouse: false,
-    kritikalitas: "SEDANG" as const,
-    hargaPerolehan: "1200000",
-    tahunPengadaan: "2024-01-10",
-    status: "AKTIF" as const,
-    pic: "Siti Rahayu",
-    opd: { id: "opd-01", nama: "Dinas Kominfo" },
-    kategoriSoftware: { id: "kat-02", nama: "Produktivitas" },
-    hardware: null,
-    createdAt: "2024-01-10T10:30:00Z",
-    updatedAt: "2024-01-10T10:30:00Z",
-  },
-  {
-    id: "sw-003",
-    nama: "ESET Endpoint Antivirus",
-    jenisLisensi: "LANGGANAN" as const,
-    nomorSeri: "ESET-ANTV-2026-XYZ",
-    tglBerakhirLisensi: "2026-03-31",
-    versiTerpasang: 9,
-    vendor: "ESET",
-    inHouse: false,
-    kritikalitas: "TINGGI" as const,
-    hargaPerolehan: "450000",
-    tahunPengadaan: "2024-02-01",
-    status: "AKTIF" as const,
-    pic: "Budi Santoso",
-    opd: { id: "opd-01", nama: "Dinas Kominfo" },
-    kategoriSoftware: { id: "kat-03", nama: "Keamanan" },
-    hardware: { id: "hw-102", nama: "PC Desktop Lenovo" },
-    createdAt: "2024-02-01T08:45:00Z",
-    updatedAt: "2024-02-01T08:45:00Z",
-  },
-  {
-    id: "sw-004",
-    nama: "Sistem Inventory Internal",
-    jenisLisensi: "OPEN_SOURCE" as const,
-    nomorSeri: "-",
-    tglBerakhirLisensi: "9999-12-31",
-    versiTerpasang: 2,
-    vendor: null,
-    inHouse: true,
-    kritikalitas: "TINGGI" as const,
-    hargaPerolehan: "0",
-    tahunPengadaan: "2023-05-20",
-    status: "AKTIF" as const,
-    pic: "Umar Usmanis",
-    opd: { id: "opd-01", nama: "Dinas Kominfo" },
-    kategoriSoftware: { id: "kat-04", nama: "Aplikasi Internal" },
-    hardware: { id: "hw-103", nama: "Server Dell R740" },
-    createdAt: "2023-05-20T14:20:00Z",
-    updatedAt: "2024-03-10T11:00:00Z",
-  },
-  {
-    id: "sw-005",
-    nama: "Adobe Photoshop CC",
-    jenisLisensi: "LANGGANAN" as const,
-    nomorSeri: "ADBE-PHSP-2025-7890",
-    tglBerakhirLisensi: "2025-06-30",
-    versiTerpasang: 25,
-    vendor: "Adobe",
-    inHouse: false,
-    kritikalitas: "RENDAH" as const,
-    hargaPerolehan: "950000",
-    tahunPengadaan: "2024-04-05",
-    status: "AKTIF" as const,
-    pic: "Dewi Lestari",
-    opd: { id: "opd-01", nama: "Dinas Kominfo" },
-    kategoriSoftware: { id: "kat-05", nama: "Desain & Multimedia" },
-    hardware: { id: "hw-104", nama: "Workstation HP Z4" },
-    createdAt: "2024-04-05T09:10:00Z",
-    updatedAt: "2024-04-05T09:10:00Z",
-  },
-  {
-    id: "sw-006",
-    nama: "MySQL Community Server",
-    jenisLisensi: "OPEN_SOURCE" as const,
-    nomorSeri: "-",
-    tglBerakhirLisensi: "9999-12-31",
-    versiTerpasang: 80033,
-    vendor: "Oracle",
-    inHouse: false,
-    kritikalitas: "TINGGI" as const,
-    hargaPerolehan: "0",
-    tahunPengadaan: "2022-11-12",
-    status: "AKTIF" as const,
-    pic: "Umar Usmanis",
-    opd: { id: "opd-01", nama: "Dinas Kominfo" },
-    kategoriSoftware: { id: "kat-06", nama: "Database" },
-    hardware: { id: "hw-103", nama: "Server Dell R740" },
-    createdAt: "2022-11-12T16:30:00Z",
-    updatedAt: "2022-11-12T16:30:00Z",
-  },
-  {
-    id: "sw-007",
-    nama: "Windows Server 2022",
-    jenisLisensi: "PERPETUAL" as const,
-    nomorSeri: "WS22-STD-XXXX-YYYY-ZZZZ",
-    tglBerakhirLisensi: "2035-12-31",
-    versiTerpasang: 20348,
-    vendor: "Microsoft",
-    inHouse: false,
-    kritikalitas: "TINGGI" as const,
-    hargaPerolehan: "8500000",
-    tahunPengadaan: "2023-02-18",
-    status: "AKTIF" as const,
-    pic: "Ahmad Fauzi",
-    opd: { id: "opd-01", nama: "Dinas Kominfo" },
-    kategoriSoftware: { id: "kat-01", nama: "Sistem Operasi" },
-    hardware: { id: "hw-105", nama: "Server HPE ProLiant" },
-    createdAt: "2023-02-18T11:20:00Z",
-    updatedAt: "2023-02-18T11:20:00Z",
-  },
-  {
-    id: "sw-008",
-    nama: "Notepad++",
-    jenisLisensi: "OPEN_SOURCE" as const,
-    nomorSeri: "-",
-    tglBerakhirLisensi: "9999-12-31",
-    versiTerpasang: 864,
-    vendor: null,
-    inHouse: false,
-    kritikalitas: "RENDAH" as const,
-    hargaPerolehan: "0",
-    tahunPengadaan: "2021-07-30",
-    status: "AKTIF" as const,
-    pic: "Umar Usmanis",
-    opd: { id: "opd-01", nama: "Dinas Kominfo" },
-    kategoriSoftware: { id: "kat-07", nama: "Utilitas" },
-    hardware: { id: "hw-101", nama: "Laptop Dell Latitude 5420" },
-    createdAt: "2021-07-30T15:45:00Z",
-    updatedAt: "2021-07-30T15:45:00Z",
-  },
-  {
-    id: "sw-009",
-    nama: "Laporan Bulanan (Template)",
-    jenisLisensi: "OPEN_SOURCE" as const,
-    nomorSeri: "-",
-    tglBerakhirLisensi: "9999-12-31",
-    versiTerpasang: 1,
-    vendor: null,
-    inHouse: true,
-    kritikalitas: "RENDAH" as const,
-    hargaPerolehan: "0",
-    tahunPengadaan: "2024-01-01",
-    status: "NON_AKTIF" as const,
-    pic: "Siti Rahayu",
-    opd: { id: "opd-01", nama: "Dinas Kominfo" },
-    kategoriSoftware: { id: "kat-04", nama: "Aplikasi Internal" },
-    hardware: null,
-    createdAt: "2024-01-01T00:00:00Z",
-    updatedAt: "2024-05-01T12:00:00Z",
-  },
-  {
-    id: "sw-010",
-    nama: "Zoom Workplace",
-    jenisLisensi: "LANGGANAN" as const,
-    nomorSeri: "ZOOM-PRO-2025-ABCD",
-    tglBerakhirLisensi: "2025-10-15",
-    versiTerpasang: 6050,
-    vendor: "Zoom",
-    inHouse: false,
-    kritikalitas: "SEDANG" as const,
-    hargaPerolehan: "300000",
-    tahunPengadaan: "2024-03-20",
-    status: "AKTIF" as const,
-    pic: "Budi Santoso",
-    opd: { id: "opd-01", nama: "Dinas Kominfo" },
-    kategoriSoftware: { id: "kat-08", nama: "Komunikasi" },
-    hardware: null,
-    createdAt: "2024-03-20T10:00:00Z",
-    updatedAt: "2024-03-20T10:00:00Z",
-  },
-  {
-    id: "sw-011",
-    nama: "Postman",
-    jenisLisensi: "OPEN_SOURCE" as const,
-    nomorSeri: "-",
-    tglBerakhirLisensi: "9999-12-31",
-    versiTerpasang: 1025,
-    vendor: "Postman Inc",
-    inHouse: false,
-    kritikalitas: "RENDAH" as const,
-    hargaPerolehan: "0",
-    tahunPengadaan: "2023-09-12",
-    status: "AKTIF" as const,
-    pic: "Umar Usmanis",
-    opd: { id: "opd-01", nama: "Dinas Kominfo" },
-    kategoriSoftware: { id: "kat-07", nama: "Utilitas" },
-    hardware: { id: "hw-101", nama: "Laptop Dell Latitude 5420" },
-    createdAt: "2023-09-12T14:15:00Z",
-    updatedAt: "2023-09-12T14:15:00Z",
-  },
-  {
-    id: "sw-012",
-    nama: "Visual Studio Code",
-    jenisLisensi: "OPEN_SOURCE" as const,
-    nomorSeri: "-",
-    tglBerakhirLisensi: "9999-12-31",
-    versiTerpasang: 189,
-    vendor: "Microsoft",
-    inHouse: false,
-    kritikalitas: "RENDAH" as const,
-    hargaPerolehan: "0",
-    tahunPengadaan: "2022-05-05",
-    status: "AKTIF" as const,
-    pic: "Umar Usmanis",
-    opd: { id: "opd-01", nama: "Dinas Kominfo" },
-    kategoriSoftware: { id: "kat-07", nama: "Utilitas" },
-    hardware: { id: "hw-101", nama: "Laptop Dell Latitude 5420" },
-    createdAt: "2022-05-05T09:30:00Z",
-    updatedAt: "2022-05-05T09:30:00Z",
-  },
-  {
-    id: "sw-013",
-    nama: "Sistem Pelaporan SIMDA",
-    jenisLisensi: "PERPETUAL" as const,
-    nomorSeri: "SIMDA-BRG-2020-001",
-    tglBerakhirLisensi: "2040-12-31",
-    versiTerpasang: 4,
-    vendor: "BPKP",
-    inHouse: false,
-    kritikalitas: "TINGGI" as const,
-    hargaPerolehan: "15000000",
-    tahunPengadaan: "2020-12-01",
-    status: "NON_AKTIF" as const,
-    pic: "Ahmad Fauzi",
-    opd: { id: "opd-01", nama: "Dinas Kominfo" },
-    kategoriSoftware: { id: "kat-04", nama: "Aplikasi Internal" },
-    hardware: { id: "hw-106", nama: "Server Backup" },
-    createdAt: "2020-12-01T00:00:00Z",
-    updatedAt: "2024-05-01T12:00:00Z",
-  },
-  {
-    id: "sw-014",
-    nama: "GIMP",
-    jenisLisensi: "OPEN_SOURCE" as const,
-    nomorSeri: "-",
-    tglBerakhirLisensi: "9999-12-31",
-    versiTerpasang: 210,
-    vendor: null,
-    inHouse: false,
-    kritikalitas: "RENDAH" as const,
-    hargaPerolehan: "0",
-    tahunPengadaan: "2023-10-10",
-    status: "AKTIF" as const,
-    pic: "Dewi Lestari",
-    opd: { id: "opd-01", nama: "Dinas Kominfo" },
-    kategoriSoftware: { id: "kat-05", nama: "Desain & Multimedia" },
-    hardware: { id: "hw-104", nama: "Workstation HP Z4" },
-    createdAt: "2023-10-10T13:20:00Z",
-    updatedAt: "2023-10-10T13:20:00Z",
-  },
-  {
-    id: "sw-015",
-    nama: "Node.js",
-    jenisLisensi: "OPEN_SOURCE" as const,
-    nomorSeri: "-",
-    tglBerakhirLisensi: "9999-12-31",
-    versiTerpasang: 20,
-    vendor: "OpenJS Foundation",
-    inHouse: false,
-    kritikalitas: "SEDANG" as const,
-    hargaPerolehan: "0",
-    tahunPengadaan: "2024-02-28",
-    status: "AKTIF" as const,
-    pic: "Umar Usmanis",
-    opd: { id: "opd-01", nama: "Dinas Kominfo" },
-    kategoriSoftware: { id: "kat-07", nama: "Utilitas" },
-    hardware: { id: "hw-101", nama: "Laptop Dell Latitude 5420" },
-    createdAt: "2024-02-28T16:40:00Z",
-    updatedAt: "2024-02-28T16:40:00Z",
-  },
-];
-
-const DUMMY_KATEGORI: { id: string; nama: string }[] = [
-  { id: "kat-01", nama: "Sistem Operasi" },
-  { id: "kat-02", nama: "Produktivitas" },
-  { id: "kat-03", nama: "Keamanan" },
-  { id: "kat-04", nama: "Aplikasi Internal" },
-  { id: "kat-05", nama: "Desain & Multimedia" },
-  { id: "kat-06", nama: "Database" },
-  { id: "kat-07", nama: "Utilitas" },
-  { id: "kat-08", nama: "Komunikasi" },
-];
-
-// ✅ Dummy OPD — dimasukkan ke filter
-const DUMMY_OPD: { id: string; nama: string }[] = [
-  { id: "opd-01", nama: "Dinas Kominfo" },
-  { id: "opd-02", nama: "Dinas Pendidikan" },
-  { id: "opd-03", nama: "Dinas Kesehatan" },
-  { id: "opd-04", nama: "Dinas PU" },
-  { id: "opd-05", nama: "Dinas Perhubungan" },
-];
-
-export type Software = (typeof DUMMY_SOFTWARE)[0];
-
-export default function SoftwareListPage() {
+export default function HardwareListPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  // ✅ Controlled state — semua string kosong (bukan undefined)
   const [searchNama, setSearchNama] = useState("");
   const [jenisLisensi, setJenisLisensi] = useState("");
+  const [kategori, setKategori] = useState("");
   const [kritikalitas, setKritikalitas] = useState("");
   const [status, setStatus] = useState("");
   const [tahun, setTahun] = useState("");
   const [pic, setPic] = useState("");
-  const [opdId, setOpdId] = useState(""); // ✅ dikembalikan
-  const [kategoriId, setKategoriId] = useState("");
+  const [opdId, setOpdId] = useState("");
 
   const [page, setPage] = useState(1);
-  const limit = 5;
+  const limit = 10;
+
   const [openFilter, setOpenFilter] = useState(false);
 
-  // ✅ Filter lokal — termasuk opdId
-  const filteredSoftware = useMemo(() => {
-    return DUMMY_SOFTWARE.filter((sw) => {
-      if (searchNama) {
-        const term = searchNama.toLowerCase();
-        if (
-          !sw.nama.toLowerCase().includes(term) &&
-          !sw.nomorSeri.toLowerCase().includes(term)
-        )
-          return false;
-      }
-      if (
-        jenisLisensi &&
-        jenisLisensi !== "ALL" &&
-        sw.jenisLisensi !== jenisLisensi
-      )
-        return false;
-      if (
-        kritikalitas &&
-        kritikalitas !== "ALL" &&
-        sw.kritikalitas !== kritikalitas
-      )
-        return false;
-      if (status && status !== "ALL" && sw.status !== status) return false;
-      if (pic && !sw.pic.toLowerCase().includes(pic.toLowerCase()))
-        return false;
-      if (
-        kategoriId &&
-        kategoriId !== "ALL" &&
-        sw.kategoriSoftware.id !== kategoriId
-      )
-        return false;
-      if (opdId && opdId !== "ALL" && sw.opd.id !== opdId) return false;
-      if (
-        tahun &&
-        new Date(sw.tahunPengadaan).getFullYear().toString() !== tahun
-      )
-        return false;
-      return true;
-    });
+  const [debouncedNama] = useDebounce(searchNama, 500);
+
+  useEffect(() => {
+    if (!searchParams) return;
+
+    const qNama = searchParams.get("q") ?? "";
+    const qKritikalitas = searchParams.get("kritikalitas") ?? "";
+    const qJenisLisensi = searchParams.get("jenisLisensi") ?? "";
+    const qKategori = searchParams.get("kategori") ?? "";
+    const qStatus = searchParams.get("status") ?? "";
+    const qTahun = searchParams.get("tahun") ?? "";
+    const qPic = searchParams.get("pic") ?? "";
+    const qOpd = searchParams.get("opdId") ?? "";
+    const qPage = parseInt(searchParams.get("page") ?? "1", 10);
+
+    setSearchNama((prev) => (prev === qNama ? prev : qNama));
+    setKritikalitas((prev) => (prev === qKritikalitas ? prev : qKritikalitas));
+    setJenisLisensi((prev) => (prev === qJenisLisensi ? prev : qJenisLisensi));
+    setKategori((prev) => (prev === qKategori ? prev : qKategori));
+    setStatus((prev) => (prev === qStatus ? prev : qStatus));
+    setTahun((prev) => (prev === qTahun ? prev : qTahun));
+    setPic((prev) => (prev === qPic ? prev : qPic));
+    setOpdId((prev) => (prev === qOpd ? prev : qOpd));
+    setPage((prev) => (prev === qPage ? prev : qPage));
+  }, [searchParams]);
+
+  const queryString = useMemo(() => {
+    const params = new URLSearchParams();
+
+    if (debouncedNama) params.set("q", debouncedNama);
+
+    if (kritikalitas) params.set("kritikalitas", kritikalitas);
+    if (jenisLisensi) params.set("jenisLisensi", jenisLisensi);
+    if (kategori) params.set("kategori", kategori);
+    if (status) params.set("status", status);
+    if (tahun) params.set("tahun", tahun);
+    if (pic) params.set("pic", pic);
+    if (opdId) params.set("opdId", opdId);
+
+    params.set("page", String(page || 1));
+    params.set("limit", String(limit));
+
+    return params.toString();
   }, [
-    searchNama,
+    debouncedNama,
     jenisLisensi,
+    kategori,
     kritikalitas,
     status,
+    tahun,
     pic,
     opdId,
-    kategoriId,
-    tahun,
+    page,
+    limit,
   ]);
 
-  const totalPages = Math.ceil(filteredSoftware.length / limit);
-  const paginatedSoftware = filteredSoftware.slice(
-    (page - 1) * limit,
-    page * limit
-  );
+  useEffect(() => {
+    const base = "/admin/manage-asset/opd-software";
+    const newPath = queryString ? `${base}?${queryString}` : base;
 
-  const summary = {
-    total: filteredSoftware.length,
-    aktif: filteredSoftware.filter((sw) => sw.status === "AKTIF").length,
-    nonAktif: filteredSoftware.filter((sw) => sw.status === "NON_AKTIF").length,
+    router.replace(newPath);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [queryString]);
+
+  const fetchUrl = `/software${queryString ? `?${queryString}` : ""}`;
+  const { data, error, isLoading, mutate } = useGet(fetchUrl);
+  const { data: opdData } = useGet("/opd");
+  const { data: kategoriData } = useGet("/software/kategori");
+  const { del } = useDelete();
+
+  const software: SoftwareRes[] = (data?.software as SoftwareRes[]) ?? [];
+  const pagination = data?.pagination ?? {
+    page: 1,
+    limit,
+    totalItems: 0,
+    totalPages: 1,
   };
+  const summary = data?.summary ?? { total: 0, aktif: 0, nonAktif: 0 };
 
   const tahunList = Array.from(
     new Set(
-      DUMMY_SOFTWARE.map((sw) =>
-        new Date(sw.tahunPengadaan).getFullYear()
-      ).filter((y) => y > 0)
+      software.map((sw) => (sw ? new Date(sw.tglPengadaan).getFullYear() : 0))
     )
-  ).sort((a, b) => b - a);
+  )
+    .filter((y) => y !== 0)
+    .sort((a, b) => b - a);
 
-  const goPrev = () => setPage(Math.max(1, page - 1));
-  const goNext = () => setPage(Math.min(totalPages, page + 1));
+  useEffect(() => {
+    setPage((cur) => (cur === 1 ? cur : 1));
+  }, [debouncedNama, jenisLisensi, kategori, status, tahun, pic, opdId]);
 
-  const handleDelete = async (id: string, nama: string) => {
-    setTimeout(() => {
-      notifier.success(`Software "${nama}" berhasil diarsipkan`);
-    }, 300);
-  };
+  const goPrev = () => setPage((p) => Math.max(1, p - 1));
+  const goNext = () =>
+    setPage((p) => Math.min(pagination?.totalPages ?? 1, p + 1));
 
-  const formatRupiah = (value: string | number) => {
-    const num = typeof value === "string" ? parseFloat(value) : value;
-    return isNaN(num)
-      ? "Rp 0"
-      : new Intl.NumberFormat("id-ID", {
-          style: "currency",
-          currency: "IDR",
-          minimumFractionDigits: 0,
-        }).format(num);
+  const handleDelete = async (id: string) => {
+    try {
+      const res = await del(`/software/${id}`);
+      console.log(res);
+
+      notifier.success(
+        "Berhasil",
+        `Hardware ${res.data.nama} berhasil dihapus`
+      );
+      mutate();
+    } catch (error) {
+      const err = error as AxiosError<ApiError>;
+      notifier.error("Gagal Menghapus Hardware", err.response?.data.message);
+    }
   };
 
   return (
@@ -483,8 +196,8 @@ export default function SoftwareListPage() {
       {/* BACK */}
       <Button
         variant="ghost"
-        onClick={router.back}
-        className="inline-flex items-center gap-2 mb-4 text-sm text-gray-600 hover:text-gray-900"
+        onClick={() => router.back()}
+        className="inline-flex items-center gap-2 mb-4 text-sm font-medium text-gray-600 hover:text-gray-900 cursor-pointer"
       >
         <ArrowLeft className="w-4 h-4" />
         Kembali
@@ -493,107 +206,146 @@ export default function SoftwareListPage() {
       {/* HEADER */}
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
         <h1 className="text-2xl sm:text-3xl font-bold flex items-center gap-2">
-          <Package className="w-6 h-6 sm:w-7 sm:h-7" /> Daftar Software
+          <Cpu className="w-6 h-6 sm:w-7 sm:h-7" /> Daftar Software
         </h1>
+
         <Link href="/admin/manage-asset/opd-software/add">
-          <Button className="w-full sm:w-auto flex items-center gap-2">
+          <Button className="w-full sm:w-auto flex items-center gap-2 cursor-pointer">
             <Plus className="w-4 h-4" /> Tambah Software
           </Button>
         </Link>
       </div>
 
-      {/* SUMMARY */}
+      {/* SUMMARY — responsive flex-wrap */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-        <div className="bg-gray-100 px-4 py-3 rounded-md text-center">
-          <div className="text-sm text-gray-800">Total</div>
+        <div className="bg-gray-100 text-gray-800 px-4 py-3 rounded-md text-center">
+          <div className="text-sm">Total</div>
           <div className="text-xl font-bold">{summary.total}</div>
         </div>
-        <div className="bg-green-100 px-4 py-3 rounded-md text-center">
-          <div className="text-sm text-green-900">Aktif</div>
+        <div className="bg-green-100 text-green-900 px-4 py-3 rounded-md text-center">
+          <div className="text-sm">Aktif</div>
           <div className="text-xl font-bold">{summary.aktif}</div>
         </div>
-        <div className="bg-red-100 px-4 py-3 rounded-md text-center">
-          <div className="text-sm text-red-900">Non-Aktif</div>
+        <div className="bg-red-100 text-red-900 px-4 py-3 rounded-md text-center">
+          <div className="text-sm">Non-Aktif</div>
           <div className="text-xl font-bold">{summary.nonAktif}</div>
         </div>
       </div>
 
       {/* SEARCH + FILTER */}
-      <div className="flex flex-col sm:flex-row gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 mb-6">
         <Input
-          placeholder="Cari software (nama/nomor seri)..."
+          placeholder="Cari software berdasarkan nama / nomor seri / no seri hardware terinstall ..."
+          className="flex-1"
           value={searchNama}
           onChange={(e) => setSearchNama(e.target.value)}
-          className="flex-1"
         />
+
         <Button
           variant="outline"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 cursor-pointer"
           onClick={() => setOpenFilter(true)}
-          className="w-full sm:w-auto flex items-center justify-center gap-2"
         >
           <SlidersHorizontal className="w-4 h-4" />
           Filter
         </Button>
       </div>
 
-      {/* TABLE / CARDS */}
+      {/* TABLE / CARD LIST — RESPONSIVE SWITCH */}
       <Card className="rounded-xl shadow-md overflow-hidden">
-        {paginatedSoftware.length === 0 ? (
-          <div className="p-6 text-center text-gray-500">
-            Tidak ada software ditemukan.
+        {isLoading && (
+          <div className="p-6">
+            <div className="animate-pulse space-y-4">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="h-24 bg-gray-100 rounded-lg"></div>
+              ))}
+            </div>
           </div>
-        ) : (
+        )}
+
+        {error && !isLoading && (
+          <div className="p-6 text-center">
+            <div className="text-red-500 font-medium mb-2">
+              Terjadi kesalahan saat memuat data
+            </div>
+            <Button onClick={() => mutate()} variant="outline">
+              Coba Lagi
+            </Button>
+          </div>
+        )}
+
+        {!isLoading && !error && software.length === 0 && (
+          <div className="p-6 text-center text-gray-500">
+            Tidak ada data ditemukan.
+          </div>
+        )}
+
+        {!isLoading && !error && software.length > 0 && (
           <>
-            {/* Desktop */}
+            {/* Desktop Table */}
             <div className="hidden md:block overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead className="bg-gray-100 text-left">
-                  <tr>
+              <table className="w-full border-collapse text-sm">
+                <thead>
+                  <tr className="bg-gray-100 text-left">
                     <th className="p-3">Nama</th>
-                    <th className="p-3">Lisensi</th>
+                    <th className="p-3">Nomor Seri</th>
                     <th className="p-3">Kategori</th>
                     <th className="p-3">OPD</th>
-                    <th className="p-3">Versi</th>
-                    <th className="p-3">Harga</th>
-                    <th className="p-3">Kritis</th>
+                    <th className="p-3">Tanggal Pengadaan</th>
+                    <th className="p-3">Kritikalitas</th>
+                    <th className="p-3">Jenis Lisensi</th>
+                    <th className="p-3">No Seri Hardware Terinstall</th>
                     <th className="p-3">Status</th>
                     <th className="p-3 text-center">Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {paginatedSoftware.map((sw) => (
+                  {software.map((sw) => (
                     <motion.tr
                       key={sw.id}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       className="border-b hover:bg-gray-50"
                     >
-                      <td className="p-3 font-medium">{sw.nama}</td>
-                      <td className="p-3">
-                        <span className="px-2 py-0.5 text-xs rounded bg-blue-100 text-blue-800">
-                          {sw.jenisLisensi}
-                        </span>
+                      <td className="p-3 font-medium max-w-[180px] truncate">
+                        {sw.nama}
                       </td>
-                      <td className="p-3">{sw.kategoriSoftware.nama}</td>
-                      <td className="p-3">{sw.opd.nama}</td>
-                      <td className="p-3 text-center">{sw.versiTerpasang}</td>
-                      <td className="p-3">{formatRupiah(sw.hargaPerolehan)}</td>
-                      <td className="p-3">
-                        <span
-                          className={`px-2 py-0.5 text-xs rounded ${
+                      <td className="p-3 max-w-[150px] truncate">
+                        {sw.nomorSeri || "—"}
+                      </td>
+                      <td className="p-3 max-w-[150px] truncate">
+                        {sw.kategoriSoftware?.nama || "—"}
+                      </td>
+                      <td className="p-3 max-w-[150px] truncate">
+                        {sw.opd?.nama || "—"}
+                      </td>
+                      <td className="p-3 max-w-[150px] truncate">
+                        {sw.tglPengadaan
+                          ? new Date(sw.tglPengadaan).toLocaleDateString(
+                              "id-ID"
+                            )
+                          : "—"}
+                      </td>
+                      <td className="p-3 max-w-[150px] truncate">
+                        <Badge
+                          variant={
                             sw.kritikalitas === "TINGGI"
-                              ? "bg-red-100 text-red-800"
-                              : sw.kritikalitas === "SEDANG"
-                              ? "bg-yellow-100 text-yellow-800"
-                              : "bg-green-100 text-green-800"
-                          }`}
+                              ? "destructive"
+                              : "default"
+                          }
                         >
-                          {sw.kritikalitas}
-                        </span>
+                          {sw.kritikalitas || "—"}
+                        </Badge>
                       </td>
-                      <td className="p-3">
+                      <td className="p-3 max-w-[150px] truncate">
+                        <Badge> {sw.jenisLisensi || "—"}</Badge>
+                      </td>
+                      <td className="p-3 max-w-[150px] truncate">
+                        {sw.hardware.nomorSeri || "—"}
+                      </td>
+                      <td className="p-3 max-w-[150px] truncate">
                         <span
-                          className={`px-2 py-0.5 text-xs rounded ${
+                          className={`px-2 py-1 text-xs rounded-full ${
                             sw.status === "AKTIF"
                               ? "bg-green-100 text-green-800"
                               : "bg-red-100 text-red-800"
@@ -604,14 +356,14 @@ export default function SoftwareListPage() {
                       </td>
                       <td className="p-3 flex flex-wrap gap-2 justify-center">
                         <Link
-                          href={`/admin/manage-asset/opd-software/${sw.id}`}
+                          href={`/admin/manage-asset/opd-hardware/${sw.id}`}
                         >
                           <Button variant="secondary" size="sm">
-                            <Eye className="w-3.5 h-3.5 mr-1" /> Detail
+                            <Eye className="w-3.5 h-3.5 mr-1" /> View
                           </Button>
                         </Link>
                         <Link
-                          href={`/admin/manage-asset/opd-software/${sw.id}/edit`}
+                          href={`/admin/manage-asset/opd-hardware/${sw.id}/edit`}
                         >
                           <Button variant="outline" size="sm">
                             <Pencil className="w-3.5 h-3.5 mr-1" /> Edit
@@ -620,27 +372,27 @@ export default function SoftwareListPage() {
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
                             <Button variant="destructive" size="sm">
-                              <Trash className="w-3.5 h-3.5 mr-1" /> Arsipkan
+                              <Trash className="w-3.5 h-3.5 mr-1" /> Hapus
                             </Button>
                           </AlertDialogTrigger>
                           <AlertDialogContent>
                             <AlertDialogHeader>
                               <AlertDialogTitle>
-                                Arsipkan Software?
+                                Hapus Hardware?
                               </AlertDialogTitle>
                               <AlertDialogDescription>
-                                Software akan dipindahkan ke arsip (status
-                                diubah menjadi <b>NON-AKTIF</b>). Data tetap
-                                bisa dipulihkan.
+                                Tindakan ini tidak dapat dibatalkan. Data
+                                hardware akan dipindahkan ke arsip (soft
+                                delete).
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                               <AlertDialogCancel>Batal</AlertDialogCancel>
                               <AlertDialogAction
-                                onClick={() => handleDelete(sw.id, sw.nama)}
+                                onClick={() => handleDelete(sw.id)}
                                 className="bg-red-600 hover:bg-red-700"
                               >
-                                Ya, Arsipkan
+                                Ya, Hapus
                               </AlertDialogAction>
                             </AlertDialogFooter>
                           </AlertDialogContent>
@@ -652,155 +404,174 @@ export default function SoftwareListPage() {
               </table>
             </div>
 
-            {/* Mobile */}
-            <div className="md:hidden divide-y">
-              {paginatedSoftware.map((sw) => (
-                <motion.div
-                  key={sw.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-4"
-                >
-                  <div className="font-semibold">{sw.nama}</div>
-                  <div className="mt-1 flex flex-wrap gap-1">
-                    <span className="px-2 py-0.5 text-xs rounded bg-blue-100 text-blue-800">
-                      {sw.jenisLisensi}
-                    </span>
-                    <span
-                      className={`px-2 py-0.5 text-xs rounded ${
-                        sw.kritikalitas === "TINGGI"
-                          ? "bg-red-100 text-red-800"
-                          : sw.kritikalitas === "SEDANG"
-                          ? "bg-yellow-100 text-yellow-800"
-                          : "bg-green-100 text-green-800"
-                      }`}
-                    >
-                      {sw.kritikalitas}
-                    </span>
-                  </div>
-                  <div className="mt-2 text-sm text-gray-600 space-y-1">
-                    <div>
-                      <span className="font-medium">Kategori:</span>{" "}
-                      {sw.kategoriSoftware.nama}
+            {/* Mobile Card Layout */}
+            <div className="md:hidden">
+              <div className="divide-y divide-gray-200">
+                {software.map((sw) => (
+                  <motion.div
+                    key={sw.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-4 border-b"
+                  >
+                    <div className="font-semibold text-lg">{sw.nama}</div>
+                    <div className="text-sm text-gray-600 mt-1">
+                      {sw.nomorSeri ? `SN: ${sw.nomorSeri}` : "—"}
                     </div>
-                    <div>
-                      <span className="font-medium">OPD:</span> {sw.opd.nama}
+
+                    <div className="mt-2 space-y-1 text-sm">
+                      <div>
+                        <span className="font-medium">Kategori:</span>{" "}
+                        {sw.kategoriSoftware?.nama || "—"}
+                      </div>
+                      <div>
+                        <span className="font-medium">OPD:</span>{" "}
+                        {sw.opd?.nama || "—"}
+                      </div>
+                      <div>
+                        <span className="font-medium">PIC:</span>{" "}
+                        {sw.pic || "—"}
+                      </div>
+                      <div>
+                        <span className="font-medium">Tanggal:</span>{" "}
+                        {sw.tglPengadaan
+                          ? new Date(sw.tglPengadaan).toLocaleDateString(
+                              "id-ID"
+                            )
+                          : "—"}
+                      </div>
+                      <div>
+                        <span className="font-medium">Status:</span>{" "}
+                        <span
+                          className={`px-2 py-0.5 text-xs rounded-full ${
+                            sw.status === "AKTIF"
+                              ? "bg-green-100 text-green-800"
+                              : "bg-red-100 text-red-800"
+                          }`}
+                        >
+                          {sw.status}
+                        </span>
+                      </div>
                     </div>
-                    <div>
-                      <span className="font-medium">Harga:</span>{" "}
-                      {formatRupiah(sw.hargaPerolehan)}
-                    </div>
-                  </div>
-                  <div className="mt-3 flex flex-col gap-2">
-                    <Link href={`/admin/manage-asset/opd-software/${sw.id}`}>
-                      <Button variant="secondary" className="w-full">
-                        <Eye className="w-4 h-4 mr-1" /> Detail
-                      </Button>
-                    </Link>
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <Button variant="destructive" className="w-full">
-                          <Trash className="w-4 h-4 mr-1" /> Arsipkan
+
+                    {/* Aksi — stacked buttons on mobile */}
+                    <div className="mt-4 flex flex-col sm:flex-row gap-2">
+                      <Link href={`/admin/manage-asset/opd-hardware/${sw.id}`}>
+                        <Button variant="secondary" className="w-full">
+                          <Eye className="w-4 h-4 mr-1" /> Detail
                         </Button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent>
-                        <AlertDialogHeader>
-                          <AlertDialogTitle>
-                            Arsipkan Software?
-                          </AlertDialogTitle>
-                          <AlertDialogDescription>
-                            Software akan dipindahkan ke arsip (status diubah
-                            menjadi <b>NON-AKTIF</b>). Data tetap bisa
-                            dipulihkan.
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel>Batal</AlertDialogCancel>
-                          <AlertDialogAction
-                            onClick={() => handleDelete(sw.id, sw.nama)}
-                            className="bg-red-600 hover:bg-red-700"
-                          >
-                            Ya, Arsipkan
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
-                  </div>
-                </motion.div>
-              ))}
+                      </Link>
+                      <Link
+                        href={`/admin/manage-asset/opd-hardware/${sw.id}/edit`}
+                      >
+                        <Button variant="outline" className="w-full">
+                          <Pencil className="w-4 h-4 mr-1" /> Edit
+                        </Button>
+                      </Link>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button variant="destructive" className="w-full">
+                            <Trash className="w-4 h-4 mr-1" /> Hapus
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Hapus Hardware?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Tindakan ini tidak dapat dibatalkan. Data hardware
+                              akan dipindahkan ke arsip (soft delete).
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Batal</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => handleDelete(sw.id)}
+                              className="bg-red-600 hover:bg-red-700"
+                            >
+                              Ya, Hapus
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </>
         )}
       </Card>
 
-      {/* PAGINATION */}
-      {filteredSoftware.length > limit && (
-        <div className="flex flex-col sm:flex-row justify-between items-center mt-6 gap-4">
-          <Button
-            disabled={page <= 1}
-            onClick={goPrev}
-            className="w-full sm:w-auto"
-          >
-            Sebelumnya
-          </Button>
-          <div className="text-sm text-gray-600">
-            Halaman {page} dari {totalPages}
-          </div>
-          <Button
-            disabled={page >= totalPages}
-            onClick={goNext}
-            className="w-full sm:w-auto"
-          >
-            Selanjutnya
-          </Button>
+      {/* PAGINATION — responsive stack on mobile */}
+      <div className="flex flex-col sm:flex-row justify-between items-center mt-6 gap-4">
+        <Button
+          disabled={page <= 1}
+          onClick={goPrev}
+          className="w-full sm:w-auto"
+        >
+          Sebelumnya
+        </Button>
+
+        <div className="text-sm text-gray-600">
+          Halaman {pagination?.page ?? 1} dari {pagination?.totalPages ?? 1}
         </div>
-      )}
 
-      {/* FILTER DIALOG — Dengan OPD */}
+        <Button
+          disabled={page >= (pagination?.totalPages ?? 1)}
+          onClick={goNext}
+          className="w-full sm:w-auto"
+        >
+          Selanjutnya
+        </Button>
+      </div>
+
+      {/* FILTER MODAL — responsive inner spacing */}
       <Dialog open={openFilter} onOpenChange={setOpenFilter}>
-        <DialogContent className="max-h-[90vh] overflow-y-auto">
+        <DialogContent>
           <DialogHeader>
-            <DialogTitle>Filter Software</DialogTitle>
+            <DialogTitle>Filter Hardware</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4 py-4">
-            <Input
-              placeholder="Nama / Nomor Seri..."
-              value={searchNama}
-              onChange={(e) => setSearchNama(e.target.value)}
-            />
 
-            <Select value={jenisLisensi} onValueChange={setJenisLisensi}>
-              <SelectTrigger>
-                <SelectValue placeholder="Jenis Lisensi" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="ALL">Semua Jenis</SelectItem>
-                <SelectItem value="PERPETUAL">Perpetual</SelectItem>
-                <SelectItem value="LANGGANAN">Langganan</SelectItem>
-                <SelectItem value="OPEN_SOURCE">Open Source</SelectItem>
-              </SelectContent>
-            </Select>
-
+          <div className="space-y-4">
             <Select value={kritikalitas} onValueChange={setKritikalitas}>
-              <SelectTrigger>
-                <SelectValue placeholder="Kritikalitas" />
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Pilih Jenis Lisensi" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="ALL">Semua</SelectItem>
-                <SelectItem value="TINGGI">Tinggi</SelectItem>
-                <SelectItem value="SEDANG">Sedang</SelectItem>
-                <SelectItem value="RENDAH">Rendah</SelectItem>
-              </SelectContent>
-            </Select>
 
-            <Select value={status} onValueChange={setStatus}>
-              <SelectTrigger>
-                <SelectValue placeholder="Status" />
-              </SelectTrigger>
               <SelectContent>
                 <SelectItem value="ALL">Semua Status</SelectItem>
-                <SelectItem value="AKTIF">Aktif</SelectItem>
-                <SelectItem value="NON_AKTIF">Non-Aktif</SelectItem>
+                <SelectItem value={"TINGGI"}>TINGGI</SelectItem>
+                <SelectItem value={"SEDANG"}>SEDANG</SelectItem>
+                <SelectItem value={"RENDAH"}>RENDAH</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Select value={jenisLisensi} onValueChange={setJenisLisensi}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Pilih Jenis Lisensi" />
+              </SelectTrigger>
+
+              <SelectContent>
+                <SelectItem value="ALL">Semua Status</SelectItem>
+                <SelectItem value={"LANGGANAN"}>LANGGANAN</SelectItem>
+                <SelectItem value={"OPEN_SOURCE"}>OPEN SOURCE</SelectItem>
+                <SelectItem value={"PERPETUAL"}>PERPETUAL</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Select value={kategori} onValueChange={setKategori}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Pilih kategori" />
+              </SelectTrigger>
+
+              <SelectContent>
+                <SelectItem value="ALL">Semua Kategori</SelectItem>
+
+                {kategoriData?.map((item: KategoriHardware) => (
+                  <SelectItem key={item.id} value={item.id}>
+                    {item.nama}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
 
@@ -810,62 +581,51 @@ export default function SoftwareListPage() {
               onChange={(e) => setPic(e.target.value)}
             />
 
-            {/* ✅ Dropdown OPD ditambahkan di sini */}
             <Select value={opdId} onValueChange={setOpdId}>
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Pilih OPD" />
               </SelectTrigger>
+
               <SelectContent>
                 <SelectItem value="ALL">Semua OPD</SelectItem>
-                {DUMMY_OPD.map((opd) => (
-                  <SelectItem key={opd.id} value={opd.id}>
-                    {opd.nama}
+
+                {opdData?.map((item: Opd) => (
+                  <SelectItem key={item.id} value={item.id}>
+                    {item.nama}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
 
-            <Select value={kategoriId} onValueChange={setKategoriId}>
-              <SelectTrigger>
-                <SelectValue placeholder="Kategori" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="ALL">Semua Kategori</SelectItem>
-                {DUMMY_KATEGORI.map((k) => (
-                  <SelectItem key={k.id} value={k.id}>
-                    {k.nama}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
-            <div>
-              <label className="block text-sm mb-1">Tahun Pengadaan</label>
-              <select
-                value={tahun}
-                onChange={(e) => setTahun(e.target.value)}
-                className="w-full rounded border px-3 py-2 text-sm"
-              >
-                <option value="">Semua Tahun</option>
-                {tahunList.map((year) => (
-                  <option key={year} value={year.toString()}>
-                    {year}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setOpenFilter(false)}
-              className="w-full"
+            <select
+              className="w-full border rounded-md px-3 py-2"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
             >
-              Batal
+              <option value="">Semua Status</option>
+              <option value="AKTIF">AKTIF</option>
+              <option value="NON_AKTIF">NON_AKTIF</option>
+            </select>
+
+            <select
+              className="w-full border rounded-md px-3 py-2"
+              value={tahun}
+              onChange={(e) => setTahun(e.target.value)}
+            >
+              <option value="">Semua Tahun</option>
+              {tahunList.map((t) => (
+                <option key={t} value={t.toString()}>
+                  {t}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setOpenFilter(false)}>
+              Tutup
             </Button>
-            <Button onClick={() => setOpenFilter(false)} className="w-full">
-              Terapkan
-            </Button>
+            <Button onClick={() => setOpenFilter(false)}>Terapkan</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

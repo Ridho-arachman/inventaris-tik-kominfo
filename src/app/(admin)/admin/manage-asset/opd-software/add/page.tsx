@@ -199,31 +199,33 @@ export default function SoftwareFormComponent() {
 
         {/* Tanggal Lisensi & Tahun Pengadaan */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Controller
-            name="tglBerakhirLisensi"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel>Tanggal Berakhir Lisensi</FieldLabel>
-                <Input
-                  type="date"
-                  value={
-                    field.value
-                      ? format(new Date(field.value), "yyyy-MM-dd")
-                      : ""
-                  }
-                  onChange={(e) =>
-                    field.onChange(
-                      e.target.value ? new Date(e.target.value) : null
-                    )
-                  }
-                />
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
-          />
+          {jenisLisensi === JenisLisensi.LANGGANAN && (
+            <Controller
+              name="tglBerakhirLisensi"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel>Tanggal Berakhir Lisensi</FieldLabel>
+                  <Input
+                    type="date"
+                    value={
+                      field.value
+                        ? format(new Date(field.value), "yyyy-MM-dd")
+                        : ""
+                    }
+                    onChange={(e) =>
+                      field.onChange(
+                        e.target.value ? new Date(e.target.value) : null
+                      )
+                    }
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+          )}
 
           <Controller
             name="tglPengadaan"

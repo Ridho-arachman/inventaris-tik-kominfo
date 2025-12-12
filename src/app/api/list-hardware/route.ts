@@ -14,7 +14,7 @@ export const GET = async () => {
         status: 403,
       });
 
-    const hardware = await prisma.hardware.findMany({});
+    const hardware = await prisma.hardware.findMany({ take: 5 });
 
     return handleResponse({
       success: true,

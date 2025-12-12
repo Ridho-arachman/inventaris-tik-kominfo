@@ -1,3 +1,9 @@
+import {
+  JenisLisensi,
+  KritikalitasStatus,
+  Prisma,
+  StatusAset,
+} from "@/generated/client";
 import { auth } from "@/lib/auth";
 import { handlePrismaError } from "@/lib/handlePrsimaError";
 import { handleResponse } from "@/lib/handleResponse";
@@ -50,8 +56,6 @@ export const POST = async (req: NextRequest) => {
       status: 201,
     });
   } catch (error) {
-    console.log(error);
-
     const prismaErr = handlePrismaError(error);
     if (prismaErr) {
       return handleResponse({
@@ -68,48 +72,103 @@ export const POST = async (req: NextRequest) => {
   }
 };
 
-// Filter dinamis
-// if (nama) {
-//   where.OR = [
-//     { nama: { contains: nama, mode: "insensitive" } },
-//     { nomorSeri: { contains: nama, mode: "insensitive" } },
-//   ];
-// }
+export const GET = async (req: NextRequest) => {
+  try {
+    const user = await auth.api.getSession({ headers: await headers() });
 
-// if (jenisLisensi) where.jenisLisensi = jenisLisensi;
-// if (kritikalitas) where.kritikalitas = kritikalitas;
-// if (status) where.status = status;
-// if (pic) where.pic = { contains: pic, mode: "insensitive" };
-// if (kategoriId && kategoriId !== "ALL") {
-//   where.kategoriSoftware = { is: { id: kategoriId } };
-// }
-// // Catatan: opdId filter hanya untuk admin. OPD tidak perlu filter OPD lain.
-// // Jika Anda hanya support OPD role, abaikan filterOpdId.
+    if (!user) {
+      return handleResponse({
+        success: false,
+        message: "User belum login",
+        status: 403,
+      });
+    }
 
-// if (tahun) {
-//   const start = new Date(`${tahun}-01-01T00:00:00Z`);
-//   const end = new Date(`${tahun}-12-31T23:59:59.999Z`);
-//   where.tahunPengadaan = { gte: start, lte: end };
-// }
+    const searchParams = req.nextUrl.searchParams;
+    const q = searchParams.get("q") || "";
+    const jenisLisensi = searchParams.get("jenisLisensi") || "";
+    const kritikalitas = searchParams.get("kritikalitas") || "";
+    const kategori = searchParams.get("kategori") || "";
+    const opdId = searchParams.get("opdId") || "";
+    const status = searchParams.get("status") || "";
+    const tahun = searchParams.get("tahun") || "";
+    const page = parseInt(searchParams.get("page") || "1", 10);
+    const limit = parseInt(searchParams.get("limit") || "10", 10);
+    const skip = (page - 1) * limit;
 
-// // ✅ 4. Query
-// const [software, total] = await Promise.all([
-//   prisma.software.findMany({
-//     where,
-//     include: {
-//       opd: { select: { nama: true } },
-//       kategoriSoftware: { select: { nama: true } },
-//       hardware: { select: { nama: true } },
-//     },
-//     orderBy: { createdAt: "desc" },
-//     skip,
-//     take: limit,
-//   }),
-//   prisma.software.count({ where }),
-// ]);
+    const where: Prisma.SoftwareWhereInput = { deletedAt: null };
 
-// const totalPages = Math.ceil(total / limit);
-// const totalAktif = software.filter((s) => s.status === "AKTIF").length;
-// const totalNonAktif = software.filter((s) => s.status === "NON_AKTIF").length;
+    if (q) {
+      where.OR = [
+        { nama: { contains: q, mode: "insensitive" } },
+        { nomorSeri: { contains: q, mode: "insensitive" } },
+        { hardware: { nomorSeri: { contains: q, mode: "insensitive" } } },
+      ];
+    }
 
-// ✅ 5. Respons benar
+    if (opdId) where.opdId = opdId === "ALL" ? {} : { contains: opdId };
+    if (kritikalitas)
+      where.kritikalitas = kritikalitas.toUpperCase() as KritikalitasStatus;
+    if (jenisLisensi)
+      where.jenisLisensi = jenisLisensi.toUpperCase() as JenisLisensi;
+    if (status) where.status = status.toUpperCase() as StatusAset;
+    if (tahun) {
+      const start = new Date(`${tahun}-01-01`);
+      const end = new Date(`${tahun}-12-31T23:59:59.999Z`);
+      where.tglPengadaan = { gte: start, lte: end };
+    }
+    if (kategori)
+      where.kategoriSoftware =
+        kategori === "ALL"
+          ? {}
+          : {
+              is: { id: { equals: kategori } },
+            };
+
+    const totalItems = await prisma.software.count({ where });
+    const totalPages = Math.ceil(totalItems / limit);
+
+    const software = await prisma.software.findMany({
+      where,
+      include: {
+        hardware: true,
+        kategoriSoftware: true,
+        opd: { select: { nama: true } },
+      },
+      orderBy: { tglPengadaan: "desc" },
+      skip,
+      take: limit,
+    });
+
+    const total = software.length;
+    const totalAktif = software.filter((h) => h.status === "AKTIF").length;
+    const totalNonAktif = software.filter(
+      (h) => h.status === "NON_AKTIF"
+    ).length;
+
+    return handleResponse({
+      success: true,
+      message: "Data software berhasil diambil",
+      data: {
+        summary: { total, aktif: totalAktif, nonAktif: totalNonAktif },
+        pagination: { page, limit, totalItems, totalPages },
+        software,
+      },
+      status: 200,
+    });
+  } catch (error) {
+    const prismaErr = handlePrismaError(error);
+    if (prismaErr) {
+      return handleResponse({
+        success: false,
+        message: prismaErr.message,
+        status: prismaErr.status,
+      });
+    }
+    return handleResponse({
+      success: false,
+      message: "Terjadi kesalahan pada server",
+      status: 500,
+    });
+  }
+};

@@ -73,15 +73,15 @@ export const softwareUpdateSchema = softwareBaseSchema
     path: ["hargaPerolehan"],
   });
 
-// export const softwareQuerySchema = z.object({
-//   nama: z.string().optional(),
-//   jenisLisensi: jenisLisensiSchema.optional(),
-//   kritikalitas: kritikalitasSchema.optional(),
-//   status: statusAsetSchema.optional(),
-//   pic: z.string().optional(),
-//   opdId: z.string().optional(), // "ALL" atau id OPD
-//   kategoriId: z.string().optional(), // "ALL" atau id kategori
-//   tahun: z.coerce.number().int().optional(), // filter by year
-//   page: z.coerce.number().int().min(1).default(1),
-//   limit: z.coerce.number().int().min(1).max(100).default(10),
-// });
+export const softwareQuerySchema = z.object({
+  q: z.string().optional(),
+  jenisLisensi: z.enum(JenisLisensi).optional(),
+  kritikalitas: z.enum(KritikalitasStatus).optional(),
+  status: z.enum(StatusAset).optional(),
+  pic: z.string().optional(),
+  opdId: z.string().optional(), // "ALL" atau id OPD
+  kategoriId: z.string().optional(), // "ALL" atau id kategori
+  tahun: z.coerce.number().int().optional(), // filter by year
+  page: z.coerce.number().int().min(1).default(1),
+  limit: z.coerce.number().int().min(1).max(100).default(10),
+});
