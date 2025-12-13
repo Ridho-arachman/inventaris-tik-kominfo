@@ -33,7 +33,7 @@ export const softwareBaseSchema = z
       .string("Biaya perolehan harus berupa string")
       .regex(/^[0-9.]+$/, "Biaya perolehan harus berupa angka"),
 
-    tglPengadaan: z.date("Tahun pengadaan tidak valid"),
+    tglPengadaan: z.date("Tgl pengadaan tidak valid"),
 
     status: z.enum(StatusAset),
     pic: z.string().trim().min(1, "PIC wajib diisi"),
@@ -73,15 +73,6 @@ export const softwareUpdateSchema = softwareBaseSchema
     path: ["hargaPerolehan"],
   });
 
-export const softwareQuerySchema = z.object({
-  q: z.string().optional(),
-  jenisLisensi: z.enum(JenisLisensi).optional(),
-  kritikalitas: z.enum(KritikalitasStatus).optional(),
-  status: z.enum(StatusAset).optional(),
-  pic: z.string().optional(),
-  opdId: z.string().optional(), // "ALL" atau id OPD
-  kategoriId: z.string().optional(), // "ALL" atau id kategori
-  tahun: z.coerce.number().int().optional(), // filter by year
-  page: z.coerce.number().int().min(1).default(1),
-  limit: z.coerce.number().int().min(1).max(100).default(10),
+export const IdSoftwareSchema = z.object({
+  id: z.string().trim().cuid("Id Tidak Valid"),
 });

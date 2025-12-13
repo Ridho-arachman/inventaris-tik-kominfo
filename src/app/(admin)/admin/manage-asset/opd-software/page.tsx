@@ -55,6 +55,14 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 type SoftwareRes = Software & {
   hardware: Hardware;
@@ -284,22 +292,23 @@ export default function HardwareListPage() {
           <>
             {/* Desktop Table */}
             <div className="hidden md:block overflow-x-auto">
-              <table className="w-full border-collapse text-sm">
-                <thead>
-                  <tr className="bg-gray-100 text-left">
-                    <th className="p-3">Nama</th>
-                    <th className="p-3">Nomor Seri</th>
-                    <th className="p-3">Kategori</th>
-                    <th className="p-3">OPD</th>
-                    <th className="p-3">Tanggal Pengadaan</th>
-                    <th className="p-3">Kritikalitas</th>
-                    <th className="p-3">Jenis Lisensi</th>
-                    <th className="p-3">No Seri Hardware Terinstall</th>
-                    <th className="p-3">Status</th>
-                    <th className="p-3 text-center">Aksi</th>
-                  </tr>
-                </thead>
-                <tbody>
+              <Table className="text-sm">
+                <TableHeader>
+                  <TableRow className="bg-gray-100">
+                    <TableHead>Nama</TableHead>
+                    <TableHead>Nomor Seri</TableHead>
+                    <TableHead>Kategori</TableHead>
+                    <TableHead>OPD</TableHead>
+                    <TableHead>Tanggal Pengadaan</TableHead>
+                    <TableHead>Kritikalitas</TableHead>
+                    <TableHead>Jenis Lisensi</TableHead>
+                    <TableHead>No Seri Hardware Terinstall</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead className="text-center">Aksi</TableHead>
+                  </TableRow>
+                </TableHeader>
+
+                <TableBody>
                   {software.map((sw) => (
                     <motion.tr
                       key={sw.id}
@@ -307,26 +316,31 @@ export default function HardwareListPage() {
                       animate={{ opacity: 1, y: 0 }}
                       className="border-b hover:bg-gray-50"
                     >
-                      <td className="p-3 font-medium max-w-[180px] truncate">
+                      <TableCell className="font-medium max-w-[180px] truncate">
                         {sw.nama}
-                      </td>
-                      <td className="p-3 max-w-[150px] truncate">
+                      </TableCell>
+
+                      <TableCell className="max-w-[150px] truncate">
                         {sw.nomorSeri || "—"}
-                      </td>
-                      <td className="p-3 max-w-[150px] truncate">
+                      </TableCell>
+
+                      <TableCell className="max-w-[150px] truncate">
                         {sw.kategoriSoftware?.nama || "—"}
-                      </td>
-                      <td className="p-3 max-w-[150px] truncate">
+                      </TableCell>
+
+                      <TableCell className="max-w-[150px] truncate">
                         {sw.opd?.nama || "—"}
-                      </td>
-                      <td className="p-3 max-w-[150px] truncate">
+                      </TableCell>
+
+                      <TableCell className="max-w-[150px] truncate">
                         {sw.tglPengadaan
                           ? new Date(sw.tglPengadaan).toLocaleDateString(
                               "id-ID"
                             )
                           : "—"}
-                      </td>
-                      <td className="p-3 max-w-[150px] truncate">
+                      </TableCell>
+
+                      <TableCell>
                         <Badge
                           variant={
                             sw.kritikalitas === "TINGGI"
@@ -336,14 +350,17 @@ export default function HardwareListPage() {
                         >
                           {sw.kritikalitas || "—"}
                         </Badge>
-                      </td>
-                      <td className="p-3 max-w-[150px] truncate">
-                        <Badge> {sw.jenisLisensi || "—"}</Badge>
-                      </td>
-                      <td className="p-3 max-w-[150px] truncate">
-                        {sw.hardware.nomorSeri || "—"}
-                      </td>
-                      <td className="p-3 max-w-[150px] truncate">
+                      </TableCell>
+
+                      <TableCell>
+                        <Badge>{sw.jenisLisensi || "—"}</Badge>
+                      </TableCell>
+
+                      <TableCell className="max-w-[150px] truncate">
+                        {sw.hardware?.nomorSeri || "—"}
+                      </TableCell>
+
+                      <TableCell>
                         <span
                           className={`px-2 py-1 text-xs rounded-full ${
                             sw.status === "AKTIF"
@@ -353,55 +370,73 @@ export default function HardwareListPage() {
                         >
                           {sw.status}
                         </span>
-                      </td>
-                      <td className="p-3 flex flex-wrap gap-2 justify-center">
-                        <Link
-                          href={`/admin/manage-asset/opd-hardware/${sw.id}`}
-                        >
-                          <Button variant="secondary" size="sm">
-                            <Eye className="w-3.5 h-3.5 mr-1" /> View
-                          </Button>
-                        </Link>
-                        <Link
-                          href={`/admin/manage-asset/opd-hardware/${sw.id}/edit`}
-                        >
-                          <Button variant="outline" size="sm">
-                            <Pencil className="w-3.5 h-3.5 mr-1" /> Edit
-                          </Button>
-                        </Link>
-                        <AlertDialog>
-                          <AlertDialogTrigger asChild>
-                            <Button variant="destructive" size="sm">
-                              <Trash className="w-3.5 h-3.5 mr-1" /> Hapus
+                      </TableCell>
+
+                      <TableCell className="text-center">
+                        <div className="flex flex-wrap gap-2 justify-center">
+                          <Link
+                            href={`/admin/manage-asset/opd-software/${sw.id}`}
+                          >
+                            <Button
+                              variant="secondary"
+                              size="sm"
+                              className="cursor-pointer"
+                            >
+                              <Eye className="w-3.5 h-3.5 mr-1" /> View
                             </Button>
-                          </AlertDialogTrigger>
-                          <AlertDialogContent>
-                            <AlertDialogHeader>
-                              <AlertDialogTitle>
-                                Hapus Hardware?
-                              </AlertDialogTitle>
-                              <AlertDialogDescription>
-                                Tindakan ini tidak dapat dibatalkan. Data
-                                hardware akan dipindahkan ke arsip (soft
-                                delete).
-                              </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                              <AlertDialogCancel>Batal</AlertDialogCancel>
-                              <AlertDialogAction
-                                onClick={() => handleDelete(sw.id)}
-                                className="bg-red-600 hover:bg-red-700"
+                          </Link>
+
+                          <Link
+                            href={`/admin/manage-asset/opd-software/${sw.id}/edit`}
+                          >
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="cursor-pointer"
+                            >
+                              <Pencil className="w-3.5 h-3.5 mr-1" /> Edit
+                            </Button>
+                          </Link>
+
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button
+                                variant="destructive"
+                                size="sm"
+                                className="cursor-pointer"
                               >
-                                Ya, Hapus
-                              </AlertDialogAction>
-                            </AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialog>
-                      </td>
+                                <Trash className="w-3.5 h-3.5 mr-1" /> Hapus
+                              </Button>
+                            </AlertDialogTrigger>
+
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                  Hapus Software?
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  Tindakan ini tidak dapat dibatalkan. Data akan
+                                  dipindahkan ke arsip (soft delete).
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Batal</AlertDialogCancel>
+                                <AlertDialogAction
+                                  onClick={() => handleDelete(sw.id)}
+                                  className="bg-red-600 hover:bg-red-700"
+                                >
+                                  Ya, Hapus
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        </div>
+                      </TableCell>
                     </motion.tr>
                   ))}
-                </tbody>
-              </table>
+                </TableBody>
+              </Table>
             </div>
 
             {/* Mobile Card Layout */}
@@ -456,21 +491,30 @@ export default function HardwareListPage() {
 
                     {/* Aksi — stacked buttons on mobile */}
                     <div className="mt-4 flex flex-col sm:flex-row gap-2">
-                      <Link href={`/admin/manage-asset/opd-hardware/${sw.id}`}>
-                        <Button variant="secondary" className="w-full">
+                      <Link href={`/admin/manage-asset/opd-software/${sw.id}`}>
+                        <Button
+                          variant="secondary"
+                          className="w-full cursor-pointer"
+                        >
                           <Eye className="w-4 h-4 mr-1" /> Detail
                         </Button>
                       </Link>
                       <Link
-                        href={`/admin/manage-asset/opd-hardware/${sw.id}/edit`}
+                        href={`/admin/manage-asset/opd-software/${sw.id}/edit`}
                       >
-                        <Button variant="outline" className="w-full">
+                        <Button
+                          variant="outline"
+                          className="w-full cursor-pointer"
+                        >
                           <Pencil className="w-4 h-4 mr-1" /> Edit
                         </Button>
                       </Link>
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
-                          <Button variant="destructive" className="w-full">
+                          <Button
+                            variant="destructive"
+                            className="w-full cursor-pointer"
+                          >
                             <Trash className="w-4 h-4 mr-1" /> Hapus
                           </Button>
                         </AlertDialogTrigger>
