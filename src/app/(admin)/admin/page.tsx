@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -17,29 +16,61 @@ import {
   LineChart,
   Line,
 } from "recharts";
+import { useGet } from "@/hooks/useApi";
+import { AdminDashboardData } from "@/types/DashboardAdmin";
 
-// Dummy Data OPD
-const opdList = [
-  { id: 1, name: "Dinas Pendidikan", totalAssets: 12, aktif: 10, nonAktif: 2 },
-  { id: 2, name: "Dinas Kesehatan", totalAssets: 8, aktif: 6, nonAktif: 2 },
-  { id: 3, name: "Dinas Perhubungan", totalAssets: 15, aktif: 12, nonAktif: 3 },
-];
-
-const totalUsers = 25;
 const colors = ["#22c55e", "#ef4444"];
 
 export default function AdminDashboard() {
-  // Summary
-  const totalAssets = opdList.reduce((acc, o) => acc + o.totalAssets, 0);
-  const totalAktif = opdList.reduce((acc, o) => acc + o.aktif, 0);
-  const totalNonAktif = opdList.reduce((acc, o) => acc + o.nonAktif, 0);
+  const { data, error, isLoading } = useGet("/dashboard/admin");
+
+  // Safety fallback
+  const safeData: AdminDashboardData = data || {};
+  const summary = safeData.summary || {
+    totalOpd: 0,
+    totalUsers: 0,
+    totalHardware: 0,
+    totalSoftware: 0,
+  };
+  const assetHardwareStatus = Array.isArray(safeData.assetHardwareStatus)
+    ? safeData.assetHardwareStatus
+    : [];
+  const assetSoftwareStatus = Array.isArray(safeData.assetSoftwareStatus)
+    ? safeData.assetSoftwareStatus
+    : [];
+  const assetsPerOpd = Array.isArray(safeData.assetsPerOpd)
+    ? safeData.assetsPerOpd
+    : [];
+  const assetGrowth = Array.isArray(safeData.assetGrowth)
+    ? safeData.assetGrowth
+    : [];
+
+  // Hitung total aktif & non aktif
+  const totalAktif =
+    (assetHardwareStatus.find((a) => a.name === "Aktif")?.aktifHardware || 0) +
+    (assetSoftwareStatus.find((a) => a.name === "Aktif")?.aktifSoftware || 0);
+
+  const totalNonAktif =
+    (assetHardwareStatus.find((a) => a.name === "Non Aktif")
+      ?.nonAktifHardware || 0) +
+    (assetSoftwareStatus.find((a) => a.name === "Non Aktif")
+      ?.nonAktifSoftware || 0);
+
+  const totalAssets =
+    (summary.totalHardware || 0) + (summary.totalSoftware || 0);
 
   const pieData = [
     { name: "Aktif", value: totalAktif },
     { name: "Non Aktif", value: totalNonAktif },
   ];
 
-  const barData = opdList.map((o) => ({ name: o.name, total: o.totalAssets }));
+  const barData = assetsPerOpd.map((o) => ({
+    name: o.name || "-",
+    total: o.totalAssets || 0,
+  }));
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div className="min-h-screen px-6 py-10 space-y-10">
@@ -55,8 +86,8 @@ export default function AdminDashboard() {
       {/* SUMMARY CARDS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
-          { label: "Total OPD", value: opdList.length },
-          { label: "Total User", value: totalUsers },
+          { label: "Total OPD", value: summary.totalOpd },
+          { label: "Total User", value: summary.totalUsers },
           { label: "Total Asset", value: totalAssets },
           {
             label: "Aktif / Non Aktif",
@@ -137,12 +168,12 @@ export default function AdminDashboard() {
         >
           <Card className="p-4 shadow-md">
             <CardHeader>
-              <CardTitle>Perkembangan Asset (Dummy)</CardTitle>
+              <CardTitle>Perkembangan Asset</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={250}>
-                <LineChart data={barData}>
-                  <XAxis dataKey="name" />
+                <LineChart data={assetGrowth}>
+                  <XAxis dataKey="label" />
                   <YAxis />
                   <Tooltip />
                   <Line
@@ -160,40 +191,82 @@ export default function AdminDashboard() {
 
       {/* LIST OPD */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {opdList.map((opd, idx) => (
+        {assetsPerOpd.map((opd, idx) => (
           <motion.div
-            key={opd.id}
+            key={opd.id || idx}
             initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: idx * 0.1 }}
           >
-            <Link href={`/admin/opd/${opd.id}`}>
-              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-                <CardHeader>
-                  <CardTitle className="text-lg font-semibold">
-                    {opd.name}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  <div className="flex justify-between">
-                    <p>Total Asset:</p>
-                    <p className="font-semibold">{opd.totalAssets}</p>
+            <Card className="hover:shadow-xl transition-shadow duration-300 border border-gray-200 rounded-xl overflow-hidden">
+              <CardHeader className="bg-gray-50 p-4">
+                <CardTitle className="text-lg font-semibold">
+                  {opd.name || "-"}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4 p-4">
+                {/* Total Asset */}
+                <div className="flex justify-between items-center">
+                  <p className="font-medium text-gray-700">Total Asset</p>
+                  <p className="font-bold text-gray-900 text-lg">
+                    {opd.totalAssets || 0}
+                  </p>
+                </div>
+
+                {/* Hardware & Software Panel */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Hardware */}
+                  <div className="p-3 bg-green-50 rounded-lg space-y-2">
+                    <p className="font-medium text-green-800 text-sm">
+                      Hardware
+                    </p>
+                    <div className="flex justify-between">
+                      <p>Total</p>
+                      <p className="font-semibold">
+                        {opd.hardware?.total || 0}
+                      </p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p>Aktif</p>
+                      <Badge className="bg-green-100 text-green-800">
+                        {opd.hardware?.aktif || 0}
+                      </Badge>
+                    </div>
+                    <div className="flex justify-between">
+                      <p>Non Aktif</p>
+                      <Badge className="bg-red-100 text-red-800">
+                        {opd.hardware?.nonAktif || 0}
+                      </Badge>
+                    </div>
                   </div>
-                  <div className="flex justify-between">
-                    <p>Aktif:</p>
-                    <Badge className="bg-green-100 text-green-700">
-                      {opd.aktif}
-                    </Badge>
+
+                  {/* Software */}
+                  <div className="p-3 bg-blue-50 rounded-lg space-y-2">
+                    <p className="font-medium text-blue-800 text-sm">
+                      Software
+                    </p>
+                    <div className="flex justify-between">
+                      <p>Total</p>
+                      <p className="font-semibold">
+                        {opd.software?.total || 0}
+                      </p>
+                    </div>
+                    <div className="flex justify-between">
+                      <p>Aktif</p>
+                      <Badge className="bg-green-100 text-green-800">
+                        {opd.software?.aktif || 0}
+                      </Badge>
+                    </div>
+                    <div className="flex justify-between">
+                      <p>Non Aktif</p>
+                      <Badge className="bg-red-100 text-red-800">
+                        {opd.software?.nonAktif || 0}
+                      </Badge>
+                    </div>
                   </div>
-                  <div className="flex justify-between">
-                    <p>Non Aktif:</p>
-                    <Badge className="bg-red-100 text-red-700">
-                      {opd.nonAktif}
-                    </Badge>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
+                </div>
+              </CardContent>
+            </Card>
           </motion.div>
         ))}
       </div>
