@@ -127,3 +127,60 @@ export const PUT = async (
     });
   }
 };
+
+export const DELETE = async (
+  _req: NextRequest,
+  ctx: RouteContext<"/api/software/[id]">
+) => {
+  try {
+    const user = await auth.api.getSession({
+      headers: await headers(),
+    });
+
+    if (!user) {
+      return handleResponse({
+        success: false,
+        message: "User Belum Login",
+        status: 403,
+      });
+    }
+
+    const { id } = await ctx.params;
+
+    const parsedId = IdSoftwareSchema.safeParse({ id });
+
+    if (!parsedId.success) return handleZodValidation(parsedId);
+
+    const softwareId = parsedId.data.id;
+
+    const hardware = await prisma.software.update({
+      where: { id: softwareId },
+      data: { deletedBy: user.user.id, deletedAt: new Date() },
+      select: { nama: true },
+    });
+
+    return handleResponse({
+      success: true,
+      message: "Software Berhasil Dihapus",
+      data: hardware,
+      status: 200,
+    });
+  } catch (error) {
+    // Prisma Error Handler
+    const prismaResponse = handlePrismaError(error);
+    if (prismaResponse) {
+      return handleResponse({
+        success: false,
+        message: prismaResponse.message,
+        status: prismaResponse.status,
+      });
+    }
+
+    // Internal Server Error
+    return handleResponse({
+      success: false,
+      message: "Terjadi kesalahan pada server",
+      status: 500,
+    });
+  }
+};

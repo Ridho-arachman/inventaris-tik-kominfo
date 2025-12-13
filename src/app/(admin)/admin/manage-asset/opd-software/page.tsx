@@ -190,12 +190,12 @@ export default function HardwareListPage() {
 
       notifier.success(
         "Berhasil",
-        `Hardware ${res.data.nama} berhasil dihapus`
+        `Software ${res.data.nama} Berhasil Dihapus`
       );
       mutate();
     } catch (error) {
       const err = error as AxiosError<ApiError>;
-      notifier.error("Gagal Menghapus Hardware", err.response?.data.message);
+      notifier.error("Gagal Menghapus Software", err.response?.data.message);
     }
   };
 
@@ -424,7 +424,7 @@ export default function HardwareListPage() {
                                 <AlertDialogCancel>Batal</AlertDialogCancel>
                                 <AlertDialogAction
                                   onClick={() => handleDelete(sw.id)}
-                                  className="bg-red-600 hover:bg-red-700"
+                                  className="bg-red-600 hover:bg-red-700 cursor-pointer"
                                 >
                                   Ya, Hapus
                                 </AlertDialogAction>
@@ -530,7 +530,7 @@ export default function HardwareListPage() {
                             <AlertDialogCancel>Batal</AlertDialogCancel>
                             <AlertDialogAction
                               onClick={() => handleDelete(sw.id)}
-                              className="bg-red-600 hover:bg-red-700"
+                              className="bg-red-600 hover:bg-red-700 cursor-pointer"
                             >
                               Ya, Hapus
                             </AlertDialogAction>

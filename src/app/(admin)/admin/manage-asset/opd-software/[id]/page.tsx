@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowLeft, Pencil, Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { useGet } from "@/hooks/useApi";
+import { useDelete, useGet } from "@/hooks/useApi";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   AlertDialog,
@@ -18,25 +18,29 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { notifier } from "@/components/ToastNotifier";
+import { AxiosError } from "axios";
+import { ApiError } from "@/types/ApiError";
 
 export default function SoftwareDetailPage() {
   const { id } = useParams();
 
   const { data: software, error, isLoading } = useGet(`/software/${id}`);
+  const { del, loading } = useDelete();
 
   const router = useRouter();
 
-  const handleDelete = async () => {
+  const handleDelete = async (id: string) => {
     try {
-      // contoh delete, sesuaikan hook / api kamu
-      await fetch(`/api/software/${id}`, {
-        method: "DELETE",
-      });
-
+      const res = await del(`/software/${id}`);
+      notifier.success(
+        "Berhasil",
+        `Software ${res.data.nama} berhasil dihapus`
+      );
       router.push("/admin/manage-asset/opd-software");
-    } catch (err) {
-      console.error(err);
-      alert("Gagal menghapus data");
+    } catch (error) {
+      const err = error as AxiosError<ApiError>;
+      notifier.error("Gagal Menghapus Software", err.response?.data.message);
     }
   };
 
@@ -106,7 +110,12 @@ export default function SoftwareDetailPage() {
         <div className="flex flex-wrap gap-2">
           {/* Kembali */}
           <Link href="/admin/manage-asset/opd-software">
-            <Button variant="ghost" size="sm" className="cursor-pointer">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="cursor-pointer"
+              disabled={loading}
+            >
               <ArrowLeft className="w-4 h-4 mr-1" />
               Kembali
             </Button>
@@ -114,7 +123,12 @@ export default function SoftwareDetailPage() {
 
           {/* Edit */}
           <Link href={`/admin/manage-asset/opd-software/${id}/edit`}>
-            <Button variant="outline" size="sm" className="cursor-pointer">
+            <Button
+              variant="outline"
+              size="sm"
+              className="cursor-pointer"
+              disabled={loading}
+            >
               <Pencil className="w-4 h-4 mr-1" />
               Edit
             </Button>
@@ -127,6 +141,7 @@ export default function SoftwareDetailPage() {
                 variant="destructive"
                 size="sm"
                 className="cursor-pointer"
+                disabled={loading}
               >
                 <Trash className="w-4 h-4 mr-1" />
                 Hapus
@@ -143,10 +158,12 @@ export default function SoftwareDetailPage() {
               </AlertDialogHeader>
 
               <AlertDialogFooter>
-                <AlertDialogCancel>Batal</AlertDialogCancel>
+                <AlertDialogCancel className="cursor-pointer">
+                  Batal
+                </AlertDialogCancel>
                 <AlertDialogAction
-                  onClick={handleDelete}
-                  className="bg-red-600 hover:bg-red-700"
+                  onClick={() => handleDelete(software.id)}
+                  className="bg-red-600 hover:bg-red-700 cursor-pointer"
                 >
                   Ya, Hapus
                 </AlertDialogAction>
