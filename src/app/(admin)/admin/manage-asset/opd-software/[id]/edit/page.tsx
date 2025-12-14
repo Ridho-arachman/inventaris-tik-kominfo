@@ -85,7 +85,6 @@ export default function SoftwareFormComponent() {
         kategoriId: software?.kategoriId,
         hardwareTerinstall: software?.hardwareTerinstall,
       });
-      console.log(form.getValues());
     }
   }, [software, form]);
 

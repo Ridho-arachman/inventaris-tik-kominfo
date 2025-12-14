@@ -22,12 +22,11 @@ export async function sendEmail({
   text?: string;
   html?: string;
 }) {
-  const info = await transporter.sendMail({
-    from: `"Your App Name" <${process.env.SMTP_USER}>`,
+  await transporter.sendMail({
+    from: `"INVENTARIS ALAT TIK KOMINFO KABUPATEN SERANG" <${process.env.SMTP_USER}>`,
     to,
     subject,
     text,
     html,
   });
-  console.log("Email sent:", info.messageId);
 }

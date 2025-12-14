@@ -25,15 +25,16 @@ export const POST = async (req: NextRequest) => {
 
     if (!parsed.success) return handleZodValidation(parsed);
 
-    const { email, password } = parsed.data;
+    const { email, password, rememberMe } = parsed.data;
 
-    // Panggil Better Auth untuk signup
     const result = await auth.api.signInEmail({
       body: {
         email,
         password,
-        callbackURL: "https://example.com/callback", // redirect setelah verifikasi
-        rememberMe: true,
+        callbackURL:
+          `${process.env.BETTER_AUTH_URL}/verify-success` ||
+          "http://localhost:3000/verify-success",
+        rememberMe,
       },
     });
 
@@ -56,6 +57,8 @@ export const POST = async (req: NextRequest) => {
       },
     });
   } catch (error) {
+    console.log(error);
+
     // Better Auth Handler
     const betterAuthErr = handleBetterAuthError(error);
     if (betterAuthErr) {

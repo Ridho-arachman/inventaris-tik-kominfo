@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/card";
 import {
   Field,
-  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
@@ -30,6 +29,7 @@ import { AxiosError } from "axios";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ApiError } from "@/types/ApiError";
+import { Checkbox } from "./ui/checkbox";
 
 export function LoginForm() {
   const router = useRouter();
@@ -39,6 +39,7 @@ export function LoginForm() {
     defaultValues: {
       email: "",
       password: "",
+      rememberMe: false,
     },
   });
 
@@ -64,7 +65,7 @@ export function LoginForm() {
   };
 
   return (
-    <Card className="w-full sm:max-w-md">
+    <Card className="sm:max-w-md">
       <CardHeader className="text-center">
         <CardTitle className="text-xl">Welcome back</CardTitle>
         <CardDescription>Login dengan Email dan Password Anda</CardDescription>
@@ -84,7 +85,7 @@ export function LoginForm() {
                     {...field}
                     id="login-email"
                     type="email"
-                    placeholder="m@example.com"
+                    placeholder="Masukkan Email Anda ...."
                     aria-invalid={fieldState.invalid}
                   />
                   {fieldState.invalid && (
@@ -101,11 +102,12 @@ export function LoginForm() {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor="login-password">Password</FieldLabel>
-                  <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
                     <Input
                       {...field}
                       id="login-password"
                       type={showPassword ? "text" : "password"}
+                      placeholder="Masukkan Password Anda ...."
                       aria-invalid={fieldState.invalid}
                     />
                     <Button
@@ -113,7 +115,7 @@ export function LoginForm() {
                       variant="outline"
                       size="sm"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="ml-auto p-0 cursor-pointer"
+                      className="p-0 w-10 h-10 flex items-center justify-center"
                     >
                       {showPassword ? (
                         <EyeOff className="w-5 h-5" />
@@ -122,7 +124,6 @@ export function LoginForm() {
                       )}
                     </Button>
                   </div>
-
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}
@@ -130,8 +131,32 @@ export function LoginForm() {
               )}
             />
 
+            {/* REMEMBER ME */}
+            <Controller
+              name="rememberMe"
+              control={form.control}
+              render={({ field }) => (
+                <div className="flex items-center gap-2 mb-4">
+                  <Checkbox
+                    id="rememberMe"
+                    className="w-4 h-4 shrink-0 cursor-pointer" // ukuran checkbox tetap
+                    checked={!!field.value} // pastikan boolean
+                    onCheckedChange={(checked) => field.onChange(checked)}
+                  />
+                  <label
+                    htmlFor="rememberMe"
+                    className="text-sm font-semibold cursor-pointer"
+                  >
+                    Remember Me
+                  </label>
+                </div>
+              )}
+            />
+
             <Field>
-              <Button type="submit">Login</Button>
+              <Button type="submit" className="cursor-pointer">
+                Login
+              </Button>
             </Field>
           </FieldGroup>
         </form>

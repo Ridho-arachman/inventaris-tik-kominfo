@@ -59,12 +59,20 @@ export default function UserDetailPage() {
         <Section title="Waktu Aktivitas">
           <Detail
             label="Dibuat Pada"
-            value={new Date(user.createdAt).toLocaleString()}
+            value={new Date(user.createdAt).toLocaleString("id-ID", {
+              dateStyle: "long",
+              timeStyle: "short",
+            })}
           />
           <Detail
             label="Diperbarui Pada"
             value={
-              user.updatedAt ? new Date(user.updatedAt).toLocaleString() : "-"
+              user.updatedAt
+                ? new Date(user.updatedAt).toLocaleString("id-ID", {
+                    dateStyle: "long",
+                    timeStyle: "short",
+                  })
+                : "-"
             }
           />
         </Section>
