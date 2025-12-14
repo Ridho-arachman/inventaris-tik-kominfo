@@ -23,12 +23,13 @@ import { notifier } from "@/components/ToastNotifier";
 import { userCreateSchema } from "@/schema/userOpdSchema";
 import { AxiosError } from "axios";
 import { ApiError } from "@/types/ApiError";
+import { Separator } from "@/components/ui/separator";
 
 export default function AddUserPage() {
   const router = useRouter();
 
   const { post, loading } = usePost("/user-opd");
-  const { data: opdList = [] } = useGet("/opd");
+  const { data: opdList, isLoading } = useGet("/opd");
 
   const form = useForm<z.infer<typeof userCreateSchema>>({
     resolver: zodResolver(userCreateSchema),
@@ -63,9 +64,42 @@ export default function AddUserPage() {
     }
   };
 
+  if (isLoading)
+    return (
+      <div className="px-6 py-10 space-y-8" key="loading-skeleton">
+        {/* Header skeleton */}
+        <div className="h-10 w-1/3 bg-gray-300 rounded animate-pulse"></div>
+        <div className="h-6 w-1/2 bg-gray-200 rounded animate-pulse"></div>
+
+        <Separator className="my-6" />
+
+        {/* Form skeleton */}
+        {[...Array(5)].map((_, i) => (
+          <div key={i} className="space-y-2">
+            {/* Label skeleton */}
+            <div className="h-4 w-1/4 bg-gray-300 rounded animate-pulse"></div>
+            {/* Input skeleton */}
+            <div className="h-10 w-full bg-gray-200 rounded animate-pulse"></div>
+          </div>
+        ))}
+
+        {/* Select skeleton */}
+        <div className="space-y-2">
+          <div className="h-4 w-1/4 bg-gray-300 rounded animate-pulse"></div>
+          <div className="h-10 w-full bg-gray-200 rounded animate-pulse"></div>
+        </div>
+
+        {/* Button skeleton */}
+        <div className="flex gap-4 mt-4">
+          <div className="h-10 w-32 bg-gray-200 rounded animate-pulse"></div>
+          <div className="h-10 w-32 bg-gray-200 rounded animate-pulse"></div>
+        </div>
+      </div>
+    );
+
   return (
     <motion.div
-      className="min-h-screen bg-gray-50 px-6 py-10"
+      className="min-h-screen px-6 py-10"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -172,9 +206,20 @@ export default function AddUserPage() {
           )}
         />
 
-        <Button type="submit" className="w-full mt-4" disabled={loading}>
-          {loading ? "Menyimpan..." : "Tambah User"}
-        </Button>
+        <div className="mt-12 flex justify-end gap-4">
+          <Button
+            variant="secondary"
+            type="button"
+            onClick={() => router.back()}
+            disabled={loading}
+            className="cursor-pointer"
+          >
+            Kembali
+          </Button>
+          <Button type="submit" disabled={loading}>
+            {loading ? "Menyimpan..." : "Tambah User"}
+          </Button>
+        </div>
       </motion.form>
     </motion.div>
   );

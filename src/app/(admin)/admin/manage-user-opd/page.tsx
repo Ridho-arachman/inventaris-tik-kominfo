@@ -25,6 +25,7 @@ import {
   Trash2,
   MoreHorizontal,
   Plus,
+  AlertCircle,
 } from "lucide-react";
 import Link from "next/link";
 import { useDelete, useGet } from "@/hooks/useApi";
@@ -60,9 +61,6 @@ export default function Page() {
 
   const { data, error, isLoading, mutate } = useGet(endpoint);
 
-  // ---------------------------------------
-  // DELETE HANDLER
-  // ---------------------------------------
   const handleDelete = (id: string) => async () => {
     try {
       await del(`/user-opd/${id}`);
@@ -127,25 +125,27 @@ export default function Page() {
 
           <TableBody>
             {/* LOADING */}
-            {isLoading && (
-              <TableRow>
-                <TableCell
-                  colSpan={5}
-                  className="text-center py-6 text-muted-foreground"
-                >
-                  Memuat data...
-                </TableCell>
-              </TableRow>
-            )}
+            {isLoading &&
+              [...Array(5)].map((_, i) => (
+                <TableRow key={i}>
+                  {[...Array(5)].map((_, j) => (
+                    <TableCell key={j}>
+                      <div className="h-4 w-full bg-gray-200 rounded animate-pulse my-2"></div>
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
 
             {/* ERROR */}
             {error && (
               <TableRow>
-                <TableCell
-                  colSpan={5}
-                  className="text-center py-6 text-red-600"
-                >
-                  Terjadi kesalahan saat memuat data.
+                <TableCell colSpan={5}>
+                  <div className="p-6 bg-red-100 border border-red-300 rounded-lg flex items-center gap-4">
+                    <AlertCircle className="w-6 h-6 text-red-600" />
+                    <span className="text-red-700 font-medium">
+                      Terjadi kesalahan saat memuat data.
+                    </span>
+                  </div>
                 </TableCell>
               </TableRow>
             )}

@@ -225,7 +225,7 @@ export default function EditUserPage() {
           <Button
             variant="secondary"
             type="button"
-            onClick={() => window.history.back()}
+            onClick={() => router.back()}
             disabled={patchLoading}
             className="cursor-pointer"
           >
