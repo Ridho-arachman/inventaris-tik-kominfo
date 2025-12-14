@@ -67,7 +67,7 @@ export default function Page() {
 
       notifier.success("Berhasil", "User berhasil dihapus");
 
-      await mutate(); // Refresh SWR cache
+      await mutate("/user-opd/"); // Refresh SWR cache
       router.refresh();
     } catch (err) {
       const error = err as AxiosError<ApiError>;
@@ -83,8 +83,8 @@ export default function Page() {
       transition={{ duration: 0.4, ease: "easeOut" }}
     >
       {/* HEADER */}
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold">Daftar User OPD</h1>
+      <div className="flex items-center justify-between mb-6 gap-4">
+        <h1 className="text-lg md:text-3xl font-bold">Daftar User OPD</h1>
         <Link href="/admin/manage-user-opd/add">
           <Button className="flex items-center gap-2 cursor-pointer">
             <Plus className="w-4 h-4" /> Tambah User
@@ -93,7 +93,7 @@ export default function Page() {
       </div>
 
       {/* SEARCH */}
-      <div className="flex justify-end mb-4">
+      <div className="flex justify-center md:justify-start xl:justify-end mb-4">
         <div className="relative w-full max-w-xs">
           <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
           <Input

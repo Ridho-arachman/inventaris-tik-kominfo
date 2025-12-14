@@ -5,7 +5,7 @@ export const userQuerySchema = z.object({
 });
 
 export const userQuerySchemaById = z.object({
-  id: z.string("Query harus berupa string").trim().cuid("Id Tidak Valid"),
+  id: z.string("Query harus berupa string").trim(),
 });
 
 export const userUpdateSchema = z.object({

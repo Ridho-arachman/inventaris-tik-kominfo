@@ -30,7 +30,9 @@ export const DELETE = async (
 
     if (!parsedId.success) return handleZodValidation(parsedId);
 
-    const userOpd = await prisma.user.delete({ where: { id } });
+    const userOpd = await prisma.user.delete({
+      where: { id: parsedId.data.id },
+    });
 
     return handleResponse({
       success: true,

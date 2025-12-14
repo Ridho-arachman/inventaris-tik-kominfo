@@ -24,6 +24,7 @@ import { userCreateSchema } from "@/schema/userOpdSchema";
 import { AxiosError } from "axios";
 import { ApiError } from "@/types/ApiError";
 import { Separator } from "@/components/ui/separator";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function AddUserPage() {
   const router = useRouter();
@@ -216,8 +217,15 @@ export default function AddUserPage() {
           >
             Kembali
           </Button>
-          <Button type="submit" disabled={loading}>
-            {loading ? "Menyimpan..." : "Tambah User"}
+          <Button type="submit" disabled={loading} className="cursor-pointer">
+            {loading ? (
+              <>
+                <Spinner />
+                <span>Menyimpan...</span>
+              </>
+            ) : (
+              "Tambah User"
+            )}
           </Button>
         </div>
       </motion.form>

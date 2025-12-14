@@ -7,7 +7,7 @@ import prisma from "@/lib/prisma";
 import { userCreateSchema, userQuerySchema } from "@/schema/userOpdSchema";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
-import bcrypt from "bcrypt";
+import { handleBetterAuthError } from "@/lib/handleBetterAuthError";
 
 export const GET = async (req: NextRequest) => {
   try {
@@ -62,8 +62,6 @@ export const GET = async (req: NextRequest) => {
       },
     });
 
-    console.log(userRes);
-
     if (userRes.length === 0) {
       return handleResponse({
         success: false,
@@ -99,66 +97,57 @@ export const GET = async (req: NextRequest) => {
 };
 
 export const POST = async (req: NextRequest) => {
+  let createdUserId: string | null = null;
+
   try {
-    // Ambil body & validasi dengan Zod
     const body = await req.json();
     const parsed = userCreateSchema.safeParse(body);
-
     if (!parsed.success) return handleZodValidation(parsed);
 
     const { name, email, password, idOpd } = parsed.data;
 
-    const opdExists = await prisma.opd.findUnique({
-      where: { id: idOpd },
+    // 1️⃣ Signup auth
+    const result = await auth.api.signUpEmail({
+      headers: await headers(),
+      body: { name, email, password },
     });
 
-    if (!opdExists) {
+    if (!result?.user) {
       return handleResponse({
         success: false,
-        message: "Id OPD tidak valid",
+        message: "Gagal membuat user OPD",
         status: 400,
       });
     }
 
-    const newUser = await prisma.$transaction(async (tx) => {
-      // 1️⃣ Buat user
-      const user = await tx.user.create({
-        data: {
-          name,
-          email,
-          role: "OPD",
-          idOpd,
-        },
-      });
+    createdUserId = result.user.id;
 
-      const salt = bcrypt.genSaltSync(10);
-      const hash = bcrypt.hashSync(password, salt);
-
-      // 2️⃣ Buat account untuk user yang baru dibuat
-      await tx.account.create({
-        data: {
-          userId: user.id,
-          providerId: "credentials",
-          accountId: user.email,
-          password: hash, // bisa hash dulu sesuai kebutuhan
-        },
-      });
-
-      return user;
+    // 2️⃣ Update Prisma
+    await prisma.user.update({
+      where: { id: createdUserId },
+      data: { idOpd },
     });
 
-    // 3️⃣ Kembalikan response sukses
     return handleResponse({
       success: true,
       message: "Signup Berhasil",
-      data: newUser,
+      data: result,
     });
   } catch (error) {
-    console.log(error);
+    // Better Auth Handler
+    const betterAuthErr = handleBetterAuthError(error);
+    if (betterAuthErr) {
+      return handleResponse({
+        success: false,
+        message: betterAuthErr.message,
+        status: betterAuthErr.status,
+      });
+    }
 
     // Handle Prisma error
     const prismaErr = handlePrismaError(error);
     if (prismaErr) {
+      await prisma.user.delete({ where: { id: createdUserId as string } });
       return handleResponse({
         success: false,
         message: prismaErr.message,

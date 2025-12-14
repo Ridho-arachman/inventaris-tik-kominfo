@@ -23,16 +23,16 @@ export function handleBetterAuthError(
       return { status: 422, message: err.body?.message || "Validation failed" };
 
     case 401:
-      if (err.body?.message?.includes("Email not verified")) {
-        return {
-          status: 401,
-          message:
-            "Email belum diverifikasi. Silakan cek inbox untuk email verifikasi.",
-        };
-      }
       return {
         status: 401,
         message: "Unauthorized / email atau password salah",
+      };
+
+    case 403:
+      return {
+        status: 403,
+        message:
+          "Email belum diverifikasi. Silakan cek inbox untuk email verifikasi.",
       };
 
     case 400:

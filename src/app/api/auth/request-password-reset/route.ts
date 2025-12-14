@@ -2,47 +2,32 @@ import { auth } from "@/lib/auth";
 import { handleBetterAuthError } from "@/lib/handleBetterAuthError";
 import { handleResponse } from "@/lib/handleResponse";
 import { handleZodValidation } from "@/lib/handleZodValidation";
-import prisma from "@/lib/prisma";
-import { signUpAdminSchema } from "@/schema/authSchema";
-
+import { EmailSchema } from "@/schema/authSchema";
 import { NextRequest } from "next/server";
 
 export const POST = async (req: NextRequest) => {
   try {
-    const body = await req.json();
+    const { email } = await req.json();
 
-    const parsed = signUpAdminSchema.safeParse(body);
-
+    const parsed = EmailSchema.safeParse({ email });
     if (!parsed.success) return handleZodValidation(parsed);
 
-    const { name, email, password } = parsed.data;
-
-    const result = await auth.api.signUpEmail({
+    const res = await auth.api.requestPasswordReset({
       body: {
-        name,
-        email,
-        password,
-        callbackURL:
-          `${process.env.BETTER_AUTH_URL}/login` ||
-          "http://localhost:3000/login",
-        // redirect setelah verifikasi
+        email: parsed.data.email,
+        redirectTo:
+          `${process.env.NEXT_PUBLIC_APP_URL}/reset-password` ||
+          "http://localhost:3000/reset-password",
       },
-    });
-
-    const roleAdmin = await prisma.user.update({
-      where: { email: result.user.email },
-      data: { role: "ADMIN" },
-      select: { role: true },
     });
 
     return handleResponse({
       success: true,
-      message: "Signup Berhasil",
-      data: { ...result, role: roleAdmin.role },
+      message: "Link reset password telah dikirim ke email Anda",
+      data: res,
+      status: 200,
     });
   } catch (error) {
-    console.log(error);
-
     // Better Auth Handler
     const betterAuthErr = handleBetterAuthError(error);
     if (betterAuthErr) {

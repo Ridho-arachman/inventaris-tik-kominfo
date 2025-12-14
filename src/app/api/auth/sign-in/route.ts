@@ -57,8 +57,6 @@ export const POST = async (req: NextRequest) => {
       },
     });
   } catch (error) {
-    console.log(error);
-
     // Better Auth Handler
     const betterAuthErr = handleBetterAuthError(error);
     if (betterAuthErr) {

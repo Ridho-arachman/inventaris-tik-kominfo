@@ -30,10 +30,12 @@ import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ApiError } from "@/types/ApiError";
 import { Checkbox } from "./ui/checkbox";
+import { Spinner } from "./ui/spinner";
+import Link from "next/link";
 
 export function LoginForm() {
   const router = useRouter();
-  const { post } = usePost("/auth/sign-in");
+  const { post, loading } = usePost("/auth/sign-in");
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -59,7 +61,6 @@ export function LoginForm() {
       console.log(error);
 
       const err = error as AxiosError<ApiError>;
-
       notifier.error("Login Gagal", err.response?.data.message);
     }
   };
@@ -73,7 +74,7 @@ export function LoginForm() {
 
       <CardContent>
         <form id="login-form" onSubmit={form.handleSubmit(onSubmit)}>
-          <FieldGroup>
+          <FieldGroup className="flex flex-col gap-3">
             {/* EMAIL */}
             <Controller
               name="email"
@@ -115,7 +116,7 @@ export function LoginForm() {
                       variant="outline"
                       size="sm"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="p-0 w-10 h-10 flex items-center justify-center"
+                      className="p-0 w-10 h-10 flex items-center justify-center cursor-pointer"
                     >
                       {showPassword ? (
                         <EyeOff className="w-5 h-5" />
@@ -131,31 +132,51 @@ export function LoginForm() {
               )}
             />
 
-            {/* REMEMBER ME */}
-            <Controller
-              name="rememberMe"
-              control={form.control}
-              render={({ field }) => (
-                <div className="flex items-center gap-2 mb-4">
-                  <Checkbox
-                    id="rememberMe"
-                    className="w-4 h-4 shrink-0 cursor-pointer" // ukuran checkbox tetap
-                    checked={!!field.value} // pastikan boolean
-                    onCheckedChange={(checked) => field.onChange(checked)}
-                  />
-                  <label
-                    htmlFor="rememberMe"
-                    className="text-sm font-semibold cursor-pointer"
-                  >
-                    Remember Me
-                  </label>
-                </div>
-              )}
-            />
+            {/* REMEMBER ME + FORGOT PASSWORD */}
+            <div className="flex items-center justify-between mb-4">
+              <Controller
+                name="rememberMe"
+                control={form.control}
+                render={({ field }) => (
+                  <div className="flex items-center gap-2">
+                    <Checkbox
+                      id="rememberMe"
+                      className="w-4 h-4 shrink-0 cursor-pointer"
+                      checked={!!field.value}
+                      onCheckedChange={(checked) => field.onChange(checked)}
+                    />
+                    <label
+                      htmlFor="rememberMe"
+                      className="text-sm font-semibold cursor-pointer"
+                    >
+                      Remember Me
+                    </label>
+                  </div>
+                )}
+              />
+
+              {/* FORGOT PASSWORD */}
+              <Link
+                href="/forgot-password"
+                className="text-sm font-medium  hover:underline"
+              >
+                Forgot Password?
+              </Link>
+            </div>
 
             <Field>
-              <Button type="submit" className="cursor-pointer">
-                Login
+              <Button
+                type="submit"
+                className="cursor-pointer"
+                disabled={loading}
+              >
+                {loading ? (
+                  <>
+                    <Spinner /> <span>Loading...</span>
+                  </>
+                ) : (
+                  "Login"
+                )}
               </Button>
             </Field>
           </FieldGroup>
