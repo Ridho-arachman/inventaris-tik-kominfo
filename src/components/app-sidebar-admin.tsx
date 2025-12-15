@@ -1,8 +1,6 @@
 "use client";
 import * as React from "react";
 
-import { SearchForm } from "@/components/search-form";
-import { VersionSwitcher } from "@/components/version-switcher";
 import {
   Sidebar,
   SidebarContent,
@@ -21,6 +19,8 @@ import { usePost } from "@/hooks/useApi";
 import { notifier } from "./ToastNotifier";
 import { AxiosError } from "axios";
 import { ApiError } from "@/types/ApiError";
+import Link from "next/link";
+import { Monitor } from "lucide-react";
 
 type MenuItem = {
   title: string;
@@ -97,12 +97,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <VersionSwitcher
-          versions={data.versions}
-          defaultVersion={data.versions[0]}
-        />
-        <SearchForm />
+        <Link
+          href="/admin"
+          className="flex items-center gap-2 px-2 py-1 transition-colors group"
+        >
+          <Monitor className="w-6 h-6  transition-transform duration-200 group-hover:scale-110" />
+          <span className="text-xl font-bold  transition-transform duration-200 group-hover:scale-105 ">
+            TIK Inventaris
+          </span>
+        </Link>
       </SidebarHeader>
+
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}
         {data.navMain.map((item) => (

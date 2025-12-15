@@ -97,8 +97,6 @@ export const GET = async (req: NextRequest) => {
 };
 
 export const POST = async (req: NextRequest) => {
-  let createdUserId: string | null = null;
-
   try {
     const body = await req.json();
     const parsed = userCreateSchema.safeParse(body);
@@ -106,26 +104,9 @@ export const POST = async (req: NextRequest) => {
 
     const { name, email, password, idOpd } = parsed.data;
 
-    // 1️⃣ Signup auth
     const result = await auth.api.signUpEmail({
       headers: await headers(),
-      body: { name, email, password },
-    });
-
-    if (!result?.user) {
-      return handleResponse({
-        success: false,
-        message: "Gagal membuat user OPD",
-        status: 400,
-      });
-    }
-
-    createdUserId = result.user.id;
-
-    // 2️⃣ Update Prisma
-    await prisma.user.update({
-      where: { id: createdUserId },
-      data: { idOpd },
+      body: { name, email, password, idOpd },
     });
 
     return handleResponse({
@@ -141,17 +122,6 @@ export const POST = async (req: NextRequest) => {
         success: false,
         message: betterAuthErr.message,
         status: betterAuthErr.status,
-      });
-    }
-
-    // Handle Prisma error
-    const prismaErr = handlePrismaError(error);
-    if (prismaErr) {
-      await prisma.user.delete({ where: { id: createdUserId as string } });
-      return handleResponse({
-        success: false,
-        message: prismaErr.message,
-        status: prismaErr.status,
       });
     }
 

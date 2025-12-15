@@ -1,221 +1,132 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
-
+import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Cpu, HardDrive, Info, HelpCircle, CheckCircle } from "lucide-react";
 
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectItem,
-  SelectContent,
-} from "@/components/ui/select";
-import { useRouter } from "next/navigation";
-
-// ============================
-// Dummy Data Asset (schema DB baru)
-// ============================
-const dummyAssets = [
-  {
-    id: 1,
-    category: "Laptop",
-    brand: "Asus",
-    model: "A14",
-    specification: "Ryzen 5, SSD 512GB",
-    acquisitionYear: 2022,
-    jmlhAktif: 8,
-    jmlhNonaktif: 2,
-    jml: 10,
-    location: "Ruang IT",
-    photoUrl: "/laptop.jpg",
-    opdId: 1,
-  },
-  {
-    id: 2,
-    category: "Laptop",
-    brand: "HP",
-    model: "ProBook 440",
-    specification: "i5 8th Gen, SSD 256GB",
-    acquisitionYear: 2021,
-    jmlhAktif: 0,
-    jmlhNonaktif: 4,
-    jml: 4,
-    location: "Gudang",
-    photoUrl: "",
-    opdId: 1,
-  },
-  {
-    id: 3,
-    category: "Printer",
-    brand: "Canon",
-    model: "IP2770",
-    specification: "Inkjet",
-    acquisitionYear: 2023,
-    jmlhAktif: 5,
-    jmlhNonaktif: 0,
-    jml: 5,
-    location: "Ruang TU",
-    photoUrl: "/printer.jpg",
-    opdId: 1,
-  },
-];
-
-export default function AssetListOPD() {
-  const router = useRouter();
-  const years = [...new Set(dummyAssets.map((a) => a.acquisitionYear))];
-  const [selectedYear, setSelectedYear] = useState<number | "ALL">("ALL");
-
-  const filteredAssets =
-    selectedYear === "ALL"
-      ? dummyAssets
-      : dummyAssets.filter((a) => a.acquisitionYear === selectedYear);
-
+export default function CategoryPage() {
   return (
-    <div className="min-h-screen px-6 py-10">
-      <h1 className="text-3xl font-bold mb-8">Daftar Asset OPD</h1>
+    <div className="min-h-screen bg-gray-50 px-6 py-10">
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="mb-10"
+      >
+        <h1 className="text-3xl font-bold">Kategori Aset</h1>
+        <p className="text-gray-600 mt-2 max-w-xl">
+          Pilih kategori aset yang ingin Anda kelola. Setiap kategori berisi
+          daftar aset dan statistik penggunaan.
+        </p>
+      </motion.div>
 
-      {/* FILTER */}
-      <div className="flex items-center gap-4 mb-8">
-        <p className="font-medium text-gray-700">Filter Tahun:</p>
-
-        <Select
-          defaultValue="ALL"
-          onValueChange={(v) =>
-            setSelectedYear(v === "ALL" ? "ALL" : parseInt(v))
-          }
+      {/* Category Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Hardware */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
         >
-          <SelectTrigger className="w-48">
-            <SelectValue placeholder="Pilih Tahun" />
-          </SelectTrigger>
+          <Link href="/opd/asset/hardware">
+            <Card className="hover:shadow-lg bg-white transition-all cursor-pointer p-5 border border-gray-200">
+              <CardHeader className="flex flex-row items-center gap-4 p-0">
+                <HardDrive className="w-10 h-10 text-blue-600" />
+                <div>
+                  <CardTitle className="text-2xl font-semibold">
+                    Hardware
+                  </CardTitle>
+                  <p className="text-sm text-gray-500">
+                    Aset fisik seperti laptop, monitor, printer, dll.
+                  </p>
+                </div>
+              </CardHeader>
 
-          <SelectContent>
-            <SelectItem value="ALL">Semua Tahun</SelectItem>
-            {years.map((y) => (
-              <SelectItem key={y} value={String(y)}>
-                {y}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+              <CardContent className="pt-4 p-0 text-gray-600">
+                Klik untuk melihat semua aset hardware.
+              </CardContent>
+            </Card>
+          </Link>
+        </motion.div>
+
+        {/* Software */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+        >
+          <Link href="/opd/asset/software">
+            <Card className="hover:shadow-lg bg-white transition-all cursor-pointer p-5 border border-gray-200">
+              <CardHeader className="flex flex-row items-center gap-4 p-0">
+                <Cpu className="w-10 h-10 text-purple-600" />
+                <div>
+                  <CardTitle className="text-2xl font-semibold">
+                    Software
+                  </CardTitle>
+                  <p className="text-sm text-gray-500">
+                    Lisensi OS, antivirus, office, dan aplikasi lainnya.
+                  </p>
+                </div>
+              </CardHeader>
+
+              <CardContent className="pt-4 p-0 text-gray-600">
+                Klik untuk melihat semua aset software.
+              </CardContent>
+            </Card>
+          </Link>
+        </motion.div>
       </div>
 
-      {/* SUMMARY */}
-      <Card className="mb-8 shadow-md">
-        <CardHeader>
-          <CardTitle>Ringkasan Aset</CardTitle>
-        </CardHeader>
-        <CardContent className="grid grid-cols-2 sm:grid-cols-4 gap-6">
-          <div>
-            <p className="text-sm text-gray-600">Total Jenis Aset</p>
-            <p className="text-2xl font-bold">{filteredAssets.length}</p>
-          </div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="mt-14"
+      >
+        <h2 className="text-xl font-semibold mb-4">
+          Informasi Pengelolaan Aset
+        </h2>
 
-          <div>
-            <p className="text-sm text-gray-600">Total Unit</p>
-            <p className="text-xl font-semibold">
-              {filteredAssets.reduce((t, a) => t + a.jml, 0)}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Info */}
+          <Card className="p-5 border border-gray-200 bg-white">
+            <div className="flex items-center gap-3 mb-3">
+              <Info className="w-6 h-6 text-blue-500" />
+              <h3 className="text-lg font-medium">Data Terpusat</h3>
+            </div>
+            <p className="text-gray-600 text-sm">
+              Semua aset yang Anda kelola akan muncul di halaman kategori ini,
+              memudahkan pengelolaan dan monitoring.
             </p>
-          </div>
+          </Card>
 
-          <div>
-            <p className="text-sm text-gray-600">Total Unit Aktif</p>
-            <p className="text-xl font-semibold text-green-600">
-              {filteredAssets.reduce((t, a) => t + a.jmlhAktif, 0)}
+          {/* Help */}
+          <Card className="p-5 border border-gray-200 bg-white">
+            <div className="flex items-center gap-3 mb-3">
+              <HelpCircle className="w-6 h-6 text-purple-500" />
+              <h3 className="text-lg font-medium">Panduan Penggunaan</h3>
+            </div>
+            <p className="text-gray-600 text-sm">
+              Anda dapat menambah, mengedit, atau menghapus aset dengan mudah
+              melalui menu yang tersedia.
             </p>
-          </div>
+          </Card>
 
-          <div>
-            <p className="text-sm text-gray-600">Total Unit Non Aktif</p>
-            <p className="text-xl font-semibold text-red-600">
-              {filteredAssets.reduce((t, a) => t + a.jmlhNonaktif, 0)}
+          {/* Check */}
+          <Card className="p-5 border border-gray-200 bg-white">
+            <div className="flex items-center gap-3 mb-3">
+              <CheckCircle className="w-6 h-6 text-green-600" />
+              <h3 className="text-lg font-medium">Data Akurat</h3>
+            </div>
+            <p className="text-gray-600 text-sm">
+              Pastikan data selalu diperbarui untuk menjaga kualitas laporan dan
+              analisis aset.
             </p>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* TABLE */}
-      <div className="bg-white rounded-xl shadow-md overflow-hidden">
-        <table className="w-full text-left">
-          <thead className="bg-gray-100 border-b">
-            <tr>
-              <th className="p-3">Foto</th>
-              <th className="p-3">Kategori</th>
-              <th className="p-3">Brand & Model</th>
-              <th className="p-3">Tahun</th>
-              <th className="p-3">Jumlah</th>
-              <th className="p-3">Aktif</th>
-              <th className="p-3">Non Aktif</th>
-              <th className="p-3">Lokasi</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {filteredAssets.map((asset) => (
-              <motion.tr
-                key={asset.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="border-b hover:bg-gray-50 cursor-pointer"
-                onClick={() => router.push("/opd/asset/" + asset.id)}
-              >
-                {/* FOTO */}
-                <td className="p-3">
-                  <div className="w-14 h-14 bg-gray-200 rounded overflow-hidden flex items-center justify-center">
-                    {asset.photoUrl ? (
-                      <Image
-                        src={asset.photoUrl}
-                        alt={asset.category}
-                        width={56}
-                        height={56}
-                        className="object-cover"
-                      />
-                    ) : (
-                      <span className="text-xs text-gray-500">No Image</span>
-                    )}
-                  </div>
-                </td>
-
-                {/* CATEGORY */}
-                <td className="p-3 font-medium">{asset.category}</td>
-
-                {/* BRAND + MODEL */}
-                <td className="p-3">
-                  {asset.brand} {asset.model}
-                </td>
-
-                {/* TAHUN */}
-                <td className="p-3">{asset.acquisitionYear}</td>
-
-                {/* TOTAL UNIT */}
-                <td className="p-3 font-medium">{asset.jml}</td>
-
-                {/* AKTIF */}
-                <td className="p-3 text-green-600">{asset.jmlhAktif}</td>
-
-                {/* NON AKTIF */}
-                <td className="p-3 text-red-600">{asset.jmlhNonaktif}</td>
-
-                {/* LOCATION */}
-                <td className="p-3">{asset.location}</td>
-              </motion.tr>
-            ))}
-
-            {filteredAssets.length === 0 && (
-              <tr>
-                <td className="p-4 text-center text-gray-500" colSpan={9}>
-                  Tidak ada aset pada tahun ini.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+          </Card>
+        </div>
+      </motion.div>
     </div>
   );
 }

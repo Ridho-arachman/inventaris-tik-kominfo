@@ -59,8 +59,9 @@ export const auth = betterAuth({
 
   emailAndPassword: {
     enabled: true,
+
     requireEmailVerification: true,
-    sendResetPassword: async ({ user, url, token }, request) => {
+    sendResetPassword: async ({ user, url }) => {
       const html = `<!DOCTYPE html>
 <html lang="id">
   <head>
@@ -213,26 +214,35 @@ export const auth = betterAuth({
     changeEmail: {
       enabled: true,
     },
+    fields: {
+      image: undefined,
+    },
     additionalFields: {
       role: {
         type: "string",
         required: false,
         defaultValue: "OPD",
-        input: false,
+        input: true,
       },
-      opdId: {
+      idOpd: {
         type: "string",
         required: false,
-        input: false,
-      },
-      codeOpd: {
-        type: "string",
-        required: false,
-        input: false,
+        input: true,
       },
     },
   },
   session: {
+    additionalFields: {
+      role: {
+        type: "string",
+        required: false,
+      },
+      idOpd: {
+        type: "string",
+        required: false,
+        input: true,
+      },
+    },
     expiresIn: 60 * 60 * 24 * 7, // 7 days
     updateAge: 60 * 60 * 24, // 1 day (every 1 day the session expiration is updated)
   },

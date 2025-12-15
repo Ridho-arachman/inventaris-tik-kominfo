@@ -50,6 +50,8 @@ export function LoginForm() {
   const onSubmit = async (data: z.infer<typeof signInSchema>) => {
     try {
       const res = await post(data);
+      console.log(res);
+
       notifier.success(
         res.message,
         `Selamat datang, ${res.data.user.name}!!!..`

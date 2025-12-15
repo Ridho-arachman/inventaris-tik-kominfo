@@ -4,18 +4,8 @@ import { handleResponse } from "@/lib/handleResponse";
 import { handleZodValidation } from "@/lib/handleZodValidation";
 import prisma from "@/lib/prisma";
 import { signInSchema } from "@/schema/authSchema";
+import { headers } from "next/headers";
 import { NextRequest } from "next/server";
-
-interface UserWithRole {
-  id: string;
-  email: string;
-  name: string;
-  image?: string | null;
-  emailVerified: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-  role: string;
-}
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -36,25 +26,24 @@ export const POST = async (req: NextRequest) => {
           "http://localhost:3000/verify-success",
         rememberMe,
       },
+      params: { expand: "user,roles,opd" },
+      headers: await headers(),
     });
 
-    const roleRecord = await prisma.user.findUnique({
-      where: { email },
-      select: { role: true },
+    const user = await prisma.user.findUnique({
+      where: { id: result.user?.id },
+      include: { opd: true },
     });
 
-    const userRole = roleRecord?.role;
+    const responseData = {
+      ...result,
+      user,
+    };
 
     return handleResponse({
       success: true,
       message: "Login Berhasil",
-      data: {
-        ...result,
-        user: {
-          ...result.user,
-          role: userRole, // default
-        } as UserWithRole,
-      },
+      data: responseData,
     });
   } catch (error) {
     // Better Auth Handler
