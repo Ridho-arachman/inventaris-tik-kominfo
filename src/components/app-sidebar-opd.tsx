@@ -44,7 +44,7 @@ const data = {
       items: [
         {
           title: "Setting User OPD Profile",
-          url: "/opd/user/sss",
+          url: "/opd/setting-user",
         },
         {
           title: "Help",

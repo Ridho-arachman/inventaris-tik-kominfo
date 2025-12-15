@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { format } from "date-fns";
 
 import { Button } from "@/components/ui/button";
@@ -60,6 +60,7 @@ export default function AddHardwareForm() {
     error: kategoriError,
     isLoading: kategoriLoading,
   } = useGet("/hardware/kategori");
+
   const form = useForm<z.infer<typeof hardwareSchema>>({
     resolver: zodResolver(hardwareSchema),
     defaultValues: {
@@ -78,6 +79,11 @@ export default function AddHardwareForm() {
       spesifikasi: "",
       nomorSeri: "",
     },
+  });
+
+  const sumber = useWatch({
+    control: form.control,
+    name: "sumber",
   });
 
   async function onSubmit(values: z.infer<typeof hardwareSchema>) {
@@ -262,6 +268,41 @@ export default function AddHardwareForm() {
                 </Field>
               )}
             />
+
+            {/* Sumber Pengadaan */}
+            <Controller
+              name="sumber"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel>Sumber Pengadaan</FieldLabel>
+
+                  <Select
+                    value={field.value ?? ""}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Pilih sumber" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Object.values(SumberPengadaan).map((item) => (
+                        <SelectItem key={item} value={item}>
+                          {item
+                            .replace(/_/g, " ")
+                            .toLowerCase()
+                            .replace(/(^\w|\s\w)/g, (m) => m.toUpperCase())}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+
             {/* Tanggal */}
             {renderCalendarField("tglPengadaan", "Tanggal Pengadaan")}
             {renderCalendarField("garansiMulai", "Garansi Mulai")}
@@ -312,29 +353,32 @@ export default function AddHardwareForm() {
               )}
             />
             {/* Biaya Perolehan */}
-            <Controller
-              name="biayaPerolehan"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel>Biaya Perolehan</FieldLabel>
-                  <InputGroup>
-                    <InputGroupAddon>
-                      <InputGroupText>Rp</InputGroupText>
-                    </InputGroupAddon>
-                    <Input
-                      {...field}
-                      value={field.value ?? ""}
-                      type="number"
-                      placeholder="15000000"
-                    />
-                  </InputGroup>
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
+            {sumber !== SumberPengadaan.HIBAH &&
+              sumber !== SumberPengadaan.TRANSFER_OPD && (
+                <Controller
+                  name="biayaPerolehan"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel>Biaya Perolehan</FieldLabel>
+                      <InputGroup>
+                        <InputGroupAddon>
+                          <InputGroupText>Rp</InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          {...field}
+                          value={field.value ?? ""}
+                          type="number"
+                          placeholder="15000000"
+                        />
+                      </InputGroup>
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
                   )}
-                </Field>
+                />
               )}
-            />
             {/* Nomor Seri */}
             <Controller
               name="nomorSeri"
@@ -353,39 +397,7 @@ export default function AddHardwareForm() {
                 </Field>
               )}
             />
-            {/* Sumber Pengadaan */}
-            <Controller
-              name="sumber"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel>Sumber Pengadaan</FieldLabel>
 
-                  <Select
-                    value={field.value ?? ""}
-                    onValueChange={field.onChange}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Pilih sumber" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {Object.values(SumberPengadaan).map((item) => (
-                        <SelectItem key={item} value={item}>
-                          {item
-                            .replace(/_/g, " ")
-                            .toLowerCase()
-                            .replace(/(^\w|\s\w)/g, (m) => m.toUpperCase())}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
             {/* Penyedia */}
             <Controller
               name="penyedia"

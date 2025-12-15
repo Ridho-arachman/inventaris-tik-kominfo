@@ -71,6 +71,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             url: "/admin/manage-asset",
           },
           {
+            title: "Manage User Admin",
+            url: "/admin/setting-user",
+          },
+          {
             title: "Logout",
             url: "#",
             classname: "bg-red-500 text-white",

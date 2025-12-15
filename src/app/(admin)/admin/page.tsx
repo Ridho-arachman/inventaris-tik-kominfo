@@ -18,6 +18,8 @@ import {
 } from "recharts";
 import { useGet } from "@/hooks/useApi";
 import { AdminDashboardData } from "@/types/DashboardAdmin";
+import { Skeleton } from "@/components/ui/skeleton";
+import { AlertTriangle } from "lucide-react";
 
 const colors = ["#22c55e", "#ef4444"];
 
@@ -69,8 +71,60 @@ export default function AdminDashboard() {
     total: o.totalAssets || 0,
   }));
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (isLoading)
+    return (
+      <div className="min-h-screen px-6 py-10 space-y-10">
+        {/* Title */}
+        <Skeleton className="h-8 w-64" />
+
+        {/* Summary Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[...Array(4)].map((_, i) => (
+            <Skeleton key={i} className="h-24 rounded-xl" />
+          ))}
+        </div>
+
+        {/* Charts */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {[...Array(3)].map((_, i) => (
+            <Skeleton key={i} className="h-[300px] rounded-xl" />
+          ))}
+        </div>
+
+        {/* OPD List */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[...Array(6)].map((_, i) => (
+            <Skeleton key={i} className="h-[260px] rounded-xl" />
+          ))}
+        </div>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="min-h-screen flex items-center justify-center px-6">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <Card className="max-w-md w-full border-red-200 shadow-sm">
+            <CardHeader className="flex flex-row items-center gap-3">
+              <AlertTriangle className="w-6 h-6 text-red-600" />
+              <CardTitle className="text-red-600">
+                Gagal Memuat Dashboard
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2 text-sm text-gray-700">
+              <p>Terjadi kesalahan saat mengambil data dashboard admin.</p>
+              <p className="text-red-600 font-medium">
+                {error.message || "Silakan coba beberapa saat lagi."}
+              </p>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </div>
+    );
 
   return (
     <div className="min-h-screen px-6 py-10 space-y-10">
