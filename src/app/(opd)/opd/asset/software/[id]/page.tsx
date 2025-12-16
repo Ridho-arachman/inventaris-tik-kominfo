@@ -37,7 +37,7 @@ export default function SoftwareDetailPage() {
         "Berhasil",
         `Software ${res.data.nama} berhasil dihapus`
       );
-      router.push("/admin/manage-asset/opd-software");
+      router.push("/opd/asset/software");
     } catch (error) {
       const err = error as AxiosError<ApiError>;
       notifier.error("Gagal Menghapus Software", err.response?.data.message);
@@ -80,7 +80,7 @@ export default function SoftwareDetailPage() {
       <p className="text-sm text-muted-foreground">
         {error.message || "Gagal memuat data software"}
       </p>
-      <Link href="/admin/manage-asset/opd-software">
+      <Link href="/opd/asset/software">
         <Button variant="outline">Kembali</Button>
       </Link>
     </div>;
@@ -92,7 +92,7 @@ export default function SoftwareDetailPage() {
       <p className="text-sm text-muted-foreground">
         Software yang Anda cari tidak tersedia
       </p>
-      <Link href="/admin/manage-asset/opd-software">
+      <Link href="/opd/asset/software">
         <Button variant="outline">Kembali</Button>
       </Link>
     </div>;
@@ -109,7 +109,7 @@ export default function SoftwareDetailPage() {
 
         <div className="flex flex-wrap gap-2">
           {/* Kembali */}
-          <Link href="/admin/manage-asset/opd-software">
+          <Link href="/opd/asset/software">
             <Button
               variant="ghost"
               size="sm"
@@ -122,7 +122,7 @@ export default function SoftwareDetailPage() {
           </Link>
 
           {/* Edit */}
-          <Link href={`/admin/manage-asset/opd-software/${id}/edit`}>
+          <Link href={`/opd/asset/software/${id}/edit`}>
             <Button
               variant="outline"
               size="sm"
@@ -181,7 +181,7 @@ export default function SoftwareDetailPage() {
           <Detail label="Nama Software" value={software.nama} />
           <Detail label="Versi Terpasang" value={software.versiTerpasang} />
           <Detail label="Vendor" value={software.vendor || "—"} />
-          <Detail label="In House" value={software.inHouse ? "Ya" : "Tidak"} />
+          <Detail label="In House" value={software.inHouse ? "✔️" : "❌"} />
           <Detail
             label="Status"
             value={

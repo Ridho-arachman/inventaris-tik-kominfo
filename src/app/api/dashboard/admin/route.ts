@@ -1,3 +1,4 @@
+import { Role } from "@/generated/enums";
 import { auth } from "@/lib/auth";
 import { handlePrismaError } from "@/lib/handlePrsimaError";
 import { handleResponse } from "@/lib/handleResponse";
@@ -5,17 +6,26 @@ import prisma from "@/lib/prisma";
 import { headers } from "next/headers";
 
 export const GET = async () => {
-  try {
-    // Auth check
-    const user = await auth.api.getSession({ headers: await headers() });
-    if (!user) {
-      return handleResponse({
-        success: false,
-        message: "User belum login",
-        status: 403,
-      });
-    }
+  const allowedRoles: Role[] = ["ADMIN"];
+  // Auth check
+  const session = await auth.api.getSession({ headers: await headers() });
+  if (!session) {
+    return handleResponse({
+      success: false,
+      message: "User belum login",
+      status: 403,
+    });
+  }
 
+  if (!allowedRoles.includes(session?.user.role as Role)) {
+    return handleResponse({
+      success: false,
+      message: "Akses ditolak",
+      status: 403,
+    });
+  }
+
+  try {
     // Summary counts
     const [
       totalOpd,

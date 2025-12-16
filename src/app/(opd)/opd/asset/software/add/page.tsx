@@ -73,7 +73,7 @@ export default function SoftwareFormComponent() {
       pic: "",
       opdId: "",
       kategoriId: "",
-      hardwareTerinstall: "",
+      hardwareTerinstall: undefined,
     },
   });
 
@@ -81,13 +81,25 @@ export default function SoftwareFormComponent() {
     name: "jenisLisensi",
     control: form.control,
   });
+
   const vendor = useWatch({ name: "vendor", control: form.control });
 
   useEffect(() => {
     form.setValue("inHouse", !vendor);
   }, [vendor, form]);
 
+  useEffect(() => {
+    form.setValue(
+      "tglBerakhirLisensi",
+      jenisLisensi === JenisLisensi.LANGGANAN
+        ? form.getValues("tglBerakhirLisensi")
+        : undefined
+    );
+  }, [jenisLisensi, form]);
+
   const onSubmit = async (values: z.infer<typeof softwareCreateSchema>) => {
+    console.log(values);
+
     try {
       const payload = {
         ...values,
@@ -107,7 +119,7 @@ export default function SoftwareFormComponent() {
         "Berhasil Menambahkan",
         `Software ${res.data.nama} berhasil ditambahkan`
       );
-      router.push("/admin/manage-asset/opd-software");
+      router.push("/opd/asset/software");
     } catch (error) {
       const err = error as AxiosError<ApiError>;
       console.log(err);
@@ -133,7 +145,11 @@ export default function SoftwareFormComponent() {
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Nama Software</FieldLabel>
-              <Input {...field} value={field.value ?? ""} />
+              <Input
+                {...field}
+                value={field.value ?? ""}
+                placeholder="Masukkan Nama Software"
+              />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
@@ -261,7 +277,11 @@ export default function SoftwareFormComponent() {
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Versi Terpasang</FieldLabel>
-              <Input {...field} value={field.value ?? ""} />
+              <Input
+                {...field}
+                value={field.value ?? ""}
+                placeholder="Masukkan Versi Terpasang"
+              />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
@@ -275,7 +295,11 @@ export default function SoftwareFormComponent() {
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel>Vendor</FieldLabel>
-                <Input {...field} value={field.value ?? ""} />
+                <Input
+                  {...field}
+                  value={field.value ?? ""}
+                  placeholder="Masukkan nama vendor software"
+                />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}
@@ -333,7 +357,15 @@ export default function SoftwareFormComponent() {
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel>Harga Perolehan</FieldLabel>
-                <Input {...field} value={field.value ?? ""} />
+                <div className="flex items-center">
+                  <span className="mr-2 font-semibold text-gray-700">Rp</span>
+                  <Input
+                    {...field}
+                    value={field.value ?? ""}
+                    type="number"
+                    placeholder="15000000"
+                  />
+                </div>
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}
@@ -378,7 +410,11 @@ export default function SoftwareFormComponent() {
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel>PIC</FieldLabel>
-                <Input {...field} value={field.value ?? ""} />
+                <Input
+                  {...field}
+                  value={field.value ?? ""}
+                  placeholder="Masukkan PIC Software"
+                />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}
@@ -472,13 +508,6 @@ export default function SoftwareFormComponent() {
                               ?.nama
                           }`
                         : "Pilih Hardware Terinstall"}
-                      {" || "}
-                      {value
-                        ? `Nomor Seri: ${
-                            listHardware.find((h: Hardware) => h.id === value)
-                              ?.nomorSeri
-                          }`
-                        : "Pilih Hardware Terinstall"}
                       <ChevronsUpDown className="opacity-50" />
                     </Button>
                   </PopoverTrigger>
@@ -528,17 +557,20 @@ export default function SoftwareFormComponent() {
           }}
         />
 
-        <div className="flex flex-col lg:flex-row  gap-4 justify-start">
-          <Button
-            type="button"
-            className="w-full md:w-1/3 cursor-pointer"
-            disabled={loading}
-          >
-            <Link href="/admin/manage-asset/opd-software">Back</Link>
-          </Button>
+        <div className="flex flex-col lg:flex-row gap-4 justify-start">
+          <Link href="/opd/asset/software" className="flex-1">
+            <Button
+              type="button"
+              className="w-full cursor-pointer"
+              disabled={loading}
+            >
+              Back
+            </Button>
+          </Link>
+
           <Button
             type="submit"
-            className="w-full md:w-1/3 cursor-pointer"
+            className="flex-1 w-full cursor-pointer"
             disabled={loading}
           >
             Simpan

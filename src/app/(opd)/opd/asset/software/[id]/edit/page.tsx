@@ -41,9 +41,8 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 import { AxiosError } from "axios";
 import { ApiError } from "@/types/ApiError";
 import { notifier } from "@/components/ToastNotifier";
@@ -56,8 +55,8 @@ export default function SoftwareFormComponent() {
   const { data: opd } = useGet("/opd");
   const { data: kategori } = useGet("/software/kategori");
   const { data: listHardware } = useGet("/list-hardware");
-  const { data: software } = useGet(`/software/${id}`);
-  const { loading, put } = usePut(`/software/${id}`);
+  const { data: software } = useGet(`/software-opd/${id}`);
+  const { loading, put } = usePut(`/software-opd/${id}`);
   const form = useForm<z.infer<typeof softwareCreateSchema>>({
     resolver: zodResolver(softwareCreateSchema),
   });
@@ -98,6 +97,15 @@ export default function SoftwareFormComponent() {
     form.setValue("inHouse", !vendor);
   }, [vendor, form]);
 
+  useEffect(() => {
+    form.setValue(
+      "tglBerakhirLisensi",
+      jenisLisensi === JenisLisensi.LANGGANAN
+        ? form.getValues("tglBerakhirLisensi")
+        : undefined
+    );
+  }, [jenisLisensi, form]);
+
   const onSubmit = async (values: z.infer<typeof softwareCreateSchema>) => {
     try {
       const payload = {
@@ -110,15 +118,13 @@ export default function SoftwareFormComponent() {
           : null,
       };
 
-      console.log("payload", payload);
-
       const res = await put(payload);
 
       notifier.success(
         "Berhasil Menambahkan",
-        `Software ${res.data.nama} berhasil ditambahkan`
+        `Software ${res.data.nama} berhasil diupdate`
       );
-      router.push("/admin/manage-asset/opd-software");
+      router.push("/opd/asset/software");
     } catch (error) {
       const err = error as AxiosError<ApiError>;
       console.log(err);
@@ -463,28 +469,43 @@ export default function SoftwareFormComponent() {
                 <FieldLabel>Hardware Terinstall</FieldLabel>
                 <Popover open={open} onOpenChange={setOpen}>
                   <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      role="combobox"
-                      aria-expanded={open}
-                      className="w-[200px] justify-between"
-                    >
-                      {value
-                        ? `Nama: ${
-                            listHardware.find((h: Hardware) => h.id === value)
-                              ?.nama
-                          }`
-                        : "Pilih Hardware Terinstall"}
-                      {" || "}
-                      {value
-                        ? `Nomor Seri: ${
-                            listHardware.find((h: Hardware) => h.id === value)
-                              ?.nomorSeri
-                          }`
-                        : "Pilih Hardware Terinstall"}
-                      <ChevronsUpDown className="opacity-50" />
-                    </Button>
+                    <div className="relative w-[200px]">
+                      <Button
+                        variant="outline"
+                        type="button"
+                        role="combobox"
+                        aria-expanded={open}
+                        className="w-full justify-between"
+                      >
+                        {value
+                          ? `Nama: ${
+                              listHardware.find((h: Hardware) => h.id === value)
+                                ?.nama
+                            }`
+                          : "Pilih Hardware Terinstall"}
+                      </Button>
+
+                      {/* Tombol Clear */}
+                      {value && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          type="button"
+                          className="absolute right-6 top-1/2 -translate-y-1/2 p-0"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onChange(null);
+                          }}
+                        >
+                          <X className="w-4 h-4 opacity-50" />
+                        </Button>
+                      )}
+
+                      {/* Icon dropdown tetap di kanan */}
+                      <ChevronsUpDown className="absolute right-2 top-1/2 -translate-y-1/2 opacity-50 pointer-events-none" />
+                    </div>
                   </PopoverTrigger>
+
                   <PopoverContent className="w-[200px] p-0">
                     <Command value={value || ""}>
                       <CommandInput
@@ -532,11 +553,15 @@ export default function SoftwareFormComponent() {
         />
 
         <div className="flex flex-col lg:flex-row  gap-4 justify-start">
-          <Link href="/admin/manage-asset/opd-software">
-            <Button type="button" className="cursor-pointer" disabled={loading}>
-              Back
-            </Button>
-          </Link>
+          <Button
+            type="button"
+            className="cursor-pointer"
+            disabled={loading}
+            onClick={() => router.back()}
+          >
+            Back
+          </Button>
+
           <Button type="submit" className="cursor-pointer" disabled={loading}>
             Simpan
           </Button>

@@ -96,7 +96,10 @@ export const GET = async (req: NextRequest) => {
     const limit = parseInt(searchParams.get("limit") || "10", 10);
     const skip = (page - 1) * limit;
 
-    const where: Prisma.SoftwareWhereInput = { deletedAt: null };
+    const where: Prisma.SoftwareWhereInput = {
+      deletedAt: null,
+      opdId: user.user.idOpd as string,
+    };
 
     if (q) {
       where.OR = [
@@ -108,14 +111,22 @@ export const GET = async (req: NextRequest) => {
 
     if (opdId) where.opdId = opdId === "ALL" ? {} : { contains: opdId };
     if (kritikalitas)
-      where.kritikalitas = kritikalitas.toUpperCase() as KritikalitasStatus;
+      where.kritikalitas =
+        kritikalitas === "ALL"
+          ? {}
+          : (kritikalitas.toUpperCase() as KritikalitasStatus);
     if (jenisLisensi)
-      where.jenisLisensi = jenisLisensi.toUpperCase() as JenisLisensi;
-    if (status) where.status = status.toUpperCase() as StatusAset;
+      where.jenisLisensi =
+        jenisLisensi === "ALL"
+          ? {}
+          : (jenisLisensi.toUpperCase() as JenisLisensi);
+    if (status)
+      where.status =
+        status === "ALL" ? {} : (status.toUpperCase() as StatusAset);
     if (tahun) {
       const start = new Date(`${tahun}-01-01`);
       const end = new Date(`${tahun}-12-31T23:59:59.999Z`);
-      where.tglPengadaan = { gte: start, lte: end };
+      where.tglPengadaan = tahun === "ALL" ? {} : { gte: start, lte: end };
     }
     if (kategori)
       where.kategoriSoftware =
