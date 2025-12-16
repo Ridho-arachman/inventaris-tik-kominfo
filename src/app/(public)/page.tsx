@@ -15,7 +15,7 @@ export default function HomePage() {
     },
     {
       title: "Laporan Cepat",
-      desc: "Ekspor laporan inventaris dalam format Excel/PDF.",
+      desc: "Lihat dan rekap data inventaris secara cepat dan akurat.",
       icon: FileText,
     },
     {
@@ -28,7 +28,7 @@ export default function HomePage() {
   return (
     <div className="bg-gray-900 font-sans text-gray-100">
       {/* Hero Section */}
-      <section className="min-h-screen flex flex-col justify-center items-center text-center px-6 bg-gradient-to-b from-slate-900 via-indigo-900 to-slate-800 relative overflow-hidden ">
+      <section className="min-h-screen flex flex-col justify-center items-center text-center px-6 bg-linear-to-b from-slate-900 via-indigo-900 to-slate-800 relative overflow-hidden ">
         <motion.h1
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -56,7 +56,7 @@ export default function HomePage() {
           <Link href="/login">
             <Button
               size="lg"
-              className="bg-white text-indigo-900 hover:bg-gray-200 shadow-lg"
+              className="bg-white text-indigo-900 hover:bg-gray-200 shadow-lg cursor-pointer"
             >
               Masuk
             </Button>
@@ -65,7 +65,7 @@ export default function HomePage() {
             <Button
               size="lg"
               variant="outline"
-              className="border-white text-indigo-900 hover:bg-white hover:text-indigo-900"
+              className="border-white text-indigo-900 hover:bg-white hover:text-indigo-900 cursor-pointer"
             >
               Panduan
             </Button>
@@ -117,7 +117,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-6 bg-gradient-to-tr from-indigo-900 via-slate-900 to-slate-800 text-white text-center">
+      <section className="py-20 px-6 bg-linear-to-tr from-indigo-900 via-slate-900 to-slate-800 text-white text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-6 drop-shadow-lg">
           Siap Memulai?
         </h2>
@@ -128,7 +128,7 @@ export default function HomePage() {
           <Link href="/login">
             <Button
               size="lg"
-              className="bg-white text-indigo-900 hover:bg-gray-200 shadow-lg"
+              className="bg-white text-indigo-900 hover:bg-gray-200 shadow-lg cursor-pointer"
             >
               Masuk Sekarang
             </Button>
@@ -137,7 +137,7 @@ export default function HomePage() {
             <Button
               size="lg"
               variant="outline"
-              className="border-white text-indigo-900 hover:bg-white hover:text-indigo-900"
+              className="border-white text-indigo-900 hover:bg-white hover:text-indigo-900 cursor-pointer"
             >
               Panduan Pengguna
             </Button>

@@ -10,7 +10,8 @@ export default function Navbar() {
   const links = [
     { name: "Beranda", href: "/" },
     { name: "Panduan", href: "/help" },
-    { name: "Profil", href: "/profile" },
+    { name: "Profile", href: "/profile" },
+    { name: "Masuk", href: "/login" },
   ];
 
   return (
