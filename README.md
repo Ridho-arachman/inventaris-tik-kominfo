@@ -354,17 +354,17 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 
 ## BETTER AUTH
 BETTER_AUTH_SECRET=rahasia_panjang_dan_kuat_32_char_min
-BETTER_AUTH_URL=http://localhost:3000/api/auth
+BETTER_AUTH_URL=http://localhost:3000
 
 ## SMTP (Email)
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_SECURE=false
-SMTP_USER=tim.tik@kominfo.go.id
+SMTP_USER=tim.tik@example.com
 SMTP_PASS=app_password_gmail
 
 ## DATABASE (PostgreSQL)
-DATABASE_URL="postgresql://user:pass@localhost:5432/inventaris_tik"
+DATABASE_URL="postgresql://user:pass@localhost:5432/db_name"
 ```
 
 > 📌 `BETTER_AUTH_SECRET` wajib kuat (minimal 32 karakter) untuk keamanan session.
