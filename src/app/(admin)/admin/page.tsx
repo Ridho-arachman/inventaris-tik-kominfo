@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -17,49 +18,122 @@ import {
   Line,
 } from "recharts";
 import { useGet } from "@/hooks/useApi";
-import { AdminDashboardData } from "@/types/DashboardAdmin";
-import { Skeleton } from "@/components/ui/skeleton";
-import { AlertTriangle } from "lucide-react";
+
+/**
+ * ======================
+ * TYPES
+ * ======================
+ */
+type AssetStatus = {
+  name: "Aktif" | "Non Aktif";
+  count: number;
+};
+
+type AssetGrowth = {
+  label: string;
+  total: number;
+};
+
+type AssetPerOpd = {
+  id: string;
+  name: string;
+  totalAssets: number;
+  hardware: {
+    total: number;
+    aktif: number;
+    nonAktif: number;
+  };
+  software: {
+    total: number;
+    aktif: number;
+    nonAktif: number;
+  };
+};
+
+type DashboardSummary = {
+  totalOpd: number;
+  totalUsers: number;
+  totalHardware: number;
+  totalSoftware: number;
+};
+
+type DashboardData = {
+  summary: DashboardSummary;
+  assetHardwareStatus: AssetStatus[];
+  assetSoftwareStatus: AssetStatus[];
+  assetsPerOpd: AssetPerOpd[];
+  assetGrowth: AssetGrowth[];
+};
 
 const colors = ["#22c55e", "#ef4444"];
 
-export default function AdminDashboard() {
-  const { data, error, isLoading } = useGet("/dashboard/admin");
+/**
+ * EMPTY STATE CHART
+ */
+const EmptyChart = ({ label }: { label: string }) => (
+  <div className="flex h-[250px] items-center justify-center text-sm text-muted-foreground">
+    {label}
+  </div>
+);
 
-  // Safety fallback
-  const safeData: AdminDashboardData = data || {};
-  const summary = safeData.summary || {
+export default function AdminDashboard() {
+  /**
+   * ======================
+   * FILTER TAHUN
+   * ======================
+   */
+  const currentYear = new Date().getFullYear();
+  const years = useMemo(
+    () => Array.from({ length: 10 }, (_, i) => String(currentYear - i)),
+    [currentYear]
+  );
+
+  const [selectedYear, setSelectedYear] = useState<number | "All">("All");
+
+  /**
+   * ======================
+   * FETCH DATA
+   * ======================
+   */
+  const { data, isLoading } = useGet(
+    selectedYear === "All"
+      ? "/dashboard/admin"
+      : `/dashboard/admin?year=${selectedYear}`
+  );
+
+  const dashboard = (data ?? {}) as Partial<DashboardData>;
+
+  /**
+   * ======================
+   * SAFE DATA
+   * ======================
+   */
+  const summary: DashboardSummary = dashboard.summary ?? {
     totalOpd: 0,
     totalUsers: 0,
     totalHardware: 0,
     totalSoftware: 0,
   };
-  const assetHardwareStatus = Array.isArray(safeData.assetHardwareStatus)
-    ? safeData.assetHardwareStatus
-    : [];
-  const assetSoftwareStatus = Array.isArray(safeData.assetSoftwareStatus)
-    ? safeData.assetSoftwareStatus
-    : [];
-  const assetsPerOpd = Array.isArray(safeData.assetsPerOpd)
-    ? safeData.assetsPerOpd
-    : [];
-  const assetGrowth = Array.isArray(safeData.assetGrowth)
-    ? safeData.assetGrowth
-    : [];
 
-  // Hitung total aktif & non aktif
+  const assetHardwareStatus = dashboard.assetHardwareStatus ?? [];
+  const assetSoftwareStatus = dashboard.assetSoftwareStatus ?? [];
+  const assetsPerOpd = dashboard.assetsPerOpd ?? [];
+  const assetGrowth = dashboard.assetGrowth ?? [];
+
+  /**
+   * ======================
+   * DERIVED DATA
+   * ======================
+   */
   const totalAktif =
-    (assetHardwareStatus.find((a) => a.name === "Aktif")?.aktifHardware || 0) +
-    (assetSoftwareStatus.find((a) => a.name === "Aktif")?.aktifSoftware || 0);
+    (assetHardwareStatus.find((a) => a.name === "Aktif")?.count || 0) +
+    (assetSoftwareStatus.find((a) => a.name === "Aktif")?.count || 0);
 
   const totalNonAktif =
-    (assetHardwareStatus.find((a) => a.name === "Non Aktif")
-      ?.nonAktifHardware || 0) +
-    (assetSoftwareStatus.find((a) => a.name === "Non Aktif")
-      ?.nonAktifSoftware || 0);
+    (assetHardwareStatus.find((a) => a.name === "Non Aktif")?.count || 0) +
+    (assetSoftwareStatus.find((a) => a.name === "Non Aktif")?.count || 0);
 
-  const totalAssets =
-    (summary.totalHardware || 0) + (summary.totalSoftware || 0);
+  const totalAssets = summary.totalHardware + summary.totalSoftware;
 
   const pieData = [
     { name: "Aktif", value: totalAktif },
@@ -71,73 +145,49 @@ export default function AdminDashboard() {
     total: o.totalAssets || 0,
   }));
 
-  if (isLoading)
-    return (
-      <div className="min-h-screen px-6 py-10 space-y-10">
-        {/* Title */}
-        <Skeleton className="h-8 w-64" />
-
-        {/* Summary Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[...Array(4)].map((_, i) => (
-            <Skeleton key={i} className="h-24 rounded-xl" />
-          ))}
-        </div>
-
-        {/* Charts */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {[...Array(3)].map((_, i) => (
-            <Skeleton key={i} className="h-[300px] rounded-xl" />
-          ))}
-        </div>
-
-        {/* OPD List */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[...Array(6)].map((_, i) => (
-            <Skeleton key={i} className="h-[260px] rounded-xl" />
-          ))}
-        </div>
-      </div>
-    );
-
-  if (error)
-    return (
-      <div className="min-h-screen flex items-center justify-center px-6">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          <Card className="max-w-md w-full border-red-200 shadow-sm">
-            <CardHeader className="flex flex-row items-center gap-3">
-              <AlertTriangle className="w-6 h-6 text-red-600" />
-              <CardTitle className="text-red-600">
-                Gagal Memuat Dashboard
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2 text-sm text-gray-700">
-              <p>Terjadi kesalahan saat mengambil data dashboard admin.</p>
-              <p className="text-red-600 font-medium">
-                {error.message || "Silakan coba beberapa saat lagi."}
-              </p>
-            </CardContent>
-          </Card>
-        </motion.div>
-      </div>
-    );
+  if (isLoading) {
+    return <div className="p-6">Loading...</div>;
+  }
 
   return (
     <div className="min-h-screen px-6 py-10 space-y-10">
+      {/* TITLE */}
       <motion.h1
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-3xl font-bold mb-4"
+        className="text-3xl font-bold"
       >
         Dashboard Admin
       </motion.h1>
 
-      {/* SUMMARY CARDS */}
+      {/* FILTER */}
+      <div className="flex items-center gap-4">
+        <select
+          value={selectedYear}
+          onChange={(e) =>
+            setSelectedYear(
+              e.target.value === "All" ? "All" : Number(e.target.value)
+            )
+          }
+          className="border px-3 py-2 rounded-md"
+        >
+          <option value="All">10 Tahun Terakhir</option>
+          {years.map((year) => (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          ))}
+        </select>
+
+        <Badge variant="secondary">
+          {selectedYear === "All"
+            ? "Mode: Tahunan (10 Tahun)"
+            : `Mode: Bulanan (${selectedYear})`}
+        </Badge>
+      </div>
+
+      {/* SUMMARY */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
           { label: "Total OPD", value: summary.totalOpd },
@@ -151,13 +201,11 @@ export default function AdminDashboard() {
           <motion.div
             key={idx}
             initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: idx * 0.1 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: idx * 0.1 }}
           >
-            <Card className="p-4 shadow-md">
-              <CardTitle className="text-lg font-semibold">
-                {item.label}
-              </CardTitle>
+            <Card className="p-4">
+              <CardTitle className="text-lg">{item.label}</CardTitle>
               <p className="text-2xl font-bold mt-2">{item.value}</p>
             </Card>
           </motion.div>
@@ -166,17 +214,15 @@ export default function AdminDashboard() {
 
       {/* CHARTS */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Pie Chart */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4 }}
-        >
-          <Card className="p-4 shadow-md">
-            <CardHeader>
-              <CardTitle>Status Asset</CardTitle>
-            </CardHeader>
-            <CardContent>
+        {/* PIE */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Status Asset</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {pieData.every((d) => d.value === 0) ? (
+              <EmptyChart label="Data status asset tidak tersedia" />
+            ) : (
               <ResponsiveContainer width="100%" height={250}>
                 <PieChart>
                   <Pie data={pieData} dataKey="value" outerRadius={80} label>
@@ -187,21 +233,19 @@ export default function AdminDashboard() {
                   <Tooltip />
                 </PieChart>
               </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </motion.div>
+            )}
+          </CardContent>
+        </Card>
 
-        {/* Bar Chart */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.1 }}
-        >
-          <Card className="p-4 shadow-md">
-            <CardHeader>
-              <CardTitle>Jumlah Asset per OPD</CardTitle>
-            </CardHeader>
-            <CardContent>
+        {/* BAR */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Jumlah Asset per OPD</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {barData.length === 0 ? (
+              <EmptyChart label="Data asset per OPD tidak ditemukan" />
+            ) : (
               <ResponsiveContainer width="100%" height={250}>
                 <BarChart data={barData}>
                   <XAxis dataKey="name" />
@@ -210,21 +254,22 @@ export default function AdminDashboard() {
                   <Bar dataKey="total" fill="#3b82f6" radius={[6, 6, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </motion.div>
+            )}
+          </CardContent>
+        </Card>
 
-        {/* Line Chart */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.2 }}
-        >
-          <Card className="p-4 shadow-md">
-            <CardHeader>
-              <CardTitle>Perkembangan Asset</CardTitle>
-            </CardHeader>
-            <CardContent>
+        {/* LINE */}
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              Perkembangan Asset{" "}
+              {selectedYear === "All" ? "(Tahunan)" : "(Bulanan)"}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {assetGrowth.length === 0 ? (
+              <EmptyChart label="Data perkembangan asset belum tersedia" />
+            ) : (
               <ResponsiveContainer width="100%" height={250}>
                 <LineChart data={assetGrowth}>
                   <XAxis dataKey="label" />
@@ -238,85 +283,63 @@ export default function AdminDashboard() {
                   />
                 </LineChart>
               </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </motion.div>
+            )}
+          </CardContent>
+        </Card>
       </div>
 
-      {/* LIST OPD */}
+      {/* OPD LIST */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {assetsPerOpd.map((opd, idx) => (
           <motion.div
-            key={opd.id || idx}
+            key={opd.id}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: idx * 0.1 }}
+            transition={{ delay: idx * 0.05 }}
           >
-            <Card className="hover:shadow-xl transition-shadow duration-300 border border-gray-200 rounded-xl overflow-hidden">
-              <CardHeader className="bg-gray-50 p-4">
-                <CardTitle className="text-lg font-semibold">
-                  {opd.name || "-"}
-                </CardTitle>
+            <Card>
+              <CardHeader>
+                <CardTitle>{opd.name}</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4 p-4">
-                {/* Total Asset */}
-                <div className="flex justify-between items-center">
-                  <p className="font-medium text-gray-700">Total Asset</p>
-                  <p className="font-bold text-gray-900 text-lg">
-                    {opd.totalAssets || 0}
-                  </p>
+              <CardContent className="space-y-4">
+                <div className="flex justify-between">
+                  <span>Total Asset</span>
+                  <strong>{opd.totalAssets}</strong>
                 </div>
 
-                {/* Hardware & Software Panel */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Hardware */}
-                  <div className="p-3 bg-green-50 rounded-lg space-y-2">
-                    <p className="font-medium text-green-800 text-sm">
-                      Hardware
-                    </p>
-                    <div className="flex justify-between">
-                      <p>Total</p>
-                      <p className="font-semibold">
-                        {opd.hardware?.total || 0}
-                      </p>
-                    </div>
-                    <div className="flex justify-between">
-                      <p>Aktif</p>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-green-50 p-3 rounded">
+                    <p className="font-medium text-green-800">Hardware</p>
+                    <p>Total: {opd.hardware.total}</p>
+                    <p>
+                      Aktif:{" "}
                       <Badge className="bg-green-100 text-green-800">
-                        {opd.hardware?.aktif || 0}
+                        {opd.hardware.aktif}
                       </Badge>
-                    </div>
-                    <div className="flex justify-between">
-                      <p>Non Aktif</p>
+                    </p>
+                    <p>
+                      Non Aktif:{" "}
                       <Badge className="bg-red-100 text-red-800">
-                        {opd.hardware?.nonAktif || 0}
+                        {opd.hardware.nonAktif}
                       </Badge>
-                    </div>
+                    </p>
                   </div>
 
-                  {/* Software */}
-                  <div className="p-3 bg-blue-50 rounded-lg space-y-2">
-                    <p className="font-medium text-blue-800 text-sm">
-                      Software
-                    </p>
-                    <div className="flex justify-between">
-                      <p>Total</p>
-                      <p className="font-semibold">
-                        {opd.software?.total || 0}
-                      </p>
-                    </div>
-                    <div className="flex justify-between">
-                      <p>Aktif</p>
+                  <div className="bg-blue-50 p-3 rounded">
+                    <p className="font-medium text-blue-800">Software</p>
+                    <p>Total: {opd.software.total}</p>
+                    <p>
+                      Aktif:{" "}
                       <Badge className="bg-green-100 text-green-800">
-                        {opd.software?.aktif || 0}
+                        {opd.software.aktif}
                       </Badge>
-                    </div>
-                    <div className="flex justify-between">
-                      <p>Non Aktif</p>
+                    </p>
+                    <p>
+                      Non Aktif:{" "}
                       <Badge className="bg-red-100 text-red-800">
-                        {opd.software?.nonAktif || 0}
+                        {opd.software.nonAktif}
                       </Badge>
-                    </div>
+                    </p>
                   </div>
                 </div>
               </CardContent>

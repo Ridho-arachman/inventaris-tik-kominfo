@@ -1,54 +1,40 @@
-// Summary
-export type Summary = {
+type Summary = {
   totalOpd: number;
   totalUsers: number;
   totalHardware: number;
   totalSoftware: number;
 };
 
-// Status hardware per keseluruhan
-export type AssetHardwareStatus = {
+type StatusItem = {
   name: "Aktif" | "Non Aktif";
-  aktifHardware?: number;
-  nonAktifHardware?: number;
+  count: number;
 };
 
-// Status software per keseluruhan
-export type AssetSoftwareStatus = {
-  name: "Aktif" | "Non Aktif";
-  aktifSoftware?: number;
-  nonAktifSoftware?: number;
-};
-
-// Hardware / Software per OPD
-export type AssetDetail = {
-  total: number;
-  aktif: number;
-  nonAktif: number;
-};
-
-// Asset per OPD
-export type AssetPerOpd = {
+type AssetPerOpd = {
   id: string;
   name: string;
   totalAssets: number;
-  aktif: number;
-  nonAktif: number;
-  hardware: AssetDetail;
-  software: AssetDetail;
+  hardware: {
+    total: number;
+    aktif: number;
+    nonAktif: number;
+  };
+  software: {
+    total: number;
+    aktif: number;
+    nonAktif: number;
+  };
 };
 
-// Pertumbuhan asset per bulan
-export type AssetGrowth = {
-  label: string; // contoh: "Jan", "Feb", dll
+type AssetGrowthItem = {
+  label: string;
   total: number;
 };
 
-// Response final
-export type AdminDashboardData = {
+export type DashboardResponse = {
   summary: Summary;
-  assetHardwareStatus: AssetHardwareStatus[];
-  assetSoftwareStatus: AssetSoftwareStatus[];
+  assetHardwareStatus: StatusItem[];
+  assetSoftwareStatus: StatusItem[];
   assetsPerOpd: AssetPerOpd[];
-  assetGrowth: AssetGrowth[];
+  assetGrowth: AssetGrowthItem[];
 };
