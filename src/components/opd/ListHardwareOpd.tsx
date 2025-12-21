@@ -68,6 +68,16 @@ export default function HardwareOpdListComponent() {
 
   const [debouncedNama] = useDebounce(searchNama, 500);
 
+  const handleFilter = () => {
+    setSearchNama("");
+    setMerk("");
+    setKategori("");
+    setStatus("");
+    setTahun("");
+    setPic("");
+    setSumber("");
+  };
+
   useEffect(() => {
     if (!searchParams) return;
 
@@ -399,6 +409,10 @@ export default function HardwareOpdListComponent() {
                         {hw.pic || "—"}
                       </div>
                       <div>
+                        <span className="font-medium">Sumber:</span>{" "}
+                        {hw.sumber || "—"}
+                      </div>
+                      <div>
                         <span className="font-medium">Tanggal:</span>{" "}
                         {hw.tglPengadaan
                           ? new Date(hw.tglPengadaan).toLocaleDateString(
@@ -582,7 +596,9 @@ export default function HardwareOpdListComponent() {
             <Button variant="outline" onClick={() => setOpenFilter(false)}>
               Tutup
             </Button>
-            <Button onClick={() => setOpenFilter(false)}>Terapkan</Button>
+            <Button className="cursor-pointer" onClick={handleFilter}>
+              Reset
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

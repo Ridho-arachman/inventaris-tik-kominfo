@@ -50,6 +50,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { StatusAset, SumberPengadaan } from "@/generated/enums";
 import { KategoriHardware, Opd } from "@/generated/client";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function AddHardwareForm() {
   const router = useRouter();
@@ -86,6 +87,15 @@ export default function AddHardwareForm() {
     name: "sumber",
   });
 
+  useEffect(() => {
+    if (
+      sumber === SumberPengadaan.HIBAH ||
+      sumber === SumberPengadaan.TRANSFER_OPD
+    ) {
+      form.setValue("biayaPerolehan", null);
+    }
+  }, [sumber, form]);
+
   async function onSubmit(values: z.infer<typeof hardwareSchema>) {
     try {
       const payload = {
@@ -112,9 +122,13 @@ export default function AddHardwareForm() {
     }
   }
 
+  const CURRENT_YEAR = new Date().getFullYear();
+  const TO_YEAR = CURRENT_YEAR + 10;
+
   const renderCalendarField = (
     name: keyof z.infer<typeof hardwareSchema>,
-    label: string
+    label: string,
+    toYear: number
   ) => (
     <Controller
       key={name}
@@ -123,6 +137,7 @@ export default function AddHardwareForm() {
       render={({ field, fieldState }) => (
         <Field data-invalid={fieldState.invalid}>
           <FieldLabel>{label}</FieldLabel>
+
           <Popover>
             <PopoverTrigger asChild>
               <Button variant="outline" className="w-full text-left">
@@ -131,16 +146,19 @@ export default function AddHardwareForm() {
                   : "Pilih tanggal"}
               </Button>
             </PopoverTrigger>
+
             <PopoverContent className="w-auto p-0">
               <Calendar
                 mode="single"
                 selected={field.value instanceof Date ? field.value : undefined}
                 onSelect={(date) => field.onChange(date ?? undefined)}
                 captionLayout="dropdown"
+                toYear={toYear}
                 className="rounded-lg border shadow-sm"
               />
             </PopoverContent>
           </Popover>
+
           {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
         </Field>
       )}
@@ -148,7 +166,7 @@ export default function AddHardwareForm() {
   );
 
   return (
-    <Card className="w-full sm:max-w-3xl mx-auto">
+    <Card>
       <CardHeader>
         <CardTitle>Tambah Hardware</CardTitle>
         <CardDescription>
@@ -304,9 +322,13 @@ export default function AddHardwareForm() {
             />
 
             {/* Tanggal */}
-            {renderCalendarField("tglPengadaan", "Tanggal Pengadaan")}
-            {renderCalendarField("garansiMulai", "Garansi Mulai")}
-            {renderCalendarField("garansiSelesai", "Garansi Selesai")}
+            {renderCalendarField(
+              "tglPengadaan",
+              "Tanggal Pengadaan",
+              CURRENT_YEAR
+            )}
+            {renderCalendarField("garansiMulai", "Garansi Mulai", CURRENT_YEAR)}
+            {renderCalendarField("garansiSelesai", "Garansi Selesai", TO_YEAR)}
             {/* Status */}
             <Controller
               name="status"
@@ -353,32 +375,31 @@ export default function AddHardwareForm() {
               )}
             />
             {/* Biaya Perolehan */}
-            {sumber !== SumberPengadaan.HIBAH &&
-              sumber !== SumberPengadaan.TRANSFER_OPD && (
-                <Controller
-                  name="biayaPerolehan"
-                  control={form.control}
-                  render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel>Biaya Perolehan</FieldLabel>
-                      <InputGroup>
-                        <InputGroupAddon>
-                          <InputGroupText>Rp</InputGroupText>
-                        </InputGroupAddon>
-                        <Input
-                          {...field}
-                          value={field.value ?? ""}
-                          type="number"
-                          placeholder="15000000"
-                        />
-                      </InputGroup>
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
-                  )}
-                />
-              )}
+            {(sumber === "PEMBELIAN" || sumber === "PROYEK_PAKET") && (
+              <Controller
+                name="biayaPerolehan"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel>Biaya Perolehan</FieldLabel>
+                    <InputGroup>
+                      <InputGroupAddon>
+                        <InputGroupText>Rp</InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        {...field}
+                        value={field.value ?? ""}
+                        type="number"
+                        placeholder="15000000"
+                      />
+                    </InputGroup>
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+            )}
             {/* Nomor Seri */}
             <Controller
               name="nomorSeri"
@@ -492,9 +513,9 @@ export default function AddHardwareForm() {
             variant="outline"
             disabled={loading}
             className="cursor-pointer"
-            onClick={() => form.reset()}
+            onClick={() => router.back()}
           >
-            Reset
+            Kembali
           </Button>
           <Button
             type="submit"

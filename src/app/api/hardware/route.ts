@@ -1,4 +1,4 @@
-import { Prisma, StatusAset } from "@/generated/client";
+import { Prisma, StatusAset, SumberPengadaan } from "@/generated/client";
 import { auth } from "@/lib/auth";
 import { handlePrismaError } from "@/lib/handlePrsimaError";
 import { handleResponse } from "@/lib/handleResponse";
@@ -88,6 +88,7 @@ export const GET = async (req: NextRequest) => {
     const status = searchParams.get("status") || "";
     const tahun = searchParams.get("tahun") || "";
     const opdId = searchParams.get("opdId") || "";
+    const sumber = searchParams.get("sumber") || "";
     const pic = searchParams.get("pic") || "";
     const page = parseInt(searchParams.get("page") || "1", 10);
     const limit = parseInt(searchParams.get("limit") || "10", 10);
@@ -101,6 +102,9 @@ export const GET = async (req: NextRequest) => {
         { nomorSeri: { contains: nama, mode: "insensitive" } },
       ];
     }
+    if (sumber)
+      where.sumber =
+        sumber === "ALL" ? {} : (sumber.toUpperCase() as SumberPengadaan);
 
     if (opdId) where.opdId = opdId === "ALL" ? {} : { contains: opdId };
     if (merk) where.merk = { contains: merk, mode: "insensitive" };

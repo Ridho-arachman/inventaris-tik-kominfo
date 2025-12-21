@@ -150,6 +150,19 @@ export const PATCH = async (
     const data = parsed.data;
     const dataId = parsedId.data.id;
 
+    const isEmailVerified = await prisma.user.findUniqueOrThrow({
+      where: { id: dataId },
+      select: { emailVerified: true },
+    });
+
+    if (isEmailVerified.emailVerified === true) {
+      return handleResponse({
+        success: false,
+        message: "Email Sudah Terverifikasi",
+        status: 400,
+      });
+    }
+
     const userOpd = await prisma.user.update({ where: { id: dataId }, data });
 
     return handleResponse({

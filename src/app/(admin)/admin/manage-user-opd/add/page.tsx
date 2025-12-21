@@ -62,6 +62,13 @@ export default function AddUserPage() {
       if (err.response?.status === 400) {
         notifier.error("Bad Request", err.response?.data?.message);
       }
+
+      if (err.response?.status === 422) {
+        notifier.error(
+          `OPD Sudah Memiliki Operator`,
+          "Silahkan pilih OPD lain"
+        );
+      }
     }
   };
 
@@ -123,7 +130,11 @@ export default function AddUserPage() {
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor={field.name}>Nama</FieldLabel>
-              <Input {...field} id={field.name} placeholder="Nama OPD" />
+              <Input
+                {...field}
+                id={field.name}
+                placeholder="Nama Operator OPD"
+              />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}

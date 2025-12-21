@@ -176,10 +176,13 @@ export default function EditHardwareForm() {
     }
   }
 
-  // SHARED DATE PICKER
+  const CURRENT_YEAR = new Date().getFullYear();
+  const TO_YEAR = CURRENT_YEAR + 10;
+
   const renderCalendarField = (
     name: keyof z.infer<typeof hardwareOpdSchema>,
-    label: string
+    label: string,
+    toYear: number
   ) => (
     <Controller
       key={name}
@@ -201,8 +204,11 @@ export default function EditHardwareForm() {
             <PopoverContent className="w-auto p-0">
               <Calendar
                 mode="single"
-                selected={field.value as Date}
+                selected={field.value instanceof Date ? field.value : undefined}
                 onSelect={(date) => field.onChange(date ?? undefined)}
+                captionLayout="dropdown"
+                toYear={toYear}
+                className="rounded-lg border shadow-sm"
               />
             </PopoverContent>
           </Popover>
@@ -373,9 +379,13 @@ export default function EditHardwareForm() {
               )}
             />
             {/* Tanggal */}
-            {renderCalendarField("tglPengadaan", "Tanggal Pengadaan")}
-            {renderCalendarField("garansiMulai", "Garansi Mulai")}
-            {renderCalendarField("garansiSelesai", "Garansi Selesai")}
+            {renderCalendarField(
+              "tglPengadaan",
+              "Tanggal Pengadaan",
+              CURRENT_YEAR
+            )}
+            {renderCalendarField("garansiMulai", "Garansi Mulai", CURRENT_YEAR)}
+            {renderCalendarField("garansiSelesai", "Garansi Selesai", TO_YEAR)}
             {/* Status */}
             <Controller
               name="status"
@@ -416,33 +426,32 @@ export default function EditHardwareForm() {
               )}
             />
             {/* Biaya Perolehan */}
-            <Controller
-              name="biayaPerolehan"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel>Biaya Perolehan</FieldLabel>
-                  <InputGroup>
-                    <InputGroupAddon>
-                      <InputGroupText>Rp</InputGroupText>
-                    </InputGroupAddon>
-                    <Input
-                      {...field}
-                      value={field.value ?? ""}
-                      type="number"
-                      placeholder="15000000"
-                      disabled={
-                        sumber === SumberPengadaan.HIBAH ||
-                        sumber === SumberPengadaan.TRANSFER_OPD
-                      }
-                    />
-                  </InputGroup>
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
+
+            {(sumber === "PEMBELIAN" || sumber === "PROYEK_PAKET") && (
+              <Controller
+                name="biayaPerolehan"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel>Biaya Perolehan</FieldLabel>
+                    <InputGroup>
+                      <InputGroupAddon>
+                        <InputGroupText>Rp</InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        {...field}
+                        value={field.value ?? ""}
+                        type="number"
+                        placeholder="15000000"
+                      />
+                    </InputGroup>
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+            )}
             {/* Nomor Seri */}
             <Controller
               name="nomorSeri"

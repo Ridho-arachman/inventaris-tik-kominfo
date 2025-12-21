@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { format } from "date-fns";
 
 import { Button } from "@/components/ui/button";
@@ -65,11 +65,31 @@ export default function EditHardwareForm() {
     isLoading: hardwareLoading,
   } = useGet(`/hardware/${id}`);
 
+  const CURRENT_YEAR = new Date().getFullYear();
+  const TO_YEAR = CURRENT_YEAR + 10;
+
   const { data: opd } = useGet("/opd");
   const { data: kategori } = useGet("/hardware/kategori");
 
   const form = useForm<z.infer<typeof hardwareSchema>>({
     resolver: zodResolver(hardwareSchema),
+    defaultValues: {
+      nama: "",
+      merk: "",
+      spesifikasi: "",
+      lokasiFisik: "",
+      pic: "",
+      biayaPerolehan: undefined,
+      nomorSeri: "",
+      penyedia: "",
+      status: "AKTIF",
+      sumber: "PEMBELIAN",
+      kategoriId: "",
+      opdId: "",
+      tglPengadaan: undefined,
+      garansiMulai: undefined,
+      garansiSelesai: undefined,
+    },
   });
 
   useEffect(() => {
@@ -98,7 +118,47 @@ export default function EditHardwareForm() {
       });
     }
   }, [hardware, form]);
-  // =====================================================
+
+  const sumber = useWatch({
+    control: form.control,
+    name: "sumber",
+  });
+
+  useEffect(() => {
+    if (
+      sumber === SumberPengadaan.HIBAH ||
+      sumber === SumberPengadaan.TRANSFER_OPD
+    ) {
+      form.setValue("biayaPerolehan", null);
+    }
+  }, [sumber, form]);
+
+  const resetToInitial = () => {
+    if (!hardware) return;
+
+    form.reset({
+      nama: hardware.nama,
+      merk: hardware.merk,
+      spesifikasi: hardware.spesifikasi,
+      lokasiFisik: hardware.lokasiFisik,
+      pic: hardware.pic,
+      biayaPerolehan: hardware.biayaPerolehan,
+      nomorSeri: hardware.nomorSeri,
+      penyedia: hardware.penyedia,
+      status: hardware.status ?? "AKTIF",
+      sumber: hardware.sumber ?? "PEMBELIAN",
+      kategoriId: hardware.kategoriId,
+      tglPengadaan: hardware.tglPengadaan
+        ? new Date(hardware.tglPengadaan)
+        : undefined,
+      garansiMulai: hardware.garansiMulai
+        ? new Date(hardware.garansiMulai)
+        : undefined,
+      garansiSelesai: hardware.garansiSelesai
+        ? new Date(hardware.garansiSelesai)
+        : undefined,
+    });
+  };
 
   async function onSubmit(values: z.infer<typeof hardwareSchema>) {
     try {
@@ -125,7 +185,8 @@ export default function EditHardwareForm() {
   // SHARED DATE PICKER
   const renderCalendarField = (
     name: keyof z.infer<typeof hardwareSchema>,
-    label: string
+    label: string,
+    toYear: number
   ) => (
     <Controller
       key={name}
@@ -147,8 +208,11 @@ export default function EditHardwareForm() {
             <PopoverContent className="w-auto p-0">
               <Calendar
                 mode="single"
-                selected={field.value as Date}
+                selected={field.value instanceof Date ? field.value : undefined}
                 onSelect={(date) => field.onChange(date ?? undefined)}
+                captionLayout="dropdown"
+                toYear={toYear}
+                className="rounded-lg border shadow-sm"
               />
             </PopoverContent>
           </Popover>
@@ -205,7 +269,7 @@ export default function EditHardwareForm() {
   }
 
   return (
-    <Card className="w-full sm:max-w-3xl mx-auto">
+    <Card>
       <CardHeader>
         <CardTitle>Edit Hardware</CardTitle>
         <CardDescription>
@@ -302,10 +366,43 @@ export default function EditHardwareForm() {
               )}
             />
 
+            {/* Sumber */}
+            <Controller
+              name="sumber"
+              control={form.control}
+              render={({ field }) => (
+                <Field>
+                  <FieldLabel>Sumber Pengadaan</FieldLabel>
+
+                  <Select
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Pilih sumber" />
+                    </SelectTrigger>
+
+                    <SelectContent>
+                      {Object.values(SumberPengadaan).map((x) => (
+                        <SelectItem key={x} value={x}>
+                          {x.replace(/_/g, " ")}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </Field>
+              )}
+            />
+
             {/* Tanggal */}
-            {renderCalendarField("tglPengadaan", "Tanggal Pengadaan")}
-            {renderCalendarField("garansiMulai", "Garansi Mulai")}
-            {renderCalendarField("garansiSelesai", "Garansi Selesai")}
+            {renderCalendarField(
+              "tglPengadaan",
+              "Tanggal Pengadaan",
+              CURRENT_YEAR
+            )}
+            {renderCalendarField("garansiMulai", "Garansi Mulai", CURRENT_YEAR)}
+            {renderCalendarField("garansiSelesai", "Garansi Selesai", TO_YEAR)}
 
             {/* Status */}
             <Controller
@@ -349,22 +446,31 @@ export default function EditHardwareForm() {
             />
 
             {/* Biaya */}
-            <Controller
-              name="biayaPerolehan"
-              control={form.control}
-              render={({ field }) => (
-                <Field>
-                  <FieldLabel>Biaya Perolehan</FieldLabel>
-
-                  <InputGroup>
-                    <InputGroupAddon>
-                      <InputGroupText>Rp</InputGroupText>
-                    </InputGroupAddon>
-                    <Input {...field} type="number" />
-                  </InputGroup>
-                </Field>
-              )}
-            />
+            {(sumber === "PEMBELIAN" || sumber === "PROYEK_PAKET") && (
+              <Controller
+                name="biayaPerolehan"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel>Biaya Perolehan</FieldLabel>
+                    <InputGroup>
+                      <InputGroupAddon>
+                        <InputGroupText>Rp</InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        {...field}
+                        value={field.value ?? ""}
+                        type="number"
+                        placeholder="15000000"
+                      />
+                    </InputGroup>
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+            )}
 
             {/* Nomor Seri */}
             <Controller
@@ -374,35 +480,6 @@ export default function EditHardwareForm() {
                 <Field>
                   <FieldLabel>Nomor Seri</FieldLabel>
                   <Input {...field} placeholder="SN123..." />
-                </Field>
-              )}
-            />
-
-            {/* Sumber */}
-            <Controller
-              name="sumber"
-              control={form.control}
-              render={({ field }) => (
-                <Field>
-                  <FieldLabel>Sumber Pengadaan</FieldLabel>
-
-                  <Select
-                    value={field.value}
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Pilih sumber" />
-                    </SelectTrigger>
-
-                    <SelectContent>
-                      {Object.values(SumberPengadaan).map((x) => (
-                        <SelectItem key={x} value={x}>
-                          {x.replace(/_/g, " ")}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
                 </Field>
               )}
             />
@@ -493,6 +570,16 @@ export default function EditHardwareForm() {
             disabled={loading}
           >
             Back
+          </Button>
+
+          <Button
+            type="button"
+            variant="outline"
+            onClick={resetToInitial}
+            disabled={loading}
+            className="cursor-pointer"
+          >
+            Reset
           </Button>
 
           <Button type="submit" form="edit-hardware-form" disabled={loading}>

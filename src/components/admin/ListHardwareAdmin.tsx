@@ -63,6 +63,7 @@ export default function HardwareListComponent() {
   const [tahun, setTahun] = useState("");
   const [pic, setPic] = useState("");
   const [opdId, setOpdId] = useState("");
+  const [sumber, setSumber] = useState("");
 
   const [page, setPage] = useState(1);
   const limit = 10;
@@ -70,6 +71,17 @@ export default function HardwareListComponent() {
   const [openFilter, setOpenFilter] = useState(false);
 
   const [debouncedNama] = useDebounce(searchNama, 500);
+
+  const handleFilter = () => {
+    setSearchNama("");
+    setMerk("");
+    setKategori("");
+    setStatus("");
+    setTahun("");
+    setPic("");
+    setOpdId("");
+    setSumber("");
+  };
 
   useEffect(() => {
     if (!searchParams) return;
@@ -81,6 +93,7 @@ export default function HardwareListComponent() {
     const qTahun = searchParams.get("tahun") ?? "";
     const qPic = searchParams.get("pic") ?? "";
     const qOpd = searchParams.get("opdId") ?? "";
+    const qSumber = searchParams.get("sumber") ?? "";
     const qPage = parseInt(searchParams.get("page") ?? "1", 10);
 
     setSearchNama((prev) => (prev === qNama ? prev : qNama));
@@ -90,6 +103,7 @@ export default function HardwareListComponent() {
     setTahun((prev) => (prev === qTahun ? prev : qTahun));
     setPic((prev) => (prev === qPic ? prev : qPic));
     setOpdId((prev) => (prev === qOpd ? prev : qOpd));
+    setSumber((prev) => (prev === qSumber ? prev : qSumber));
     setPage((prev) => (prev === qPage ? prev : qPage));
   }, [searchParams]);
 
@@ -104,12 +118,24 @@ export default function HardwareListComponent() {
     if (tahun) params.set("tahun", tahun);
     if (pic) params.set("pic", pic);
     if (opdId) params.set("opdId", opdId);
+    if (sumber) params.set("sumber", sumber);
 
     params.set("page", String(page || 1));
     params.set("limit", String(limit));
 
     return params.toString();
-  }, [debouncedNama, merk, kategori, status, tahun, pic, opdId, page, limit]);
+  }, [
+    debouncedNama,
+    merk,
+    kategori,
+    status,
+    tahun,
+    pic,
+    opdId,
+    sumber,
+    page,
+    limit,
+  ]);
 
   useEffect(() => {
     const base = "/admin/manage-asset/opd-hardware";
@@ -174,7 +200,7 @@ export default function HardwareListComponent() {
       <Button
         variant="ghost"
         onClick={() => router.back()}
-        className="inline-flex items-center gap-2 mb-4 text-sm font-medium text-gray-600 hover:text-gray-900"
+        className="inline-flex items-center gap-2 mb-4 text-sm font-medium text-gray-600 hover:text-gray-900 cursor-pointer"
       >
         <ArrowLeft className="w-4 h-4" />
         Kembali
@@ -187,7 +213,7 @@ export default function HardwareListComponent() {
         </h1>
 
         <Link href="/admin/manage-asset/opd-hardware/add">
-          <Button className="w-full sm:w-auto flex items-center gap-2">
+          <Button className="w-full sm:w-auto flex items-center gap-2 cursor-pointer">
             <Plus className="w-4 h-4" /> Tambah Hardware
           </Button>
         </Link>
@@ -220,7 +246,7 @@ export default function HardwareListComponent() {
 
         <Button
           variant="outline"
-          className="w-full sm:w-auto flex items-center justify-center gap-2"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 cursor-pointer"
           onClick={() => setOpenFilter(true)}
         >
           <SlidersHorizontal className="w-4 h-4" />
@@ -268,6 +294,7 @@ export default function HardwareListComponent() {
                     <th className="p-3">Nomor Seri</th>
                     <th className="p-3">Kategori</th>
                     <th className="p-3">OPD</th>
+                    <th className="p-3">Sumber Pengadaan</th>
                     <th className="p-3">Tanggal Pengadaan</th>
                     <th className="p-3">PIC</th>
                     <th className="p-3">Status</th>
@@ -295,6 +322,9 @@ export default function HardwareListComponent() {
                         {hw.opd?.nama || "—"}
                       </td>
                       <td className="p-3 max-w-[150px] truncate">
+                        {hw.sumber || "—"}
+                      </td>
+                      <td className="p-3 max-w-[150px] truncate">
                         {hw.tglPengadaan
                           ? new Date(hw.tglPengadaan).toLocaleDateString(
                               "id-ID"
@@ -319,20 +349,32 @@ export default function HardwareListComponent() {
                         <Link
                           href={`/admin/manage-asset/opd-hardware/${hw.id}`}
                         >
-                          <Button variant="secondary" size="sm">
+                          <Button
+                            variant="secondary"
+                            size="sm"
+                            className="cursor-pointer"
+                          >
                             <Eye className="w-3.5 h-3.5 mr-1" /> View
                           </Button>
                         </Link>
                         <Link
                           href={`/admin/manage-asset/opd-hardware/${hw.id}/edit`}
                         >
-                          <Button variant="outline" size="sm">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="cursor-pointer"
+                          >
                             <Pencil className="w-3.5 h-3.5 mr-1" /> Edit
                           </Button>
                         </Link>
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
-                            <Button variant="destructive" size="sm">
+                            <Button
+                              variant="destructive"
+                              size="sm"
+                              className="cursor-pointer"
+                            >
                               <Trash className="w-3.5 h-3.5 mr-1" /> Hapus
                             </Button>
                           </AlertDialogTrigger>
@@ -348,10 +390,12 @@ export default function HardwareListComponent() {
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
-                              <AlertDialogCancel>Batal</AlertDialogCancel>
+                              <AlertDialogCancel className="cursor-pointer">
+                                Batal
+                              </AlertDialogCancel>
                               <AlertDialogAction
                                 onClick={() => handleDelete(hw.id)}
-                                className="bg-red-600 hover:bg-red-700"
+                                className="bg-red-600 hover:bg-red-700 cursor-pointer"
                               >
                                 Ya, Hapus
                               </AlertDialogAction>
@@ -392,6 +436,10 @@ export default function HardwareListComponent() {
                       <div>
                         <span className="font-medium">PIC:</span>{" "}
                         {hw.pic || "—"}
+                      </div>
+                      <div>
+                        <span className="font-medium">PIC:</span>{" "}
+                        {hw.sumber || "—"}
                       </div>
                       <div>
                         <span className="font-medium">Tanggal:</span>{" "}
@@ -522,6 +570,20 @@ export default function HardwareListComponent() {
               onChange={(e) => setPic(e.target.value)}
             />
 
+            <Select value={sumber} onValueChange={setSumber}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Pilih Sumber Pengadaan ..." />
+              </SelectTrigger>
+
+              <SelectContent>
+                <SelectItem value="ALL">Semua Sumber Pengadaan</SelectItem>
+                <SelectItem value="PEMBELIAN">PEMBELIAN</SelectItem>
+                <SelectItem value="HIBAH">HIBAH</SelectItem>
+                <SelectItem value="TRANSFER_OPD">TRANSFER OPD</SelectItem>
+                <SelectItem value="PROYEK_PAKET">PROYEK PAKET</SelectItem>
+              </SelectContent>
+            </Select>
+
             <Select value={opdId} onValueChange={setOpdId}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Pilih OPD" />
@@ -563,10 +625,16 @@ export default function HardwareListComponent() {
           </div>
 
           <DialogFooter>
-            <Button variant="outline" onClick={() => setOpenFilter(false)}>
+            <Button
+              variant="outline"
+              className="cursor-pointer"
+              onClick={() => setOpenFilter(false)}
+            >
               Tutup
             </Button>
-            <Button onClick={() => setOpenFilter(false)}>Terapkan</Button>
+            <Button className="cursor-pointer" onClick={handleFilter}>
+              Reset
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

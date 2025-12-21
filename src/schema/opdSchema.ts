@@ -12,7 +12,8 @@ export const OpdCreateSchema = z.object({
     .string()
     .trim()
     .nonempty("Name wajib diisi")
-    .max(255, "Name maksimal 255 karakter"),
+    .max(255, "Name maksimal 255 karakter")
+    .uppercase("Nama harus huruf besar"),
 });
 
 export const opdQuerySchema = z.object({

@@ -3,14 +3,44 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowLeft, Pencil, Trash } from "lucide-react";
-import { useGet } from "@/hooks/useApi";
-import { useParams } from "next/navigation";
+import { useDelete, useGet } from "@/hooks/useApi";
+import { useParams, useRouter } from "next/navigation";
 import { AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { notifier } from "@/components/ToastNotifier";
+import { AxiosError } from "axios";
+import { ApiError } from "@/types/ApiError";
 
 export default function HardwareDetailPage() {
+  const router = useRouter();
   const { id } = useParams();
   const { data: hardware, error, isLoading } = useGet(`/hardware/${id}`);
+  const { del } = useDelete();
+
+  const handleDelete = async (id: string) => {
+    try {
+      const res = await del(`/hardware/${id}`);
+      notifier.success("Berhasil", `Hardware ${res.data.nama} telah dihapus`);
+      router.push("/admin/manage-asset/opd-hardware");
+    } catch (error) {
+      const err = error as AxiosError<ApiError>;
+      notifier.error(
+        "Gagal",
+        `Gagal menghapus hardware: ${err.response?.data.message || err.message}`
+      );
+    }
+  };
 
   if (isLoading) {
     return (
@@ -80,7 +110,7 @@ export default function HardwareDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen ">
       {/* Hero / Header */}
       <div className="relative bg-white shadow-md">
         <div className="max-w-5xl mx-auto px-6 py-8">
@@ -108,10 +138,6 @@ export default function HardwareDetailPage() {
             </span>
           </div>
         </div>
-        {/* Dummy Image */}
-        <div className="w-full h-64 bg-gray-200 flex items-center justify-center">
-          <span className="text-gray-400">[Gambar Hardware]</span>
-        </div>
       </div>
 
       {/* Content Section */}
@@ -134,9 +160,10 @@ export default function HardwareDetailPage() {
             label="Biaya Perolehan"
             value={
               hardware?.biayaPerolehan
-                ? `Rp ${Number(hardware.biayaPerolehan).toLocaleString(
-                    "id-ID"
-                  )}`
+                ? new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  }).format(hardware?.biayaPerolehan)
                 : "-"
             }
           />
@@ -144,7 +171,10 @@ export default function HardwareDetailPage() {
             label="Tanggal Pengadaan"
             value={
               hardware?.tglPengadaan
-                ? new Date(hardware.tglPengadaan).toLocaleDateString("id-ID")
+                ? new Date(hardware.tglPengadaan).toLocaleString("id-ID", {
+                    dateStyle: "long",
+                    timeStyle: "short",
+                  })
                 : "-"
             }
           />
@@ -152,7 +182,10 @@ export default function HardwareDetailPage() {
             label="Garansi Mulai"
             value={
               hardware?.garansiMulai
-                ? new Date(hardware.garansiMulai).toLocaleDateString("id-ID")
+                ? new Date(hardware?.garansiMulai).toLocaleString("id-ID", {
+                    dateStyle: "long",
+                    timeStyle: "short",
+                  })
                 : "-"
             }
           />
@@ -160,12 +193,29 @@ export default function HardwareDetailPage() {
             label="Garansi Selesai"
             value={
               hardware?.garansiSelesai
-                ? new Date(hardware.garansiSelesai).toLocaleDateString("id-ID")
+                ? new Date(hardware.garansiSelesai).toLocaleString("id-ID", {
+                    dateStyle: "long",
+                    timeStyle: "short",
+                  })
                 : "-"
             }
           />
           <DetailItem label="Dibuat Oleh" value={hardware?.creator?.name} />
           <DetailItem label="Diubah Oleh" value={hardware?.updater?.name} />
+          <DetailItem
+            label="Tanggal Dibuat"
+            value={new Date(hardware?.createdAt).toLocaleString("id-ID", {
+              dateStyle: "long",
+              timeStyle: "short",
+            })}
+          />
+          <DetailItem
+            label="Tanggal Diubah"
+            value={new Date(hardware?.updatedAt).toLocaleString("id-ID", {
+              dateStyle: "long",
+              timeStyle: "short",
+            })}
+          />
         </div>
 
         {/* Aksi */}
@@ -176,9 +226,36 @@ export default function HardwareDetailPage() {
             </Button>
           </Link>
 
-          <Button variant="destructive" className="gap-2 cursor-pointer">
-            <Trash className="w-4 h-4" /> Hapus
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="destructive" className="gap-2 cursor-pointer">
+                <Trash className="w-4 h-4" />
+                Hapus
+              </Button>
+            </AlertDialogTrigger>
+
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Hapus Data Hardware</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Tindakan ini tidak dapat dibatalkan. Data hardware akan
+                  dihapus secara permanen dari sistem.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+
+              <AlertDialogFooter>
+                <AlertDialogCancel className="cursor-pointer">
+                  Batal
+                </AlertDialogCancel>
+                <AlertDialogAction
+                  className="bg-red-600 hover:bg-red-700 cursor-pointer"
+                  onClick={() => handleDelete(hardware.id)}
+                >
+                  Ya, Hapus
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
     </div>

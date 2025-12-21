@@ -116,7 +116,7 @@ export default function ListOpdComponent() {
         </div>
 
         <Link href="/admin/manage-opd/add">
-          <Button className="flex items-center gap-2">
+          <Button className="flex items-center gap-2 cursor-pointer">
             <Plus className="w-4 h-4" />
             Tambah OPD
           </Button>
@@ -190,7 +190,7 @@ export default function ListOpdComponent() {
 
                 <Link href={`/admin/manage-opd/${opd.id}`}>
                   <CardHeader>
-                    <CardTitle className="text-lg font-semibold">
+                    <CardTitle className="text-lg font-semibold line-clamp-2 min-h-14">
                       {opd.nama}
                     </CardTitle>
                   </CardHeader>
