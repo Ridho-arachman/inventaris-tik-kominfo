@@ -18,7 +18,7 @@ import {
 
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 
-import { softwareCreateSchema } from "@/schema/softwareSchema";
+import { softwareOpdBaseSchema } from "@/schema/softwareSchema";
 import {
   JenisLisensi,
   KritikalitasStatus,
@@ -27,7 +27,7 @@ import {
 import { format } from "date-fns";
 import z from "zod";
 import { useGet, usePost } from "@/hooks/useApi";
-import { Hardware, KategoriSoftware, Opd } from "@/generated/client";
+import { Hardware, KategoriSoftware } from "@/generated/client";
 import {
   Popover,
   PopoverContent,
@@ -52,12 +52,11 @@ import { useRouter } from "next/navigation";
 export default function SoftwareFormComponent() {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
-  const { data: opd } = useGet("/opd");
   const { data: kategori } = useGet("/software/kategori");
   const { data: listHardware } = useGet("/list-hardware");
-  const { loading, post } = usePost("/software");
-  const form = useForm<z.infer<typeof softwareCreateSchema>>({
-    resolver: zodResolver(softwareCreateSchema),
+  const { loading, post } = usePost("/software-opd");
+  const form = useForm<z.infer<typeof softwareOpdBaseSchema>>({
+    resolver: zodResolver(softwareOpdBaseSchema),
     defaultValues: {
       nama: "",
       jenisLisensi: "OPEN_SOURCE",
@@ -71,7 +70,6 @@ export default function SoftwareFormComponent() {
       tglPengadaan: undefined,
       status: "AKTIF",
       pic: "",
-      opdId: "",
       kategoriId: "",
       hardwareTerinstall: undefined,
     },
@@ -97,9 +95,7 @@ export default function SoftwareFormComponent() {
     );
   }, [jenisLisensi, form]);
 
-  const onSubmit = async (values: z.infer<typeof softwareCreateSchema>) => {
-    console.log(values);
-
+  const onSubmit = async (values: z.infer<typeof softwareOpdBaseSchema>) => {
     try {
       const payload = {
         ...values,
@@ -110,10 +106,8 @@ export default function SoftwareFormComponent() {
           ? new Date(values.tglPengadaan).toISOString()
           : null,
       };
-      console.log("payload", payload);
 
       const res = await post(payload);
-      console.log(res);
 
       notifier.success(
         "Berhasil Menambahkan",
@@ -425,35 +419,6 @@ export default function SoftwareFormComponent() {
 
         {/* OPD + Kategori */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Controller
-            name="opdId"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel>OPD</FieldLabel>
-                <Select
-                  {...field}
-                  value={field.value ?? ""}
-                  onValueChange={(val) => field.onChange(val)}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Pilih OPD" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {opd?.map((opd: Opd) => (
-                      <SelectItem key={opd.id} value={opd.id}>
-                        {opd.nama}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
-          />
-
           <Controller
             name="kategoriId"
             control={form.control}

@@ -9,7 +9,7 @@ import { handlePrismaError } from "@/lib/handlePrsimaError";
 import { handleResponse } from "@/lib/handleResponse";
 import { handleZodValidation } from "@/lib/handleZodValidation";
 import prisma from "@/lib/prisma";
-import { softwareCreateSchema } from "@/schema/softwareSchema";
+import { softwareOpdBaseSchema } from "@/schema/softwareSchema";
 
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
@@ -35,7 +35,7 @@ export const POST = async (req: NextRequest) => {
         body.tglBerakhirLisensi && new Date(body.tglBerakhirLisensi),
     };
 
-    const parsed = softwareCreateSchema.safeParse(payload);
+    const parsed = softwareOpdBaseSchema.safeParse(payload);
     if (!parsed.success) return handleZodValidation(parsed);
 
     const data = parsed.data;
@@ -46,6 +46,7 @@ export const POST = async (req: NextRequest) => {
         nomorSeri: data.nomorSeri === undefined ? undefined : data.nomorSeri,
         createdBy: user.user.id,
         updatedBy: user.user.id,
+        opdId: user.user.idOpd as string,
       },
     });
 

@@ -88,6 +88,32 @@ export default function SoftwareFormComponent() {
     }
   }, [software, form]);
 
+  const resetToInitial = () => {
+    if (!software) return;
+
+    form.reset({
+      nama: software?.nama,
+      jenisLisensi: software?.jenisLisensi,
+      nomorSeri: software?.nomorSeri,
+      tglBerakhirLisensi: software.tglBerakhirLisensi
+        ? new Date(software.tglBerakhirLisensi)
+        : undefined,
+      tglPengadaan: software.tglPengadaan
+        ? new Date(software.tglPengadaan)
+        : undefined,
+      versiTerpasang: software?.versiTerpasang,
+      vendor: software?.vendor,
+      inHouse: software?.inHouse,
+      kritikalitas: software?.kritikalitas,
+      hargaPerolehan: software?.hargaPerolehan,
+      status: software?.status,
+      pic: software?.pic,
+      opdId: software?.opdId,
+      kategoriId: software?.kategoriId,
+      hardwareTerinstall: software?.hardwareTerinstall,
+    });
+  };
+
   const jenisLisensi = useWatch({
     name: "jenisLisensi",
     control: form.control,
@@ -97,6 +123,15 @@ export default function SoftwareFormComponent() {
   useEffect(() => {
     form.setValue("inHouse", !vendor);
   }, [vendor, form]);
+
+  useEffect(() => {
+    form.setValue(
+      "tglBerakhirLisensi",
+      jenisLisensi === JenisLisensi.LANGGANAN
+        ? form.getValues("tglBerakhirLisensi")
+        : undefined
+    );
+  }, [jenisLisensi, form]);
 
   const onSubmit = async (values: z.infer<typeof softwareCreateSchema>) => {
     try {
@@ -109,8 +144,6 @@ export default function SoftwareFormComponent() {
           ? new Date(values.tglPengadaan).toISOString()
           : null,
       };
-
-      console.log("payload", payload);
 
       const res = await put(payload);
 
@@ -537,6 +570,17 @@ export default function SoftwareFormComponent() {
               Back
             </Button>
           </Link>
+
+          <Button
+            type="button"
+            variant="outline"
+            onClick={resetToInitial}
+            disabled={loading}
+            className="cursor-pointer"
+          >
+            Reset
+          </Button>
+
           <Button type="submit" className="cursor-pointer" disabled={loading}>
             Simpan
           </Button>

@@ -18,7 +18,6 @@ import {
 
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 
-import { softwareCreateSchema } from "@/schema/softwareSchema";
 import {
   JenisLisensi,
   KritikalitasStatus,
@@ -27,7 +26,7 @@ import {
 import { format } from "date-fns";
 import z from "zod";
 import { useGet, usePut } from "@/hooks/useApi";
-import { Hardware, KategoriSoftware, Opd } from "@/generated/client";
+import { Hardware, KategoriSoftware } from "@/generated/client";
 import {
   Popover,
   PopoverContent,
@@ -47,18 +46,18 @@ import { AxiosError } from "axios";
 import { ApiError } from "@/types/ApiError";
 import { notifier } from "@/components/ToastNotifier";
 import { useParams, useRouter } from "next/navigation";
+import { softwareOpdBaseSchema } from "@/schema/softwareSchema";
 
 export default function SoftwareFormComponent() {
   const { id } = useParams();
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
-  const { data: opd } = useGet("/opd");
   const { data: kategori } = useGet("/software/kategori");
   const { data: listHardware } = useGet("/list-hardware");
   const { data: software } = useGet(`/software-opd/${id}`);
   const { loading, put } = usePut(`/software-opd/${id}`);
-  const form = useForm<z.infer<typeof softwareCreateSchema>>({
-    resolver: zodResolver(softwareCreateSchema),
+  const form = useForm<z.infer<typeof softwareOpdBaseSchema>>({
+    resolver: zodResolver(softwareOpdBaseSchema),
   });
 
   useEffect(() => {
@@ -80,12 +79,36 @@ export default function SoftwareFormComponent() {
         hargaPerolehan: software?.hargaPerolehan,
         status: software?.status,
         pic: software?.pic,
-        opdId: software?.opdId,
         kategoriId: software?.kategoriId,
         hardwareTerinstall: software?.hardwareTerinstall,
       });
     }
   }, [software, form]);
+
+  const resetToInitial = () => {
+    if (!software) return;
+
+    form.reset({
+      nama: software?.nama,
+      jenisLisensi: software?.jenisLisensi,
+      nomorSeri: software?.nomorSeri,
+      tglBerakhirLisensi: software.tglBerakhirLisensi
+        ? new Date(software.tglBerakhirLisensi)
+        : undefined,
+      tglPengadaan: software.tglPengadaan
+        ? new Date(software.tglPengadaan)
+        : undefined,
+      versiTerpasang: software?.versiTerpasang,
+      vendor: software?.vendor,
+      inHouse: software?.inHouse,
+      kritikalitas: software?.kritikalitas,
+      hargaPerolehan: software?.hargaPerolehan,
+      status: software?.status,
+      pic: software?.pic,
+      kategoriId: software?.kategoriId,
+      hardwareTerinstall: software?.hardwareTerinstall,
+    });
+  };
 
   const jenisLisensi = useWatch({
     name: "jenisLisensi",
@@ -106,7 +129,7 @@ export default function SoftwareFormComponent() {
     );
   }, [jenisLisensi, form]);
 
-  const onSubmit = async (values: z.infer<typeof softwareCreateSchema>) => {
+  const onSubmit = async (values: z.infer<typeof softwareOpdBaseSchema>) => {
     try {
       const payload = {
         ...values,
@@ -399,35 +422,6 @@ export default function SoftwareFormComponent() {
         {/* OPD + Kategori */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Controller
-            name="opdId"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel>OPD</FieldLabel>
-                <Select
-                  {...field}
-                  value={field.value ?? ""}
-                  onValueChange={(val) => field.onChange(val)}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Pilih OPD" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {opd?.map((opd: Opd) => (
-                      <SelectItem key={opd.id} value={opd.id}>
-                        {opd.nama}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
-          />
-
-          <Controller
             name="kategoriId"
             control={form.control}
             render={({ field, fieldState }) => (
@@ -560,6 +554,16 @@ export default function SoftwareFormComponent() {
             onClick={() => router.back()}
           >
             Back
+          </Button>
+
+          <Button
+            type="button"
+            variant="outline"
+            onClick={resetToInitial}
+            disabled={loading}
+            className="cursor-pointer"
+          >
+            Reset
           </Button>
 
           <Button type="submit" className="cursor-pointer" disabled={loading}>

@@ -87,6 +87,15 @@ export default function SoftwareFormComponent() {
     form.setValue("inHouse", !vendor);
   }, [vendor, form]);
 
+  useEffect(() => {
+    form.setValue(
+      "tglBerakhirLisensi",
+      jenisLisensi === JenisLisensi.LANGGANAN
+        ? form.getValues("tglBerakhirLisensi")
+        : undefined
+    );
+  }, [jenisLisensi, form]);
+
   const onSubmit = async (values: z.infer<typeof softwareCreateSchema>) => {
     try {
       const payload = {
@@ -528,17 +537,19 @@ export default function SoftwareFormComponent() {
           }}
         />
 
-        <div className="flex flex-col lg:flex-row  gap-4 justify-start">
-          <Button
-            type="button"
-            className="w-full md:w-1/3 cursor-pointer"
-            disabled={loading}
-          >
-            <Link href="/admin/manage-asset/opd-software">Back</Link>
-          </Button>
+        <div className="flex flex-col lg:flex-row gap-4 justify-start">
+          <Link href="/admin/manage-asset/opd-software" className="flex-1">
+            <Button
+              type="button"
+              className="w-full cursor-pointer"
+              disabled={loading}
+            >
+              Back
+            </Button>
+          </Link>
           <Button
             type="submit"
-            className="w-full md:w-1/3 cursor-pointer"
+            className="flex-1 w-full cursor-pointer"
             disabled={loading}
           >
             Simpan

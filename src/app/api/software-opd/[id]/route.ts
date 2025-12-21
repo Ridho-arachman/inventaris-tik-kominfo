@@ -5,7 +5,7 @@ import { handleZodValidation } from "@/lib/handleZodValidation";
 import prisma from "@/lib/prisma";
 import {
   IdSoftwareSchema,
-  softwareUpdateSchema,
+  softwareOpdBaseSchema,
 } from "@/schema/softwareSchema";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
@@ -91,7 +91,7 @@ export const PUT = async (
     const parsedId = IdSoftwareSchema.safeParse({ id });
     if (!parsedId.success) return handleZodValidation(parsedId);
 
-    const parsed = softwareUpdateSchema.safeParse(payload);
+    const parsed = softwareOpdBaseSchema.safeParse(payload);
     if (!parsed.success) return handleZodValidation(parsed);
 
     const data = parsed.data;

@@ -579,7 +579,7 @@ export default function SoftwareListComponent() {
           <div className="space-y-4">
             <Select value={kritikalitas} onValueChange={setKritikalitas}>
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Pilih Jenis Lisensi" />
+                <SelectValue placeholder="Pilih Jenis Kritikalitas" />
               </SelectTrigger>
 
               <SelectContent>

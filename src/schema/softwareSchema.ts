@@ -63,6 +63,61 @@ export const softwareBaseSchema = z
 
 export const softwareCreateSchema = softwareBaseSchema;
 
+export const softwareOpdBaseSchema = z
+  .object({
+    nama: z.string().trim().min(1, "Nama software wajib diisi"),
+    jenisLisensi: z.enum(JenisLisensi),
+    nomorSeri: z
+      .string()
+      .max(50, " Nomor seri maksimal 50 karakter")
+      .nullable()
+      .optional(),
+
+    tglBerakhirLisensi: z
+      .date("Tanggal berakhir lisensi tidak valid")
+      .nullable()
+      .optional(),
+
+    versiTerpasang: z
+      .string()
+      .trim()
+      .min(1, "Versi terpasang wajib diisi")
+      .max(100, "Versi terpasang maksimal 100 karakter"),
+
+    vendor: z.string().nullable().optional(),
+    inHouse: z.boolean(),
+    kritikalitas: z.enum(KritikalitasStatus, "Kritikalitas tidak valid"),
+    hargaPerolehan: z
+      .string("Biaya perolehan harus berupa string")
+      .regex(/^[0-9.]+$/, "Biaya perolehan harus berupa angka"),
+
+    tglPengadaan: z.date("Tgl pengadaan tidak valid"),
+
+    status: z.enum(StatusAset),
+    pic: z.string().trim().min(1, "PIC wajib diisi"),
+
+    kategoriId: z.string().min(1, "Kategori wajib dipilih"),
+    hardwareTerinstall: z.string().nullable().optional(),
+  })
+  .refine(
+    (data) =>
+      !data.tglBerakhirLisensi || data.tglBerakhirLisensi >= data.tglPengadaan,
+    {
+      message:
+        "Tanggal berakhir lisensi harus lebih besar atau sama dengan tanggal pengadaan",
+      path: ["tglBerakhirLisensi"],
+    }
+  )
+  .refine(
+    (data) =>
+      data.jenisLisensi === JenisLisensi.OPEN_SOURCE ||
+      (!!data.nomorSeri && data.nomorSeri.trim() !== ""),
+    {
+      message: "Nomor seri wajib diisi untuk lisensi selain Open Source",
+      path: ["nomorSeri"],
+    }
+  );
+
 export const softwareUpdateSchema = softwareBaseSchema
   .partial()
   .required({
