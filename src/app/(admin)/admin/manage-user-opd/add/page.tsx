@@ -46,10 +46,11 @@ export default function AddUserPage() {
   const onSubmit = async (values: z.infer<typeof userCreateSchema>) => {
     try {
       const res = await post(values);
+      console.log(res);
 
       notifier.success(
         "Berhasil",
-        `User ${res.data.name} berhasil ditambahkan`
+        `User ${res.data.user.name} berhasil ditambahkan`
       );
 
       router.push("/admin/manage-user-opd");

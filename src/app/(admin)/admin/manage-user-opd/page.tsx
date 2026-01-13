@@ -135,9 +135,20 @@ export default function Page() {
                   ))}
                 </TableRow>
               ))}
+            {/* NO DATA */}
+            {error?.response?.status === 404 && (
+              <TableRow>
+                <TableCell
+                  colSpan={5}
+                  className="text-center py-6 text-muted-foreground"
+                >
+                  Tidak ada data ditemukan.
+                </TableCell>
+              </TableRow>
+            )}
 
             {/* ERROR */}
-            {error && (
+            {!isLoading && error && error.response?.status !== 404 && (
               <TableRow>
                 <TableCell colSpan={5}>
                   <div className="p-6 bg-red-100 border border-red-300 rounded-lg flex items-center gap-4">
@@ -146,18 +157,6 @@ export default function Page() {
                       Terjadi kesalahan saat memuat data.
                     </span>
                   </div>
-                </TableCell>
-              </TableRow>
-            )}
-
-            {/* NO DATA */}
-            {!isLoading && !error && (!data || data.length === 0) && (
-              <TableRow>
-                <TableCell
-                  colSpan={5}
-                  className="text-center py-6 text-muted-foreground"
-                >
-                  Tidak ada data ditemukan.
                 </TableCell>
               </TableRow>
             )}
