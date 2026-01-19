@@ -31,29 +31,29 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
     navMain: [
       {
-        title: "Your Application",
+        title: "Applikasi OPD",
         url: "#",
         items: [
           {
-            title: "Dashboard",
+            title: "Dashboard OPD",
             url: "/opd",
           },
           {
-            title: "Asset's",
+            title: "Manage Asset TIK",
             url: "/opd/asset",
           },
         ],
       },
       {
-        title: "Configuration and Information",
+        title: "Konfigurasi dan Informasi User OPD",
         url: "#",
         items: [
           {
-            title: "Setting User OPD Profile",
+            title: "Edit Profil User OPD",
             url: "/opd/setting-user",
           },
           {
-            title: "Help",
+            title: "Bantuan",
             url: "/opd/help",
           },
           {

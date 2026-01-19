@@ -107,6 +107,7 @@ export const POST = async (req: NextRequest) => {
     const result = await auth.api.signUpEmail({
       headers: await headers(),
       body: { name, email, password, idOpd },
+      path: "/admin/manage-user-opd",
     });
 
     return handleResponse({

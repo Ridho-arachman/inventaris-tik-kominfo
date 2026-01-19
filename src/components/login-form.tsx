@@ -29,9 +29,9 @@ import { AxiosError } from "axios";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ApiError } from "@/types/ApiError";
-import { Checkbox } from "./ui/checkbox";
+// import { Checkbox } from "./ui/checkbox";
 import { Spinner } from "./ui/spinner";
-import Link from "next/link";
+// import Link from "next/link";
 
 export function LoginForm() {
   const router = useRouter();
@@ -135,7 +135,7 @@ export function LoginForm() {
             />
 
             {/* REMEMBER ME + FORGOT PASSWORD */}
-            <div className="flex items-center justify-between mb-4">
+            {/* <div className="flex items-center justify-between mb-4">
               <Controller
                 name="rememberMe"
                 control={form.control}
@@ -157,14 +157,14 @@ export function LoginForm() {
                 )}
               />
 
-              {/* FORGOT PASSWORD */}
+             
               <Link
                 href="/forgot-password"
                 className="text-sm font-medium  hover:underline"
               >
                 Forgot Password?
               </Link>
-            </div>
+            </div> */}
 
             <Field>
               <Button

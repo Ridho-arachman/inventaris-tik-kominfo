@@ -25,12 +25,17 @@ import { AxiosError } from "axios";
 import { ApiError } from "@/types/ApiError";
 import { Separator } from "@/components/ui/separator";
 import { Spinner } from "@/components/ui/spinner";
+import { Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
 
 export default function AddUserPage() {
   const router = useRouter();
 
   const { post, loading } = usePost("/user-opd");
   const { data: opdList, isLoading } = useGet("/opd");
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const form = useForm<z.infer<typeof userCreateSchema>>({
     resolver: zodResolver(userCreateSchema),
@@ -46,7 +51,6 @@ export default function AddUserPage() {
   const onSubmit = async (values: z.infer<typeof userCreateSchema>) => {
     try {
       const res = await post(values);
-      console.log(res);
 
       notifier.success(
         "Berhasil",
@@ -56,6 +60,7 @@ export default function AddUserPage() {
       router.push("/admin/manage-user-opd");
     } catch (error) {
       const err = error as AxiosError<ApiError>;
+
       if (err.response?.status === 409) {
         notifier.error("Terjadi Kesalahan", "Email sudah terdaftar");
       }
@@ -66,7 +71,7 @@ export default function AddUserPage() {
 
       if (err.response?.status === 422) {
         notifier.error(
-          `OPD Sudah Memiliki Operator`,
+          "OPD Sudah Memiliki Operator",
           "Silahkan pilih OPD lain"
         );
       }
@@ -75,34 +80,18 @@ export default function AddUserPage() {
 
   if (isLoading)
     return (
-      <div className="px-6 py-10 space-y-8" key="loading-skeleton">
-        {/* Header skeleton */}
+      <div className="px-6 py-10 space-y-8">
         <div className="h-10 w-1/3 bg-gray-300 rounded animate-pulse"></div>
         <div className="h-6 w-1/2 bg-gray-200 rounded animate-pulse"></div>
 
         <Separator className="my-6" />
 
-        {/* Form skeleton */}
-        {[...Array(5)].map((_, i) => (
+        {[...Array(6)].map((_, i) => (
           <div key={i} className="space-y-2">
-            {/* Label skeleton */}
             <div className="h-4 w-1/4 bg-gray-300 rounded animate-pulse"></div>
-            {/* Input skeleton */}
             <div className="h-10 w-full bg-gray-200 rounded animate-pulse"></div>
           </div>
         ))}
-
-        {/* Select skeleton */}
-        <div className="space-y-2">
-          <div className="h-4 w-1/4 bg-gray-300 rounded animate-pulse"></div>
-          <div className="h-10 w-full bg-gray-200 rounded animate-pulse"></div>
-        </div>
-
-        {/* Button skeleton */}
-        <div className="flex gap-4 mt-4">
-          <div className="h-10 w-32 bg-gray-200 rounded animate-pulse"></div>
-          <div className="h-10 w-32 bg-gray-200 rounded animate-pulse"></div>
-        </div>
       </div>
     );
 
@@ -130,12 +119,8 @@ export default function AddUserPage() {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={field.name}>Nama</FieldLabel>
-              <Input
-                {...field}
-                id={field.name}
-                placeholder="Nama Operator OPD"
-              />
+              <FieldLabel>Nama</FieldLabel>
+              <Input {...field} placeholder="Nama Operator OPD" />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
@@ -147,13 +132,8 @@ export default function AddUserPage() {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={field.name}>Email</FieldLabel>
-              <Input
-                {...field}
-                id={field.name}
-                type="email"
-                placeholder="Email"
-              />
+              <FieldLabel>Email</FieldLabel>
+              <Input {...field} type="email" placeholder="Email" />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
@@ -165,13 +145,21 @@ export default function AddUserPage() {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={field.name}>Password</FieldLabel>
-              <Input
-                {...field}
-                id={field.name}
-                type="password"
-                placeholder="Password"
-              />
+              <FieldLabel>Password</FieldLabel>
+              <div className="relative">
+                <Input
+                  {...field}
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((p) => !p)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
@@ -183,13 +171,25 @@ export default function AddUserPage() {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={field.name}>Confirm Password</FieldLabel>
-              <Input
-                {...field}
-                id={field.name}
-                type="password"
-                placeholder="Confirm Password"
-              />
+              <FieldLabel>Confirm Password</FieldLabel>
+              <div className="relative">
+                <Input
+                  {...field}
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder="Confirm Password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword((p) => !p)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff size={18} />
+                  ) : (
+                    <Eye size={18} />
+                  )}
+                </button>
+              </div>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
@@ -201,7 +201,7 @@ export default function AddUserPage() {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={field.name}>OPD</FieldLabel>
+              <FieldLabel>OPD</FieldLabel>
               <Select value={field.value} onValueChange={field.onChange}>
                 <SelectTrigger>
                   <SelectValue placeholder="Pilih OPD" />
@@ -225,11 +225,10 @@ export default function AddUserPage() {
             type="button"
             onClick={() => router.back()}
             disabled={loading}
-            className="cursor-pointer"
           >
             Kembali
           </Button>
-          <Button type="submit" disabled={loading} className="cursor-pointer">
+          <Button type="submit" disabled={loading}>
             {loading ? (
               <>
                 <Spinner />
